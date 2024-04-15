@@ -54,11 +54,11 @@ export class DesignationComponent implements OnInit, AfterViewInit{
 
   ngAfterViewInit() {
     // Fetch data asynchronously using the service
-    this.adminService.getAllDesignation().subscribe((data) => {
+    this.adminService.getAllDesignation().subscribe((response) => {
      // Assign the data to the dataSource
-     console.log(data);
+     console.log(response);
      
-     this.dataSource.data = data;
+     this.dataSource.data = response.data;
 
      // Set up sorting and pagination
      this.dataSource.paginator = this.paginator;

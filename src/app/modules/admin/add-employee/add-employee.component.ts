@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Department } from '../../../model_class/Department';
+import { Department } from '../../../model_class/department';
 import { AdminService } from '../../../services/admin.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class AddEmployeeComponent implements OnInit{
   loadDepartments(): void {
     this.adminService.getAllDepartments().subscribe(
       departments => {
-        this.departments = departments;
+        this.departments = departments.data;
         console.log(departments);
       },
       error => {

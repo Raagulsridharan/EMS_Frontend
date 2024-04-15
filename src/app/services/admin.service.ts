@@ -2,10 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 import { Employee } from '../model_class/employee';
-import { Department } from '../model_class/Department';
+import { Department } from '../model_class/department';
 import { Designation } from '../model_class/designation';
 import { RoleMapping } from '../model_class/roleMapping';
 import { Payroll } from '../model_class/payroll';
+import { HttpStatusClass } from '../model_class/httpStatusClass';
 
 @Injectable({
   providedIn: 'root',
@@ -101,10 +102,10 @@ export class AdminService {
     );
   }
 
-  getAllDepartments(): Observable<Department[]> {
+  getAllDepartments(): Observable<HttpStatusClass> {
     console.log('Fetching All departments...');
 
-    return this.httpClient.get<Department[]>(`${this.departmentURL}`).pipe(
+    return this.httpClient.get<HttpStatusClass>(`${this.departmentURL}`).pipe(
       catchError((error: any) => {
         console.error('API request failed:', error);
         return throwError(error);
@@ -131,10 +132,10 @@ export class AdminService {
     );
   }
 
-  getAllDesignation(): Observable<Designation[]> {
+  getAllDesignation(): Observable<HttpStatusClass> {
     console.log('Fetching All designation...');
 
-    return this.httpClient.get<Designation[]>(`${this.designationURL}`).pipe(
+    return this.httpClient.get<HttpStatusClass>(`${this.designationURL}`).pipe(
       catchError((error: any) => {
         console.error('API request failed:', error);
         return throwError(error);
@@ -142,10 +143,10 @@ export class AdminService {
     );
   }
 
-  getAllEmployees(): Observable<Employee[]> {
+  getAllEmployees(): Observable<HttpStatusClass> {
     console.log('Fetching All employees...');
 
-    return this.httpClient.get<Employee[]>(`${this.employeeURL}`).pipe(
+    return this.httpClient.get<HttpStatusClass>(`${this.employeeURL}`).pipe(
       catchError((error: any) => {
         console.error('API request failed:', error);
         return throwError(error);

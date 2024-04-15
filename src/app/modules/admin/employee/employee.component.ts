@@ -4,7 +4,7 @@ import { AdminService } from '../../../services/admin.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Department } from '../../../model_class/Department';
+import { Department } from '../../../model_class/department';
 import { Employee } from '../../../model_class/employee';
 import { ActivatedRoute } from '@angular/router';
 
@@ -48,17 +48,17 @@ export class EmployeeComponent {
   @ViewChild(MatSort) sort: MatSort = {} as MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
 
-  displayedColumns: string[] = ['id', 'emp_name', 'gender', 'mobile', 'email', 'address', 'department','Action'];
+  displayedColumns: string[] = ['id', 'emp_name', 'birthday','gender', 'mobile', 'email', 'address', 'department','Action'];
   dataSource = new MatTableDataSource<Employee>();
 
 
   ngAfterViewInit() {
     // Fetch data asynchronously using the service
-    this.adminService.getAllEmployees().subscribe((data) => {
+    this.adminService.getAllEmployees().subscribe((response) => {
      // Assign the data to the dataSource
-     console.log(data);
+     console.log(response);
      
-     this.dataSource.data = data;
+     this.dataSource.data = response.data;
 
      // Set up sorting and pagination
      this.dataSource.paginator = this.paginator;

@@ -46,7 +46,7 @@
                       type="text"
                       class="form-control form-control-lg"
                       id="birthdayDate"
-                      placeholder="Date Of Birth"
+                      placeholder="Date Of Birth(YYYY-MM-DD)"
                     />
                     <!-- <label for="birthdayDate" class="form-label">Birthday</label> -->
                   </div>
@@ -143,7 +143,7 @@
                   ><br />
                   <select class="select form-control-lg">
                     <option value="1" disabled>Choose Department</option>
-                    <option *ngFor="let department of departments" [value]="department.id">{{ department.name }}</option>
+                    <option *ngFor="let department of departments" [value]="department.id">{{ department?.name }}</option>
                   </select>
                 </div>
               </div>

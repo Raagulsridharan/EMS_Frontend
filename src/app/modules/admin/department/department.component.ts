@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AdminService } from '../../../services/admin.service';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { Department } from '../../../model_class/Department';
+import { Department } from '../../../model_class/department';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { HttpStatusClass } from '../../../model_class/httpStatusClass';
 
 
 @Component({
@@ -53,15 +54,19 @@ export class DepartmentComponent implements OnInit, AfterViewInit{
 
   ngAfterViewInit() {
     // Fetch data asynchronously using the service
-    this.adminService.getAllDepartments().subscribe((data) => {
-     // Assign the data to the dataSource
-     console.log(data);
-     
-     this.dataSource.data = data;
-
-     // Set up sorting and pagination
-     this.dataSource.paginator = this.paginator;
-     this.dataSource.sort = this.sort;
+    this.adminService.getAllDepartments().subscribe((response: HttpStatusClass) => {
+      if (response.statusCode === 200) {
+        // Assign the data to the dataSource
+        console.log(response.data);
+        this.dataSource.data = response.data;
+        
+        // Set up sorting and pagination
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      } else {
+        // Handle error case
+        console.error('Error fetching departments:', response.description);
+      }
    });
  }
 
