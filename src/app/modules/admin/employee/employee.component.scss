@@ -1,3 +1,25 @@
+.btns {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px;
+  .signin {
+    padding: 8px 5px;
+    border: 1px solid #f05e23;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.3s ease;
+    background-color: #f05e23;
+    color: #ffffff;
+    width: 40%;
+    margin-top: 10px;
+    cursor: pointer;
+    &:hover {
+      background-color: #ffffff;
+      color: #f05e23;
+      border: 1px solid #f05e23;
+    }
+  }
+}
 .filter {
     display: flex;
     justify-content: end;

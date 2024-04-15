@@ -1,5 +1,10 @@
-<p>employee works!</p>
-<div class="mat-elevation-z8 table">
+<div class="btns">
+  <button class="signin" type="submit" routerLink="/admin/employee/addEmployee">
+    <mat-icon>open_in_new</mat-icon> Add Employees
+  </button>
+</div>
+<ng-container *ngIf="!isAddEmployeeRoute">
+  <div class="mat-elevation-z8 table">
     <div class="filter">
       <input
         matInput
@@ -58,4 +63,5 @@
       showFirstLastButtons
     ></mat-paginator>
   </div>
+</ng-container>
   

@@ -41,10 +41,10 @@ const routes: Routes = [
       },
       {
         path: 'employee',
-        component: EmployeeComponent
+        component: EmployeeComponent,
       },
       {
-        path:'addEmployee',
+        path: 'employee/addEmployee',
         component: AddEmployeeComponent
       },
       {

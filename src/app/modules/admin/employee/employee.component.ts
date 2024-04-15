@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Department } from '../../../model_class/Department';
 import { Employee } from '../../../model_class/employee';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-employee',
@@ -13,14 +14,20 @@ import { Employee } from '../../../model_class/employee';
   styleUrl: './employee.component.scss',
 })
 export class EmployeeComponent {
+
+  isAddEmployeeRoute: boolean = false;
   formData!: FormGroup;
 
   constructor(
+    private route: ActivatedRoute,
     private adminService: AdminService,
     private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
+    this.route.url.subscribe(url => {
+      this.isAddEmployeeRoute = url.length > 0 && url[0].path === 'addEmployee';
+    });
     this.formData = this.formBuilder.group({
       emp_name: ['', [Validators.required]],
       gender: ['', [Validators.required]],
