@@ -1,0 +1,77 @@
+<mat-toolbar class="toolbar">
+  <button
+    mat-icon-button
+    (click)="sidenav.toggle()"
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span class="logo">EMS</span>
+
+  <span class="example-spacer"></span>
+</mat-toolbar>
+
+<mat-sidenav-container autosize style="height: 100vh; margin-top: 80px">
+  <mat-sidenav #sidenav opened="true" mode="side" [style.width]="'200px'">
+    <div class="info">
+      <h3>Admin</h3>
+    </div>
+
+    <mat-nav-list>
+      <mat-list-item routerLink="dashboard" class="lists">
+        <div class="list-item">
+          <mat-icon>dashboard</mat-icon>
+          <p>Dashboard</p>
+        </div>
+      </mat-list-item>
+      <mat-list-item routerLink="department" class="lists">
+        <div class="list-item">
+          <mat-icon>corporate_fare</mat-icon>
+          <p>Department</p>
+        </div>
+      </mat-list-item>
+      <mat-list-item routerLink="designation" class="lists">
+        <div class="list-item">
+          <mat-icon>loyalty</mat-icon>
+          <p>Designation</p>
+        </div>
+      </mat-list-item>
+      <mat-list-item routerLink="employee" class="lists">
+        <div class="list-item">
+          <mat-icon>person_apron</mat-icon>
+          <p>Employee</p>
+        </div>
+      </mat-list-item>
+      <mat-list-item routerLink="rolemapping" class="lists">
+        <div class="list-item">
+          <mat-icon>swap_horiz</mat-icon>
+          <p>Role Mapping</p>
+        </div>
+      </mat-list-item>
+      <mat-list-item routerLink="leaveassign" class="lists">
+        <div class="list-item">
+          <mat-icon>event_upcoming</mat-icon>
+          <p>Leave Assign</p>
+        </div>
+      </mat-list-item>
+      <mat-list-item routerLink="payroll" class="lists">
+        <div class="list-item">
+          <mat-icon>paid</mat-icon>
+          <p>Payroll</p>
+        </div>
+      </mat-list-item>
+      <mat-list-item routerLink="leaveapplied" class="lists">
+        <div class="list-item">
+          <mat-icon>mark_unread_chat_alt</mat-icon>
+          <p>Leave Applied</p>
+        </div>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

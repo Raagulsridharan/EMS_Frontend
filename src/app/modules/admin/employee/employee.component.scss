@@ -1,0 +1,44 @@
+.filter {
+    display: flex;
+    justify-content: end;
+    padding: 30px 15px;
+    input {
+      padding: 7px 15px;
+      width: 280px;
+      margin-right: -40px;
+      border-left: 1px solid grey;
+      border-top: 1px solid grey;
+      border-right: 1px solid grey;
+      border-bottom: 2px solid rgb(253, 87, 50);
+      border-radius: 25px;
+      outline: none;
+      text-align: center;
+    }
+    i {
+      align-self: center;
+      margin-right: 65px;
+    }
+  }
+  i {
+    font-size: 20px;
+    background: linear-gradient(
+      90deg,
+      rgb(194, 29, 3) 31%,
+      rgb(253, 87, 50) 100%,
+      rgb(255, 183, 135) 100%
+    );
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: {background: 0.3s ease;}
+    &:hover {
+      background: linear-gradient(
+        270deg,
+        rgba(255, 152, 63, 1) 0%,
+        rgba(255, 102, 0, 1) 100%,
+        rgba(255, 255, 161, 1) 100%
+      );
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+  }
+  

@@ -1,0 +1,61 @@
+.toolbar {
+  background-color: #19212a;
+  height: 80px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  mat-icon,
+  span {
+    color: white;
+  }
+  .logo {
+    font-size: 25px;
+    color: #fff;
+    font-family: system-ui;
+    border-bottom: 4px double;
+    padding-bottom: 4px;
+    width: 50px;
+    border-top: 4px double;
+    margin: 4px;
+    border-left: 4px double;
+    padding-left: 10px;
+    border-radius: 15px 0;
+    transition: color 0.3s;
+    &:hover {
+      cursor: pointer;
+      color: #ff9a71;
+    }
+  }
+  .example-spacer {
+    flex: 1 1 auto;
+  }  
+}
+
+mat-sidenav{
+  .info {
+    text-align: center;
+    line-height: 4px;
+    margin-top: 30px;
+  }
+  .lists {
+    margin-bottom: 7px;
+    .list-item {
+      display: flex;
+      p {
+        margin: 0px;
+        margin-left: 20px;
+        &:focus-visible {
+          color: black;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+mat-sidenav-container {
+  overflow : hidden !important;
+}
+
+

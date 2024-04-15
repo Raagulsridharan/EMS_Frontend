@@ -1,0 +1,61 @@
+<p>payroll works!</p>
+<div class="mat-elevation-z8 table">
+    <div class="filter">
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Search here..."
+        #input
+      />
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- Id Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+      <!-- Employee Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name}}</td>
+      </ng-container>
+      <!-- Department name Column -->
+      <ng-container matColumnDef="dept">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Department</th>
+        <td mat-cell *matCellDef="let element">{{ element.dept }}</td>
+      </ng-container>
+      <!-- role Column -->
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
+        <td mat-cell *matCellDef="let element">{{ element.role }}</td>
+      </ng-container>
+      <!-- Basic Salary Column -->
+      <ng-container matColumnDef="basic_sal_month">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Basic Salary</th>
+        <td mat-cell *matCellDef="let element">{{ element.basic_sal_month }}</td>
+      </ng-container>
+      <!-- Tax Reduction Column -->
+      <ng-container matColumnDef="tax_reduction_month">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tax Reduction</th>
+        <td mat-cell *matCellDef="let element">{{ element.tax_reduction_month }}</td>
+      </ng-container>
+      <!-- Net Salary Column -->
+      <ng-container matColumnDef="net_sal_month">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Net Salary</th>
+        <td mat-cell *matCellDef="let element">{{ element.net_sal_month }}</td>
+      </ng-container>
+      <!-- History Column -->
+      <ng-container matColumnDef="history">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>History</th>
+        <td mat-cell *matCellDef="let element"></td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+  
