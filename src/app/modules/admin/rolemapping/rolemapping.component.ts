@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Employee } from '../../../model_class/employee';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { AdminService } from '../../../services/admin.service';
 import { RoleMapping } from '../../../model_class/roleMapping';
 
@@ -13,6 +13,11 @@ import { RoleMapping } from '../../../model_class/roleMapping';
   styleUrl: './rolemapping.component.scss'
 })
 export class RolemappingComponent implements OnInit, AfterViewInit{
+
+  formData!: FormGroup;
+  departments: any[] = [];
+  employees: any[] = [];
+  roles: any[] = [];
 
   constructor(
     private adminService: AdminService,

@@ -10,7 +10,7 @@
             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5" style="font-size: xx-large; text-align: center;">
               Register Employee
             </h3>
-            <form>
+            <form [formGroup]="formData">
               <div class="row">
                 <div class="col-md-6 mb-4">
                   <div data-mdb-input-init class="form-outline">
@@ -19,6 +19,7 @@
                       id="firstName"
                       class="form-control form-control-lg"
                       placeholder="First Name"
+                      formControlName="firstName"
                     />
                     <!-- <label class="form-label" for="firstName">First Name</label> -->
                   </div>
@@ -30,6 +31,7 @@
                       id="lastName"
                       class="form-control form-control-lg"
                       placeholder="Last Name"
+                      formControlName="lastName"
                     />
                     <!-- <label class="form-label" for="lastName">Last Name</label> -->
                   </div>
@@ -47,6 +49,7 @@
                       class="form-control form-control-lg"
                       id="birthdayDate"
                       placeholder="Date Of Birth(YYYY-MM-DD)"
+                      formControlName="birthday"
                     />
                     <!-- <label for="birthdayDate" class="form-label">Birthday</label> -->
                   </div>
@@ -58,9 +61,10 @@
                     <input
                       class="form-check-input"
                       type="radio"
-                      name="inlineRadioOptions"
+                      name="gender"
                       id="femaleGender"
-                      value="option1"
+                      formControlName="gender"
+                      value="Female"
                       checked
                     />
                     <label class="form-check-label" for="femaleGender"
@@ -72,22 +76,22 @@
                     <input
                       class="form-check-input"
                       type="radio"
-                      name="inlineRadioOptions"
+                      name="gender"
+                      formControlName="gender"
                       id="maleGender"
-                      value="option2"
+                      value="Male"
                     />
-                    <label class="form-check-label" for="maleGender"
-                      >Male</label
-                    >
+                    <label class="form-check-label" for="maleGender">Male</label>
                   </div>
 
                   <div class="form-check form-check-inline">
                     <input
                       class="form-check-input"
                       type="radio"
-                      name="inlineRadioOptions"
+                      name="gender"
+                      formControlName="gender"
                       id="otherGender"
-                      value="option3"
+                      value="Other"
                     />
                     <label class="form-check-label" for="otherGender"
                       >Other</label
@@ -103,6 +107,7 @@
                       type="email"
                       id="emailAddress"
                       class="form-control form-control-lg"
+                      formControlName="email"
                       placeholder="E-Mail"
                     />
                     <!-- <label class="form-label" for="emailAddress">Email</label> -->
@@ -115,6 +120,7 @@
                       id="phoneNumber"
                       class="form-control form-control-lg"
                       placeholder="Phone Number"
+                      formControlName="mobile"
                     />
                     <!-- <label class="form-label" for="phoneNumber">Phone Number</label> -->
                   </div>
@@ -128,6 +134,7 @@
                       id="address"
                       class="form-control form-control-lg"
                       placeholder="Address"
+                      formControlName="address"
                     />
                     <!-- <label class="form-label" for="address">Address</label> -->
                   </div>
@@ -141,7 +148,7 @@
                     style="font-size: large"
                     >Choose Department</label
                   ><br />
-                  <select class="select form-control-lg">
+                  <select class="select form-control-lg" formControlName="departmentId">
                     <option value="1" disabled>Choose Department</option>
                     <option *ngFor="let department of departments" [value]="department.id">{{ department?.name }}</option>
                   </select>
@@ -149,14 +156,14 @@
               </div>
 
               <div class="mt-4 pt-2">
-                <input
-                  data-mdb-button-init
-                  data-mdb-ripple-init
+                <button
                   class="btn btn-primary btn-lg"
-                  type="submit"
-                  value="Submit"
-                />
-              </div>
+                  type="button"
+                  (click)="onSubmit()"
+                >
+                  Submit
+                </button>
+              </div>              
             </form>
           </div>
         </div>

@@ -1,3 +1,34 @@
+<mat-accordion>
+  <mat-expansion-panel #panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Assign role and salary for employee!</mat-panel-title
+      >
+    </mat-expansion-panel-header>
+
+    <form>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Enter Designation"
+          formControlName="newDesignationName"
+        />
+      </mat-form-field>
+      <br />
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Enter Salary Package"
+          formControlName="salary_package"
+        />
+      </mat-form-field>
+      <button mat-button type="submit">Add</button>
+    </form>
+  </mat-expansion-panel>
+</mat-accordion>
+
+
+
 <div class="mat-elevation-z8 table">
     <div class="filter">
       <input

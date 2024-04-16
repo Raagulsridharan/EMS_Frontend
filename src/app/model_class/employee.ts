@@ -1,3 +1,5 @@
+import { Department } from "./department";
+
 export interface Employee{
     id: number;
     emp_name: string;
@@ -6,5 +8,6 @@ export interface Employee{
     mobile: number;
     email: string;
     address: string;
-    department: string;
+    department: Department[];
+    status: string;
 }

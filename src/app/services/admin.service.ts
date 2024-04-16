@@ -7,6 +7,7 @@ import { Designation } from '../model_class/designation';
 import { RoleMapping } from '../model_class/roleMapping';
 import { Payroll } from '../model_class/payroll';
 import { HttpStatusClass } from '../model_class/httpStatusClass';
+import { Logindetails } from '../model_class/loginDetails';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class AdminService {
   private departmentURL = 'http://localhost:8080/departments';
   private designationURL = 'http://localhost:8080/designations';
   private roleSalaryURL = 'http://localhost:8080/empRoleSalary';
+  private emailUrl = 'http://localhost:8080/email';
   private payrollURL = 'http://localhost:8080/payroll';
   private leaveTypeURL = 'http://localhost:8080/leavePolicy';
   private leaveAppliedURL = 'http://localhost:8080/leaveApplied';
@@ -113,10 +115,10 @@ export class AdminService {
     );
   }
 
-  addDesignation(designation: string,salary_package:string): Observable<any> {
-    const designationData = { 
+  addDesignation(designation: string, salary_package: string): Observable<any> {
+    const designationData = {
       role: designation,
-      salary_package: salary_package
+      salary_package: salary_package,
     };
     console.log('Designation Data:', designationData);
 
@@ -139,6 +141,35 @@ export class AdminService {
       catchError((error: any) => {
         console.error('API request failed:', error);
         return throwError(error);
+      })
+    );
+  }
+
+  addEmployee(employeeData: any): Observable<any> {
+    return this.httpClient.post(`${this.employeeURL}`, employeeData).pipe(
+      tap((response) => {
+        console.log('Add Employee Response:', response);
+      }),
+      catchError((error) => {
+        console.error('Error adding employee:', error);
+        console.log('Error Response Body:', error.error);
+        throw error;
+      })
+    );
+  }
+
+  sentEmailForLoginCredential( username: string, password: string, deptId: number): Observable<any> {
+    const loginData = { username, password, deptId };
+    console.log('Email Credential Data:', loginData);
+
+    return this.httpClient.post(this.emailUrl, loginData).pipe(
+      tap((response) => {
+        console.log('Email sent...', response);
+      }),
+      catchError((error) => {
+        console.error('Error in email sending:', error);
+        console.log('Error Response Body:', error.error);
+        throw error;
       })
     );
   }
@@ -176,4 +207,14 @@ export class AdminService {
     );
   }
 
+  getEmployeesForRoleAssigningByDepartment(departmentId:number): Observable<HttpStatusClass>{
+    console.log('Fetching Employees by Department for Role assigning...');
+
+    return this.httpClient.get<HttpStatusClass>(`${this.employeeURL}/getAllEmployeeByDeptForRoleAssign/${departmentId}`).pipe(
+      catchError((error: any) => {
+        console.error('API request failed:', error);
+        return throwError(error);
+      })
+    );
+  }
 }
