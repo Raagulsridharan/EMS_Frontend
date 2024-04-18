@@ -27,6 +27,8 @@ import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MDBBootstrapModule } from 'angular-bootstrap-md'; // Assuming mdbCollapse is part of MDBBootstrapModule
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+
 
 
 @NgModule({
@@ -57,6 +59,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md'; // Assuming mdbCollap
     MdbCollapseModule,
     MdbModalModule,
     MdbTabsModule,
+    MdbFormsModule,
     MDBBootstrapModule.forRoot() // Import the module that declares mdbCollapse
 
   ],

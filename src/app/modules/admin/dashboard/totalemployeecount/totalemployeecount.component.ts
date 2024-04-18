@@ -105,12 +105,12 @@ export class TotalemployeecountComponent implements OnInit {
       {
         title: 'Employees',
         count: this.totalEmployeeCount,
-        router: 'employees',
+        router: '/admin/employee',
       },
       {
         title: 'Departments',
         count: this.totalDepartmentCount,
-        router: 'departments',
+        router: '/admin/department',
       },
       {
         title: 'Leave Types',

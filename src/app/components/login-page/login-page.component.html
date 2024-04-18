@@ -1,27 +1,52 @@
+<div class="welcome">
+  <h1>.</h1>
+</div>
 <div class="login">
-  <div class="svg"><img src="assets/login_svg.svg" alt /></div>
+  <div class="svg">
+    <img src="assets/login_svg.svg" alt />
+  </div>
   <div class="line"></div>
   <div class="login_form">
     <h1>Sign In As</h1>
-    <mdb-tabs [pills]="true" class="tabs">
-      <mdb-tab title="Admin" id="tabs-admin">
+    <mdb-tabs [justified]="true" >
+      <mdb-tab title="Admin">
         <form [formGroup]="loginForm" (submit)="submitForm()">
-          <label for="email">Enter Email</label>
-          <input type="email" id="email" placeholder="Email*" formControlName="email"/>
-          <label for="password">Enter Password</label>
-          <input type="{{ hidePassword ? 'password' : 'text' }}" id="password" placeholder="Password*" formControlName="password"/>
-          <mat-icon class="eye" (click)="togglePasswordVisibility()">{{hidePassword ? "visibility_off" : "visibility"}}</mat-icon>
-          <div class="btns"><button class="signin" type="submit">Sign In</button></div>
+          <!-- Email input -->
+          <mdb-form-control class="mb-4">
+            <label mdbLabel class="form-label" for="loginName">Enter Your Email</label>
+            <input mdbInput type="email" id="email" placeholder="Email" formControlName="email" class="form-control" />
+          </mdb-form-control>
+    
+          <!-- Password input -->
+          <mdb-form-control class="mb-4">
+            <label mdbLabel class="form-label" for="loginPassword">Enter Password</label>
+            <input mdbInput type="{{ hidePassword ? 'password' : 'text' }}" id="password" placeholder="Password" formControlName="password" class="form-control" />
+          </mdb-form-control>
+    
+          <!-- Submit button -->
+          <div class="btns">
+            <button mdbRipple type="submit" class="signin btn btn-primary btn-block mb-4">Sign in</button>
+          </div>
         </form>
       </mdb-tab>
-      <mdb-tab title="Employee" id="tabs-employee">
+      <mdb-tab title="Employee">
         <form [formGroup]="loginForm" (submit)="employeeLogin()">
-          <label for="email">Enter Email</label>
-          <input type="email" id="email" placeholder="Email*" formControlName="email"/>
-          <label for="password">Enter Password</label>
-          <input type="{{ hidePassword ? 'password' : 'text' }}" id="password" placeholder="Password*" formControlName="password"/>
-          <mat-icon class="eye" (click)="togglePasswordVisibility()">{{hidePassword ? "visibility_off" : "visibility"}}</mat-icon>
-          <div class="btns"><button class="signin" type="submit">Sign In</button></div>
+          <!-- Email input -->
+          <mdb-form-control class="mb-4">
+            <label mdbLabel class="form-label" for="loginName">Enter Your Email</label>
+            <input mdbInput type="email" id="email" placeholder="Email" formControlName="email" class="form-control" />
+          </mdb-form-control>
+    
+          <!-- Password input -->
+          <mdb-form-control class="mb-4">
+            <label mdbLabel class="form-label" for="loginPassword">Enter Password</label>
+            <input mdbInput type="{{ hidePassword ? 'password' : 'text' }}" id="password" placeholder="Password" formControlName="password" class="form-control" />
+          </mdb-form-control>
+    
+          <!-- Submit button -->
+          <div class="btns">
+            <button mdbRipple type="submit" class="signin btn btn-primary btn-block mb-4">Sign in</button>
+          </div>    
         </form>
       </mdb-tab>
     </mdb-tabs>

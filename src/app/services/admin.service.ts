@@ -258,4 +258,27 @@ export class AdminService {
       })
     );
   }
+
+  getEmployeesForLeaveAssigningByDepartment(departmentId:number): Observable<HttpStatusClass>{
+    console.log('Fetching Employees by Department for Leave assigning...');
+
+    return this.httpClient.get<HttpStatusClass>(`${this.employeeURL}/getAllEmployeeByDeptForLeaveAssign/${departmentId}`).pipe(
+      catchError((error: any) => {
+        console.error('API request failed:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  getAllLeaveType(): Observable<HttpStatusClass> {
+    console.log('Fetching All LeaveTypes...');
+
+    return this.httpClient.get<HttpStatusClass>(`${this.leaveTypeURL}`).pipe(
+      catchError((error: any) => {
+        console.error('API request failed:', error);
+        return throwError(error);
+      })
+    );
+  }
+
 }

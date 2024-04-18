@@ -5,10 +5,12 @@
   top: 0;
   width: 100%;
   z-index: 2;
-  mat-icon,
   span {
     color: white;
   }
+  .fa-bars {
+    color: white; /* or any other light color */
+}
   .logo {
     font-size: 25px;
     color: #fff;
