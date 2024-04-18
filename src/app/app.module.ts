@@ -23,6 +23,11 @@ import { AppComponent } from './app.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { ActivationPageComponent } from './components/activation-page/activation-page.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
+import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
+import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
+import { MDBBootstrapModule } from 'angular-bootstrap-md'; // Assuming mdbCollapse is part of MDBBootstrapModule
+
 
 @NgModule({
   declarations: [
@@ -48,7 +53,12 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    MatMenuModule
+    MatMenuModule,
+    MdbCollapseModule,
+    MdbModalModule,
+    MdbTabsModule,
+    MDBBootstrapModule.forRoot() // Import the module that declares mdbCollapse
+
   ],
   providers: [
     provideAnimationsAsync()

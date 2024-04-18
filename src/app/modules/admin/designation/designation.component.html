@@ -1,3 +1,37 @@
+<div class="coll-button">
+  <button
+  class="btn btn-primary"
+  type="button"
+  (click)="collapse.toggle()"
+  [attr.aria-expanded]="!collapse.collapsed"
+  aria-controls="collapseExample">Add Designation and Salary package</button>
+<!--Collapsed content-->
+<div class="mt-3" id="collapseExample" mdbCollapse #collapse="mdbCollapse">
+  <form [formGroup]="formData" (submit)="addDesignation()">
+    <mdb-form-control>
+      <input mdbInput type="text" formControlName="newDesignationName" id="form1" class="form-control" placeholder="Enter Designation"/>
+      <!-- <label mdbLabel class="form-label" for="form1">Enter Designation</label> -->
+    </mdb-form-control>
+    <br>
+    <mdb-form-control>
+      <input mdbInput type="text" id="salary_package" class="form-control" formControlName="salary_package" placeholder="Enter Salary Package"/>
+      <!-- <label mdbLabel class="form-label" for="salary_package">Enter Salary Package</label> -->
+    </mdb-form-control>
+    <br>
+    <button type="submit" class="btn btn-outline-primary" mdbRipple rippleColor="dark">Add</button>    
+    
+    <!-- <mat-form-field>
+      <input matInput placeholder="Enter Designation" formControlName="newDesignationName" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Enter Salary Package" formControlName="salary_package" />
+    </mat-form-field> 
+    <button mat-button type="submit">Add</button> -->
+  </form>
+</div>
+
+</div>
+<!-- 
 <mat-accordion>
   <mat-expansion-panel #panel>
     <mat-expansion-panel-header>
@@ -25,16 +59,16 @@
       <button mat-button type="submit">Add</button>
     </form>
   </mat-expansion-panel>
-</mat-accordion>
-
+</mat-accordion> -->
 <div class="mat-elevation-z8 table">
   <div class="filter">
-    <input
-      matInput
-      (keyup)="applyFilter($event)"
-      placeholder="Search here..."
-      #input
-    />
+    <input mdbInput
+         type="text"
+         id="form1"
+         class="form-control"
+         (keyup)="applyFilter($event)"
+         placeholder="Search here..."
+         #input />
     <i class="fa-solid fa-magnifying-glass"></i>
   </div>
   <table mat-table [dataSource]="dataSource" matSort>
@@ -67,3 +101,5 @@
     showFirstLastButtons
   ></mat-paginator>
 </div>
+
+

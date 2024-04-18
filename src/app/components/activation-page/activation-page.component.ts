@@ -47,7 +47,7 @@ export class ActivationPageComponent {
         () => {
           // Password updated successfully, optionally navigate to another page
           alert('Password updated successfully');
-          this.router.navigate(['/admin']);
+          this.router.navigate(['/employee']);
         },
         error => {
           console.error('Error updating password:', error);

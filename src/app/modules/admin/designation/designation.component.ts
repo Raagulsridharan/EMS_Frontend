@@ -5,6 +5,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Designation } from '../../../model_class/designation';
 import { MatTableDataSource } from '@angular/material/table';
+import { MdbCollapseDirective } from 'mdb-angular-ui-kit/collapse';
+
 
 @Component({
   selector: 'app-designation',
@@ -52,7 +54,13 @@ export class DesignationComponent implements OnInit, AfterViewInit{
   displayedColumns: string[] = ['id', 'role', 'salary_package','Action'];
   dataSource = new MatTableDataSource<Designation>();
 
-  ngAfterViewInit() {
+@ViewChild('collapse') collapse!: MdbCollapseDirective;
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.collapse.show();
+    }, 2000);
+
     // Fetch data asynchronously using the service
     this.adminService.getAllDesignation().subscribe((response) => {
      // Assign the data to the dataSource
@@ -64,7 +72,7 @@ export class DesignationComponent implements OnInit, AfterViewInit{
      this.dataSource.paginator = this.paginator;
      this.dataSource.sort = this.sort;
    });
- }
+  }
 
  applyFilter(event: Event) {
    const filterValue = (event.target as HTMLInputElement).value;

@@ -185,10 +185,10 @@ export class AdminService {
     );
   }
 
-  getAllEmployeesRoleAndSalary(): Observable<RoleMapping[]> {
+  getAllEmployeesRoleAndSalary(): Observable<HttpStatusClass> {
     console.log('Fetching All employees role & salary...');
 
-    return this.httpClient.get<RoleMapping[]>(`${this.roleSalaryURL}`).pipe(
+    return this.httpClient.get<HttpStatusClass>(`${this.roleSalaryURL}`).pipe(
       catchError((error: any) => {
         console.error('API request failed:', error);
         return throwError(error);
@@ -196,10 +196,10 @@ export class AdminService {
     );
   }
 
-  getAllEmployeesPayroll(): Observable<Payroll[]> {
+  getAllEmployeesPayroll(): Observable<HttpStatusClass> {
     console.log('Fetching All employees role & salary...');
 
-    return this.httpClient.get<Payroll[]>(`${this.payrollURL}`).pipe(
+    return this.httpClient.get<HttpStatusClass>(`${this.payrollURL}`).pipe(
       catchError((error: any) => {
         console.error('API request failed:', error);
         return throwError(error);
@@ -214,6 +214,47 @@ export class AdminService {
       catchError((error: any) => {
         console.error('API request failed:', error);
         return throwError(error);
+      })
+    );
+  }
+
+  addRoleAndSalaryForEmployee(empId:number,roleId:number,salaryPack:number): Observable<any> {
+    const roleSalaryData = {
+      roleId,salaryPack
+    }
+    return this.httpClient.post(`${this.roleSalaryURL}/${empId}`,roleSalaryData).pipe(
+      tap((response) => {
+        console.log('Add Role&Salary Response:', response);
+      }),
+      catchError((error) => {
+        console.error('Error adding Role and salary:', error);
+        console.log('Error Response Body:', error.error);
+        throw error;
+      })
+    );
+  }
+
+  getEmployeesForPayrollAssigningByDepartment(departmentId:number): Observable<HttpStatusClass>{
+    console.log('Fetching Employees by Department for Payroll assigning...');
+
+    return this.httpClient.get<HttpStatusClass>(`${this.employeeURL}/getAllEmpByDeptForPayroll/${departmentId}`).pipe(
+      catchError((error: any) => {
+        console.error('API request failed:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  createPayrollForEmployee(empId:number): Observable<any>{
+    const body = {};
+    return this.httpClient.post(`${this.payrollURL}/createPayroll/${empId}`, body).pipe(
+      tap((response) => {
+        console.log('Add Payroll Response:', response);
+      }),
+      catchError((error) => {
+        console.error('Error adding payroll:', error);
+        console.log('Error Response Body:', error.error);
+        throw error;
       })
     );
   }

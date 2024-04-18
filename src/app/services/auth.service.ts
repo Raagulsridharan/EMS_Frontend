@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { EmpFlag } from '../model_class/empFlag';
+import { HttpStatusClass } from '../model_class/httpStatusClass';
 
 const baseUrl = ['http://localhost:8080'];
 
@@ -40,8 +41,8 @@ export class AuthService {
     );
   }
 
-  getUserType(email: string) {
-    return this.http.get<string>(baseUrl + '/designations/' + email);
+  getUserType(email: string): Observable<HttpStatusClass> {
+    return this.http.get<HttpStatusClass>(baseUrl + '/designations/getUserType/' + email);
   }
 
   updatePassword(empId: string, password: string): Observable<any>{
