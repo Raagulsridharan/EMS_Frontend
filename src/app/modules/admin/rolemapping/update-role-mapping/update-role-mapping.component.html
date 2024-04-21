@@ -1,0 +1,54 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Change Department</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formData">
+      <div class="mb-3">
+        <p>Employee ID: {{ empId }}</p>
+        <p>Employee Name: {{ empName }}</p>
+        <p>Department Name: {{ dept }}</p>
+        <label for="designation" class="form-label">Designation Name</label>
+        <mdb-form-control>
+          <select
+            formControlName="designation"
+            id="designation"
+            class="form-control"
+          >
+            <option value="" disabled selected>Change Designation</option>
+            <option
+              *ngFor="let designation of designations"
+              [value]="designation.id"
+              [disabled]="isDesignationDisabled(designation.role)"
+            >
+              {{ designation.role }}
+            </option>
+          </select>
+        </mdb-form-control>
+      </div>
+      <div class="mb-3">
+        <label for="salaryPackage" class="form-label">Salary Package : </label>
+        <input
+          type="text"
+          class="form-control"
+          id="salaryPackage"
+          name="salaryPackage"
+          formControlName="updateSalaryPackage"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalRef.close()">
+      Close
+    </button>
+    <button type="button" class="btn btn-primary" (click)="updateRoleMapping()">
+      Save Changes
+    </button>
+  </div>
+  

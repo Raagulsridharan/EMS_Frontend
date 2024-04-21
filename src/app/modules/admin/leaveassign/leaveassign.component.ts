@@ -10,6 +10,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { EmployeeHasLeave } from '../../../model_class/employeeHasLeave';
 import { HttpStatusClass } from '../../../model_class/httpStatusClass';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { UpdateLeaveAssignComponent } from './update-leave-assign/update-leave-assign.component';
 
 @Component({
   selector: 'app-leaveassign',
@@ -27,6 +29,7 @@ export class LeaveassignComponent implements OnInit {
   selectedEmployee!: number;
 
   constructor(
+    private modalService: MdbModalService,
     private adminService: AdminService,
     private formBuilder: FormBuilder
   ) {}
@@ -166,5 +169,13 @@ export class LeaveassignComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  openUpdateModal(element: EmployeeHasLeave) {
+    console.log(element)
+    const modalRef: MdbModalRef<UpdateLeaveAssignComponent> = this.modalService.open(UpdateLeaveAssignComponent);
+    // modalRef.component.designationId = element.role;
+    // modalRef.component.designationName = element.role;
+    // modalRef.component.salaryPackage = element.salary_package;
   }
 }

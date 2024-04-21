@@ -7,6 +7,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Department } from '../../../model_class/department';
 import { Employee } from '../../../model_class/employee';
 import { ActivatedRoute } from '@angular/router';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { UpdateEmployeeComponent } from './update-employee/update-employee.component';
 
 @Component({
   selector: 'app-employee',
@@ -14,18 +16,18 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './employee.component.scss',
 })
 export class EmployeeComponent {
-
   isAddEmployeeRoute: boolean = false;
   formData!: FormGroup;
 
   constructor(
+    private modalService: MdbModalService,
     private route: ActivatedRoute,
     private adminService: AdminService,
     private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
-    this.route.url.subscribe(url => {
+    this.route.url.subscribe((url) => {
       this.isAddEmployeeRoute = url.length > 0 && url[0].path === 'addEmployee';
     });
     this.formData = this.formBuilder.group({
@@ -48,26 +50,58 @@ export class EmployeeComponent {
   @ViewChild(MatSort) sort: MatSort = {} as MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
 
-  displayedColumns: string[] = ['id', 'emp_name', 'birthday','gender', 'mobile', 'email', 'address', 'department','Action'];
+  displayedColumns: string[] = [
+    'id',
+    'emp_name',
+    'birthday',
+    'gender',
+    'mobile',
+    'email',
+    'address',
+    'department',
+    'Action',
+  ];
   dataSource = new MatTableDataSource<Employee>();
-
 
   ngAfterViewInit() {
     // Fetch data asynchronously using the service
     this.adminService.getAllEmployees().subscribe((response) => {
-     // Assign the data to the dataSource
-     console.log(response);
-     
-     this.dataSource.data = response.data;
+      // Assign the data to the dataSource
+      console.log(response);
 
-     // Set up sorting and pagination
-     this.dataSource.paginator = this.paginator;
-     this.dataSource.sort = this.sort;
-   });
- }
+      this.dataSource.data = response.data;
 
- applyFilter(event: Event) {
-   const filterValue = (event.target as HTMLInputElement).value;
-   this.dataSource.filter = filterValue.trim().toLowerCase();
- }
+      // Set up sorting and pagination
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  openUpdateModal(element: Employee) {
+    console.log(element);
+    const modalRef: MdbModalRef<UpdateEmployeeComponent> = this.modalService.open(UpdateEmployeeComponent);
+    modalRef.component.empId = element.id;
+    modalRef.component.empName = element.name;
+    modalRef.component.deptName = element.department;
+    modalRef.component.mobille = element.mobile;
+    modalRef.component.address = element.address;
+  }
+
+  deleteEmployee(empId: number) {
+    this.adminService.deleteEmployee(empId).subscribe(
+      (response) => {
+        console.log('Employee Deleted successfully:' + response);
+        this.ngAfterViewInit()
+      },
+      (error) => {
+        alert('Error in deleting employee...!');
+        console.error('Error deleting employee:', error);
+      }
+    );
+  }
 }

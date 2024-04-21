@@ -35,6 +35,9 @@ import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { UpdateDepartmentComponent } from './department/update-department/update-department.component';
 import { UpdateDesignationComponent } from './designation/update-designation/update-designation.component';
+import { UpdateEmployeeComponent } from './employee/update-employee/update-employee.component';
+import { UpdateLeaveAssignComponent } from './leaveassign/update-leave-assign/update-leave-assign.component';
+import { UpdateRoleMappingComponent } from './rolemapping/update-role-mapping/update-role-mapping.component';
 
 
 
@@ -55,7 +58,10 @@ import { UpdateDesignationComponent } from './designation/update-designation/upd
     ApprovedLeavesComponent,
     AddEmployeeComponent,
     UpdateDepartmentComponent,
-    UpdateDesignationComponent
+    UpdateDesignationComponent,
+    UpdateEmployeeComponent,
+    UpdateLeaveAssignComponent,
+    UpdateRoleMappingComponent
   ],
   imports: [
     CommonModule,
