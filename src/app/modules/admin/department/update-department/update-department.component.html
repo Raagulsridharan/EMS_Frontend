@@ -18,6 +18,7 @@
         id="departmentName"
         name="departmentName"
         formControlName="updateDepartmentName"
+        [value]="defaultValue" (input)="onInput($event)"
       />
     </div>
   </form>

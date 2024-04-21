@@ -9,7 +9,7 @@ import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { Department } from '../../../../model_class/department';
 import { AdminService } from '../../../../services/admin.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-update-department',
@@ -19,9 +19,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class UpdateDepartmentComponent implements OnInit {
   [x: string]: any;
 
+  defaultName!: string;
   formData!: FormGroup;
-  @Input()
-  departmentId!: number;
+  @Input() departmentId!: number;
+  @Input() departmentName!: string;
+
+  defaultValue: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,9 +33,14 @@ export class UpdateDepartmentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.defaultValue = this.departmentName;
     this.formData = this.formBuilder.group({
-      updateDepartmentName: ['', [Validators.required]],
+      updateDepartmentName: [this.defaultValue, [Validators.required]],
     });
+  }
+
+  onInput(event: Event) {
+    this.defaultValue = (event.target as HTMLInputElement).value;
   }
 
   updateDepartment(): void {

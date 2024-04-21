@@ -85,6 +85,7 @@ export class DepartmentComponent implements OnInit, AfterViewInit {
     console.log(element)
     const modalRef: MdbModalRef<UpdateDepartmentComponent> = this.modalService.open(UpdateDepartmentComponent);
     modalRef.component.departmentId = element.id;
+    modalRef.component.departmentName = element.name;
   }
   
 }
