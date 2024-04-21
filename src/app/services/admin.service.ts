@@ -8,6 +8,7 @@ import { RoleMapping } from '../model_class/roleMapping';
 import { Payroll } from '../model_class/payroll';
 import { HttpStatusClass } from '../model_class/httpStatusClass';
 import { Logindetails } from '../model_class/loginDetails';
+import { LeaveAssign } from '../model_class/leaveAssign';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,7 @@ export class AdminService {
   private payrollURL = 'http://localhost:8080/payroll';
   private leaveTypeURL = 'http://localhost:8080/leavePolicy';
   private leaveAppliedURL = 'http://localhost:8080/leaveApplied';
+  private empHasLeaveURL = 'http://localhost:8080/employeeHasLeave';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -279,6 +281,46 @@ export class AdminService {
         return throwError(error);
       })
     );
+  }
+
+  assignLeaveForEmployee(empId:number,leaveAssign:any): Observable<any>{
+    console.log(empId,leaveAssign);
+    return this.httpClient.post(`${this.empHasLeaveURL}/${empId}`, leaveAssign).pipe(
+      tap((response) => {
+        console.log('Add Leave For Employee Response:', response);
+      }),
+      catchError((error) => {
+        console.error('Error adding Leave For Employee:', error);
+        console.log('Error Response Body:', error.error);
+        throw error;
+      })
+    );
+  }
+
+  getAllEmployeesHasLeave(): Observable<HttpStatusClass> {
+    console.log('Fetching All employees role & salary...');
+
+    return this.httpClient.get<HttpStatusClass>(`${this.empHasLeaveURL}`).pipe(
+      catchError((error: any) => {
+        console.error('API request failed:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  updateDepartment(departmentId:number, updatedDepartment: string): Observable<any>{
+
+    const departmentData = {
+      name:updatedDepartment
+    }
+
+    return this.httpClient.put<HttpStatusClass>(`${this.departmentURL}/${departmentId}`,departmentData).pipe(
+      catchError((error: any) => {
+        console.error('API request failed:', error);
+        return throwError(error);
+      })
+    );
+
   }
 
 }

@@ -28,6 +28,8 @@ import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MDBBootstrapModule } from 'angular-bootstrap-md'; // Assuming mdbCollapse is part of MDBBootstrapModule
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
+import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 
 
 
@@ -60,8 +62,9 @@ import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
     MdbModalModule,
     MdbTabsModule,
     MdbFormsModule,
-    MDBBootstrapModule.forRoot() // Import the module that declares mdbCollapse
-
+    MdbDropdownModule,
+    MdbRippleModule,
+    MDBBootstrapModule.forRoot()
   ],
   providers: [
     provideAnimationsAsync()

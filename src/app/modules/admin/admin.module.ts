@@ -33,6 +33,7 @@ import { ApprovedLeavesComponent } from './leaveapplied/approved-leaves/approved
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
+import { UpdateDepartmentComponent } from './department/update-department/update-department.component';
 
 
 
@@ -51,7 +52,8 @@ import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
     RejectedLeavesComponent,
     RequestedLeavesComponent,
     ApprovedLeavesComponent,
-    AddEmployeeComponent
+    AddEmployeeComponent,
+    UpdateDepartmentComponent
   ],
   imports: [
     CommonModule,
