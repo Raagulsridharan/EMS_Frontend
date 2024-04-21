@@ -6,6 +6,8 @@ import { MatSort } from '@angular/material/sort';
 import { Designation } from '../../../model_class/designation';
 import { MatTableDataSource } from '@angular/material/table';
 import { MdbCollapseDirective } from 'mdb-angular-ui-kit/collapse';
+import { MdbModalRef, MdbModalService  } from 'mdb-angular-ui-kit/modal';
+import { UpdateDesignationComponent } from './update-designation/update-designation.component';
 
 
 @Component({
@@ -14,12 +16,15 @@ import { MdbCollapseDirective } from 'mdb-angular-ui-kit/collapse';
   styleUrl: './designation.component.scss'
 })
 export class DesignationComponent implements OnInit, AfterViewInit{
-
   newDesignationName: string = '';
   salary_package: string = '';
   formData!: FormGroup;
 
-  constructor(private adminService: AdminService, private formBuilder: FormBuilder) { }
+  constructor(
+    private modalService: MdbModalService,
+    private adminService: AdminService, 
+    private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit() {
     this.formData = this.formBuilder.group({
@@ -78,5 +83,13 @@ export class DesignationComponent implements OnInit, AfterViewInit{
    const filterValue = (event.target as HTMLInputElement).value;
    this.dataSource.filter = filterValue.trim().toLowerCase();
  }
+
+ openUpdateModal(element: Designation) {
+    console.log(element)
+    const modalRef: MdbModalRef<UpdateDesignationComponent> = this.modalService.open(UpdateDesignationComponent);
+    modalRef.component.designationId = element.id;
+    modalRef.component.designationName = element.role;
+    modalRef.component.salaryPackage = element.salary_package;
+  }
 
 }

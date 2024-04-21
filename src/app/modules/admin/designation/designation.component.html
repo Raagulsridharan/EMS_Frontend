@@ -19,47 +19,10 @@
     </mdb-form-control>
     <br>
     <button type="submit" class="btn btn-outline-primary" mdbRipple rippleColor="dark">Add</button>    
-    
-    <!-- <mat-form-field>
-      <input matInput placeholder="Enter Designation" formControlName="newDesignationName" />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Enter Salary Package" formControlName="salary_package" />
-    </mat-form-field> 
-    <button mat-button type="submit">Add</button> -->
   </form>
 </div>
 
 </div>
-<!-- 
-<mat-accordion>
-  <mat-expansion-panel #panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Add Designation & Salary Package Here...!</mat-panel-title
-      >
-    </mat-expansion-panel-header>
-
-    <form [formGroup]="formData" (submit)="addDesignation()">
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="Enter Designation"
-          formControlName="newDesignationName"
-        />
-      </mat-form-field>
-      <br />
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="Enter Salary Package"
-          formControlName="salary_package"
-        />
-      </mat-form-field>
-      <button mat-button type="submit">Add</button>
-    </form>
-  </mat-expansion-panel>
-</mat-accordion> -->
 <div class="mat-elevation-z8 table">
   <div class="filter">
     <input mdbInput
@@ -90,7 +53,11 @@
     <!-- Action Name Column -->
     <ng-container matColumnDef="Action">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
-      <td mat-cell *matCellDef="let element"></td>
+      <td mat-cell *matCellDef="let element">
+        <button class="btn btn-primary" (click)="openUpdateModal(element)">
+          <i class="fas fa-edit"></i> Update
+        </button>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

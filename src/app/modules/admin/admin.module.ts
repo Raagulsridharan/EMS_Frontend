@@ -34,6 +34,7 @@ import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { UpdateDepartmentComponent } from './department/update-department/update-department.component';
+import { UpdateDesignationComponent } from './designation/update-designation/update-designation.component';
 
 
 
@@ -53,7 +54,8 @@ import { UpdateDepartmentComponent } from './department/update-department/update
     RequestedLeavesComponent,
     ApprovedLeavesComponent,
     AddEmployeeComponent,
-    UpdateDepartmentComponent
+    UpdateDepartmentComponent,
+    UpdateDesignationComponent
   ],
   imports: [
     CommonModule,

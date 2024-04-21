@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Update Designation & SalaryPackage</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formData">
+      <div class="mb-3">
+        <p>Designation ID: {{ designationId }}</p>
+        <label for="designation" class="form-label">Role : </label>
+        <input
+          type="text"
+          class="form-control"
+          id="designation"
+          name="designation"
+          formControlName="updateDesignation"
+          [value]="defaultRole" (input)="onInput1($event)"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="salaryPackage" class="form-label">Salary Package : </label>
+        <input
+          type="text"
+          class="form-control"
+          id="salaryPackage"
+          name="salaryPackage"
+          formControlName="updateSalaryPackage"
+          [value]="defualtPackage" (input)="onInput2($event)"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalRef.close()">
+      Close
+    </button>
+    <button type="button" class="btn btn-primary" (click)="updateDesignation()">
+      Save Changes
+    </button>
+  </div>
+  

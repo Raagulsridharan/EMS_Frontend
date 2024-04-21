@@ -308,13 +308,29 @@ export class AdminService {
     );
   }
 
-  updateDepartment(departmentId:number, updatedDepartment: string): Observable<any>{
+  updateDepartment(departmentId:number, updatedDepartment: string): Observable<HttpStatusClass>{
 
     const departmentData = {
       name:updatedDepartment
     }
 
     return this.httpClient.put<HttpStatusClass>(`${this.departmentURL}/${departmentId}`,departmentData).pipe(
+      catchError((error: any) => {
+        console.error('API request failed:', error);
+        return throwError(error);
+      })
+    );
+
+  }
+
+  updateDesignation(designationId:number, updatedDesignation: string, salaryPackage:string): Observable<HttpStatusClass>{
+
+    const designationData = {
+      role: updatedDesignation,
+      salary_package: salaryPackage,
+    }
+
+    return this.httpClient.put<HttpStatusClass>(`${this.designationURL}/${designationId}`,designationData).pipe(
       catchError((error: any) => {
         console.error('API request failed:', error);
         return throwError(error);
