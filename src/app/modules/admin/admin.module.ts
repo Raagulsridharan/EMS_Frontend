@@ -38,6 +38,7 @@ import { UpdateDesignationComponent } from './designation/update-designation/upd
 import { UpdateEmployeeComponent } from './employee/update-employee/update-employee.component';
 import { UpdateLeaveAssignComponent } from './leaveassign/update-leave-assign/update-leave-assign.component';
 import { UpdateRoleMappingComponent } from './rolemapping/update-role-mapping/update-role-mapping.component';
+import { PaymentHistoryComponent } from './payroll/payment-history/payment-history.component';
 
 
 
@@ -61,7 +62,8 @@ import { UpdateRoleMappingComponent } from './rolemapping/update-role-mapping/up
     UpdateDesignationComponent,
     UpdateEmployeeComponent,
     UpdateLeaveAssignComponent,
-    UpdateRoleMappingComponent
+    UpdateRoleMappingComponent,
+    PaymentHistoryComponent
   ],
   imports: [
     CommonModule,

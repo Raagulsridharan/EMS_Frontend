@@ -439,4 +439,49 @@ export class AdminService {
       );
   }
 
+  makePayment(empId:string, month:string, description:string): Observable<any> {
+    const paymentData = { month, description };
+    console.log('Email Credential Data:', paymentData, empId);
+
+    return this.httpClient.post(`${this.payrollURL}/${empId}`, paymentData).pipe(
+      tap((response) => {
+        console.log('Payment done...', response);
+      }),
+      catchError((error) => {
+        console.error('Error in payment sending:', error);
+        console.log('Error Response Body:', error.error);
+        throw error;
+      })
+    );
+  }
+
+  getEmployeesPayroll(empId:any): Observable<HttpStatusClass> {
+    console.log('Fetching employees salary details...');
+
+    return this.httpClient.get<HttpStatusClass>(`${this.payrollURL}/${empId}`).pipe(
+      catchError((error: any) => {
+        console.error('API request failed:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  exportPDF(empId: any): void {
+    console.log('Exporting PDF...');
+    this.httpClient.get(`${this.payrollURL}/exportPDF/${empId}`, { responseType: 'blob' }).subscribe(
+      (response: Blob) => {
+        const blob = new Blob([response], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `payslip_${empId}.pdf`;
+        link.click();
+      },
+      (error: any) => {
+        console.error('Error exporting PDF:', error);
+        // Handle error if needed
+      }
+    );
+  }
+  
+
 }

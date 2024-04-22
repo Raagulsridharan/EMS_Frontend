@@ -14,6 +14,7 @@ import { LeaveassignComponent } from './leaveassign/leaveassign.component';
 import { PayrollComponent } from './payroll/payroll.component';
 import { LeaveappliedComponent } from './leaveapplied/leaveapplied.component';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
+import { PaymentHistoryComponent } from './payroll/payment-history/payment-history.component';
 
 
 
@@ -58,6 +59,10 @@ const routes: Routes = [
       {
         path: 'payroll',
         component: PayrollComponent
+      },
+      {
+        path: 'payroll/paymentHistory/:id',
+        component: PaymentHistoryComponent
       },
       {
         path: 'leaveapplied',

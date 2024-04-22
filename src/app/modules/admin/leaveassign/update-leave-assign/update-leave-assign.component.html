@@ -1,1 +1,28 @@
-<p>update-leave-assign works!</p>
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Change Department</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formData">
+      <div class="mb-3">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet assumenda aliquid autem excepturi quasi, recusandae nostrum quidem quis temporibus iusto expedita obcaecati nesciunt quas explicabo provident. Voluptatem consectetur libero ipsum?</p>
+      </div>
+      <div class="mb-3">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, ipsa?</p>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalRef.close()">
+      Close
+    </button>
+    <button type="button" class="btn btn-primary" >
+      Save Changes
+    </button>
+  </div>
+  
