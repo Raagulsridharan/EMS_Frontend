@@ -407,7 +407,7 @@ export class AdminService {
       );
   }
 
-  deleteEmployee(empId:number):Observable<any>{
+  deleteEmployee(empId: number): Observable<any> {
     return this.httpClient.delete(`${this.employeeURL}/${empId}`).pipe(
       catchError((error: any) => {
         console.error('API request failed:', error);
@@ -439,49 +439,107 @@ export class AdminService {
       );
   }
 
-  makePayment(empId:string, month:string, description:string): Observable<any> {
+  makePayment(
+    empId: string,
+    month: string,
+    description: string
+  ): Observable<any> {
     const paymentData = { month, description };
     console.log('Email Credential Data:', paymentData, empId);
 
-    return this.httpClient.post(`${this.payrollURL}/${empId}`, paymentData).pipe(
-      tap((response) => {
-        console.log('Payment done...', response);
-      }),
-      catchError((error) => {
-        console.error('Error in payment sending:', error);
-        console.log('Error Response Body:', error.error);
-        throw error;
-      })
-    );
+    return this.httpClient
+      .post(`${this.payrollURL}/${empId}`, paymentData)
+      .pipe(
+        tap((response) => {
+          console.log('Payment done...', response);
+        }),
+        catchError((error) => {
+          console.error('Error in payment sending:', error);
+          console.log('Error Response Body:', error.error);
+          throw error;
+        })
+      );
   }
 
-  getEmployeesPayroll(empId:any): Observable<HttpStatusClass> {
+  getEmployeesPayroll(empId: any): Observable<HttpStatusClass> {
     console.log('Fetching employees salary details...');
 
-    return this.httpClient.get<HttpStatusClass>(`${this.payrollURL}/${empId}`).pipe(
-      catchError((error: any) => {
-        console.error('API request failed:', error);
-        return throwError(error);
-      })
-    );
+    return this.httpClient
+      .get<HttpStatusClass>(`${this.payrollURL}/${empId}`)
+      .pipe(
+        catchError((error: any) => {
+          console.error('API request failed:', error);
+          return throwError(error);
+        })
+      );
   }
 
   exportPDF(empId: any): void {
     console.log('Exporting PDF...');
-    this.httpClient.get(`${this.payrollURL}/exportPDF/${empId}`, { responseType: 'blob' }).subscribe(
-      (response: Blob) => {
-        const blob = new Blob([response], { type: 'application/pdf' });
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = `payslip_${empId}.pdf`;
-        link.click();
-      },
-      (error: any) => {
-        console.error('Error exporting PDF:', error);
-        // Handle error if needed
-      }
-    );
+    this.httpClient
+      .get(`${this.payrollURL}/exportPDF/${empId}`, { responseType: 'blob' })
+      .subscribe(
+        (response: Blob) => {
+          const blob = new Blob([response], { type: 'application/pdf' });
+          const link = document.createElement('a');
+          link.href = window.URL.createObjectURL(blob);
+          link.download = `payslip_${empId}.pdf`;
+          link.click();
+        },
+        (error: any) => {
+          console.error('Error exporting PDF:', error);
+          // Handle error if needed
+        }
+      );
   }
-  
 
+  getAllApprovedLeaves(): Observable<HttpStatusClass> {
+    return this.httpClient
+      .get<HttpStatusClass>(`${this.leaveAppliedURL}/getAllApprovedLeaves`)
+      .pipe(
+        catchError((error: any) => {
+          console.error('API request failed:', error);
+          return throwError(error);
+        })
+      );
+  }
+
+  getAllRequestedLeaves(): Observable<HttpStatusClass> {
+    return this.httpClient
+      .get<HttpStatusClass>(`${this.leaveAppliedURL}/getAllRequestedLeaves`)
+      .pipe(
+        catchError((error: any) => {
+          console.error('API request failed:', error);
+          return throwError(error);
+        })
+      );
+  }
+  getAllRejectedLeaves(): Observable<HttpStatusClass> {
+    return this.httpClient
+      .get<HttpStatusClass>(`${this.leaveAppliedURL}/getAllRejectedLeaves`)
+      .pipe(
+        catchError((error: any) => {
+          console.error('API request failed:', error);
+          return throwError(error);
+        })
+      );
+  }
+
+  updateLeaveStatus(id:number, empId:number, leaveType:number, status:string): Observable<any>{
+    const leaveData = {
+      id,
+      empId,
+      leaveType,
+      status
+    };
+    console.log(leaveData);
+    return this.httpClient
+      .put<any>(`${this.leaveAppliedURL}`, leaveData)
+      .pipe(
+        catchError((error: any) => {
+          console.error('API request failed:', error);
+          return throwError(error);
+        })
+      );
+  }
 }

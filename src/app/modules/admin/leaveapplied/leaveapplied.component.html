@@ -1,1 +1,42 @@
-<h1>Leave Applied</h1>
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Leave Status</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formData">
+      <div class="mb-3">
+        <p>Employee ID: {{ empId }}</p>
+        <label for="statusSelected" class="form-label">Leave status</label>
+        <mdb-form-control>
+          <select
+            formControlName="statusSelected"
+            id="statusSelected"
+            class="form-control"
+          >
+            <option value="" disabled selected>Change Status</option>
+            <option
+              *ngFor="let status of statusOption"
+              [value]="status"
+              [disabled]="isStatusDisabled(status)"
+            >
+              {{ status }}
+            </option>
+          </select>
+        </mdb-form-control>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalRef.close()">
+      Close
+    </button>
+    <button type="button" class="btn btn-primary" (click)="updateLeaveStatus()">
+      Save Changes
+    </button>
+  </div>
+  

@@ -62,12 +62,28 @@
           <p>Payroll</p>
         </div>
       </mat-list-item>
-      <mat-list-item routerLink="leaveapplied" class="lists">
-        <div class="list-item">
+    <mat-list-item class="lists">
+      <div mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="list-item">
+        <mat-icon>more_vert</mat-icon>
+        <p>Leave Applied</p>
+      </div>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="approvedLeaves">
+          <mat-icon>recommend</mat-icon>
+          <span>Approved Leaves</span>
+        </button>
+        <button mat-menu-item routerLink="rejectedLeaves">
+          <mat-icon>block</mat-icon>
+          <span>Rejected Leaves</span>
+        </button>
+        <button mat-menu-item routerLink="requestedLeaves">
           <mat-icon>mark_unread_chat_alt</mat-icon>
-          <p>Leave Applied</p>
-        </div>
-      </mat-list-item>
+          <span>Requested Leaves</span>
+        </button>
+      </mat-menu>
+    </mat-list-item>
+      
+      
     </mat-nav-list>
   </mat-sidenav>
 

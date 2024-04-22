@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { SalaryComponent } from './salary/salary.component';
+import { LeaveApplyComponent } from './leave-apply/leave-apply.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -9,23 +12,35 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
+        path: 'salary',
+        component: SalaryComponent
       },
       {
-        path: 'home',
-        component: HomeComponent
+        path: 'leaveApply',
+        component: LeaveApplyComponent
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent
+      },
+      {
+        path: '', // Redirect empty path to HomeComponent
+        pathMatch: 'full',
+        redirectTo: 'home'
       }
     ]
-  }  
+  },
+  { 
+    path: '**', // Wildcard route for unmatched paths
+    redirectTo: 'home'
+  }
 ];
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-  ]
+  ],
+  exports: [RouterModule]
 })
 export class EmployeeRoutingModule { }

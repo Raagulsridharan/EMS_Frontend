@@ -1,0 +1,27 @@
+nav {
+    height: 10vh;
+    padding: 15px;
+    .logo {
+      font-size: 25px;
+      color: #fff;
+      font-family: system-ui;
+      border-bottom: 4px double;
+      padding-bottom: 4px;
+      width: 50px;
+      border-top: 4px double;
+      margin: 50px;
+      border-left: 4px double;
+      padding-left: 10px;
+      border-radius: 15px 0;
+      transition: color 0.3s;
+      &:hover {
+        cursor: pointer;
+        color: #0b0b0b;
+      }
+    }
+  }
+  
+  .navbar {
+    background-color: #f05e23;
+  }
+  

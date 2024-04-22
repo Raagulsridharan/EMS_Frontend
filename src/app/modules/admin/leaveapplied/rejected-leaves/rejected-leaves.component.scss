@@ -1,0 +1,66 @@
+.btns {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+    .signin {
+      padding: 8px 5px;
+      border: 1px solid #f05e23;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: 0.3s ease;
+      background-color: #f05e23;
+      color: #ffffff;
+      width: 40%;
+      margin-top: 10px;
+      cursor: pointer;
+      &:hover {
+        background-color: #ffffff;
+        color: #f05e23;
+        border: 1px solid #f05e23;
+      }
+    }
+  }
+  .filter {
+      display: flex;
+      justify-content: end;
+      padding: 30px 15px;
+      input {
+        padding: 7px 15px;
+        width: 280px;
+        margin-right: -40px;
+        border-left: 1px solid grey;
+        border-top: 1px solid grey;
+        border-right: 1px solid grey;
+        border-bottom: 2px solid rgb(253, 87, 50);
+        border-radius: 25px;
+        outline: none;
+        text-align: center;
+      }
+      i {
+        align-self: center;
+        margin-right: 65px;
+      }
+    }
+    i {
+      font-size: 20px;
+      background: linear-gradient(
+        90deg,
+        rgb(231, 68, 4) 31%,
+        rgb(224, 129, 6) 100%,
+        rgb(209, 245, 211) 100%
+      );
+      -webkit-background-clip: text;
+      color: transparent;
+      transition: {background: 0.3s ease;}
+    //   &:hover {
+    //     background: linear-gradient(
+    //       270deg,
+    //       rgb(1, 104, 34) 31%,
+    //     rgb(6, 224, 64) 100%,
+    //     rgb(209, 245, 211) 100%
+    //     );
+    //     -webkit-background-clip: text;
+    //     color: transparent;
+    //   }
+    }
+    

@@ -1,0 +1,91 @@
+<style>
+    .buttons {
+      display: flex;
+      gap: 10px;
+    }
+    .example-card {
+      width: 400px;
+      border-radius: 30px;
+      margin-top: 30px;
+    }
+  
+    mat-divider {
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+  
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .example-header-image {
+      margin-top: 10px;
+      background-image: url("https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg");
+      background-size: cover;
+    }
+  
+    .content {
+      margin: 15px;
+    }
+  
+    .header-btn {
+      background-color: #f05e23;
+      color: #fff;
+      padding: 8px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-bottom: 18px;
+    }
+  </style>
+  
+  <div class="profile-container">
+    <div class="outer-box">
+      <div class="left-section">
+        <!-- Left content goes here (80%) -->
+        <img
+          src="../../../../../assets/profile.svg"
+          alt="profile-images"
+          class="profile-images"
+        />
+      </div>
+      <div class="right-section">
+  
+        <h1>Welcome to profile</h1>
+
+        <div class="card example-card" >
+            <div class="card-header header">
+              <div class="example-header-image"></div>
+              <div class="btns">
+                <button class="header-btn" >Update</button>
+                <button class="header-btn" >Delete account</button>
+              </div>
+            </div>
+            <hr>
+            <div class="card-body content">
+              <h5 class="card-subtitle">Name</h5>
+              <h4 class="card-title"></h4>
+            </div>
+            <hr>
+            <div class="card-body content">
+              <h5 class="card-subtitle">Email</h5>
+              <h4 class="card-title"></h4>
+            </div>
+            <hr>
+            <div class="card-body content">
+              <h5 class="card-subtitle">Address</h5>
+              <h4 class="card-title"></h4>
+            </div>
+            <hr>
+            <div class="card-body content">
+              <h5 class="card-subtitle">Phone Number</h5>
+              <h4 class="card-title"></h4>
+            </div>
+            <hr>
+          </div>
+          
+        
+      </div>
+    </div>
+  </div>

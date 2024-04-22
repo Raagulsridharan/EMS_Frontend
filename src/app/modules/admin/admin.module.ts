@@ -12,6 +12,7 @@ import { MatButtonModule} from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'; 
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
@@ -76,6 +77,7 @@ import { PaymentHistoryComponent } from './payroll/payment-history/payment-histo
     MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
+    MatMenuModule,
     FormsModule,
     ReactiveFormsModule,
     MdbFormsModule,

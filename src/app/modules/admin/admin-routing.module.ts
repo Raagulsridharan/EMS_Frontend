@@ -15,6 +15,9 @@ import { PayrollComponent } from './payroll/payroll.component';
 import { LeaveappliedComponent } from './leaveapplied/leaveapplied.component';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { PaymentHistoryComponent } from './payroll/payment-history/payment-history.component';
+import { ApprovedLeavesComponent } from './leaveapplied/approved-leaves/approved-leaves.component';
+import { RejectedLeavesComponent } from './leaveapplied/rejected-leaves/rejected-leaves.component';
+import { RequestedLeavesComponent } from './leaveapplied/requested-leaves/requested-leaves.component';
 
 
 
@@ -67,6 +70,18 @@ const routes: Routes = [
       {
         path: 'leaveapplied',
         component: LeaveappliedComponent
+      },
+      {
+        path: 'approvedLeaves',
+        component: ApprovedLeavesComponent
+      },
+      {
+        path: 'rejectedLeaves',
+        component: RejectedLeavesComponent
+      },
+      {
+        path: 'requestedLeaves',
+        component: RequestedLeavesComponent
       }
     ]
   }  
