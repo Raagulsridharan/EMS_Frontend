@@ -9,6 +9,8 @@ import { Employee } from '../../../model_class/employee';
 import { ActivatedRoute } from '@angular/router';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { UpdateEmployeeComponent } from './update-employee/update-employee.component';
+import { DeleteEmployeeComponent } from './delete-employee/delete-employee.component';
+import { ViewEmployeeComponent } from './view-employee/view-employee.component';
 
 @Component({
   selector: 'app-employee',
@@ -57,7 +59,6 @@ export class EmployeeComponent {
     'gender',
     'mobile',
     'email',
-    'address',
     'department',
     'Action',
   ];
@@ -92,16 +93,35 @@ export class EmployeeComponent {
     modalRef.component.address = element.address;
   }
 
-  deleteEmployee(empId: number) {
-    this.adminService.deleteEmployee(empId).subscribe(
-      (response) => {
-        console.log('Employee Deleted successfully:' + response);
-        this.ngAfterViewInit()
-      },
-      (error) => {
-        alert('Error in deleting employee...!');
-        console.error('Error deleting employee:', error);
-      }
-    );
+  openDeleteModal(element: any) {
+    console.log(element);
+    const modalRef: MdbModalRef<DeleteEmployeeComponent> = this.modalService.open(DeleteEmployeeComponent, {
+      modalClass: 'modal-dialog-centered modal-sm',
+      animation: true,
+      
+    })
+    modalRef.component.empId = element.id;
+    modalRef.component.empName = element.emp_name;
+    modalRef.component.deptName = element.department;
+    modalRef.component.mobille = element.mobile;
+    modalRef.component.address = element.address;
   }
+
+  openViewModal(element: any) {
+    console.log(element);
+    const modalRef: MdbModalRef<ViewEmployeeComponent> = this.modalService.open(ViewEmployeeComponent, {
+      modalClass: 'modal-dialog-centered',
+      animation: true,
+      
+    })
+    modalRef.component.empId = element.id;
+    modalRef.component.empName = element.emp_name;
+    modalRef.component.deptName = element.department;
+    modalRef.component.mobile = element.mobile;
+    modalRef.component.email = element.email;
+    modalRef.component.birthday = element.birthday;
+    modalRef.component.gender = element.gender;
+    modalRef.component.address = element.address;
+  }
+
 }

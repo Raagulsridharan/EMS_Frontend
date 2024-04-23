@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="exampleModalLabel">Employee Profile</h3>
+    <button
+      type="button"
+      class="btn-close"
+      data-mdb-dismiss="modal"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <table class="table">
+      <tr>
+        <td><strong>Employee ID</strong></td>
+        <td>{{ empId }}</td>
+      </tr>
+      <tr>
+        <td><strong>Employee Name</strong></td>
+        <td>{{ empName }}</td>
+      </tr>
+      <tr>
+        <td><strong>Gender</strong></td>
+        <td>{{ gender }}</td>
+      </tr>
+      <tr>
+        <td><strong>Date Of Birth</strong></td>
+        <td>{{ birthday }}</td>
+      </tr>
+      <tr>
+        <td><strong>Department</strong></td>
+        <td>{{ deptName }}</td>
+      </tr>
+      <tr>
+        <td><strong>Email</strong></td>
+        <td>{{ email }}</td>
+      </tr>
+      <tr>
+        <td><strong>Mobile</strong></td>
+        <td>{{ mobile }}</td>
+      </tr>
+      <tr>
+        <td><strong>Address</strong></td>
+        <td>{{ address }}</td>
+      </tr>
+    </table>
+  </div>
+  
+  <!-- <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal" (click)="modalRef.close()">
+      close
+    </button>
+  </div> -->
+  
