@@ -15,15 +15,35 @@
     </div>
     <br>
     <!-- Dynamic rows for leave types and days -->
-    <div *ngFor="let leave of leaves; let i = index" class="row mb-3">
+    <div *ngFor="let leave of leaveTypes; let i = index" class="row mb-3">
       <!-- First Column -->
       <div class="col-md-6">
-        <label for="leaveId{{ i }}" class="form-label" formControlName="leaveId{{ i }}">{{ leave.leaveType }}</label>
+        <mdb-form-control>
+          <select
+            formControlName="leaveId{{ i }}"
+            id="leaveId{{ i }}"
+            class="form-control"
+          >
+            <option value="">Select Leave Type</option>
+            <option
+              *ngFor="let leaveType of leaveTypes"
+              [value]="leaveType.id"
+            >
+              {{ leaveType.leave_types }}
+            </option>
+          </select>
+        </mdb-form-control>
       </div>
       <!-- Second Column -->
       <div class="col-md-6">
         <mdb-form-control>
-          <input type="number" class="form-control" placeholder="Enter No Of Days" formControlName="updatedNoOfDays{{i}}">
+          <input
+            type="number"
+            formControlName="updatedNoOfDays{{ i }}"
+            id="updatedNoOfDays{{ i }}"
+            class="form-control"
+            placeholder="Enter No Of Days"
+          />
         </mdb-form-control>
       </div>
     </div>

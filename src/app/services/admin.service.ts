@@ -556,4 +556,20 @@ export class AdminService {
         })
       );
   }
+
+  updateLeaveForEmployee(empId: number, leaveAssign: any): Observable<any> {
+    console.log(empId, leaveAssign);
+    return this.httpClient
+      .put(`${this.empHasLeaveURL}/${empId}`, leaveAssign)
+      .pipe(
+        tap((response) => {
+          console.log('Update Leave For Employee Response:', response);
+        }),
+        catchError((error) => {
+          console.error('Error Updating Leave For Employee:', error);
+          console.log('Error Response Body:', error.error);
+          throw error;
+        })
+      );
+  }
 }

@@ -77,7 +77,7 @@ export class LeaveassignComponent implements OnInit {
 
   fetchAllLeaveTypes(): void {
     this.adminService.getAllLeaveType().subscribe(
-      (leaves) => {
+      (leaves:HttpStatusClass) => {
         this.leaveTypes = leaves.data || [];
         console.log(leaves);
         this.initLeaveTypeFormControls();
