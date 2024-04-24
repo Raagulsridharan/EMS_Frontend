@@ -171,11 +171,9 @@ export class LeaveassignComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openUpdateModal(element: EmployeeHasLeave) {
+  openUpdateModal(element: any) {
     console.log(element)
     const modalRef: MdbModalRef<UpdateLeaveAssignComponent> = this.modalService.open(UpdateLeaveAssignComponent);
-    // modalRef.component.designationId = element.role;
-    // modalRef.component.designationName = element.role;
-    // modalRef.component.salaryPackage = element.salary_package;
+    modalRef.component.empId = element.id;
   }
 }

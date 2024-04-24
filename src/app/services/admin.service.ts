@@ -525,16 +525,30 @@ export class AdminService {
       );
   }
 
-  updateLeaveStatus(id:number, empId:number, leaveType:number, status:string): Observable<any>{
+  updateLeaveStatus(
+    id: number,
+    empId: number,
+    leaveType: number,
+    status: string
+  ): Observable<any> {
     const leaveData = {
       id,
       empId,
       leaveType,
-      status
+      status,
     };
     console.log(leaveData);
+    return this.httpClient.put<any>(`${this.leaveAppliedURL}`, leaveData).pipe(
+      catchError((error: any) => {
+        console.error('API request failed:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  gettingEmployeeLeaves(empId: number): Observable<HttpStatusClass> {
     return this.httpClient
-      .put<any>(`${this.leaveAppliedURL}`, leaveData)
+      .get<HttpStatusClass>(`${this.empHasLeaveURL}/${empId}`)
       .pipe(
         catchError((error: any) => {
           console.error('API request failed:', error);
