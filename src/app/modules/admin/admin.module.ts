@@ -43,6 +43,7 @@ import { PaymentHistoryComponent } from './payroll/payment-history/payment-histo
 import { DeleteEmployeeComponent } from './employee/delete-employee/delete-employee.component';
 import { ViewEmployeeComponent } from './employee/view-employee/view-employee.component';
 import { MakePaymentComponent } from './payroll/make-payment/make-payment.component';
+import { ViewEmployeeLeavesComponent } from './leaveassign/view-employee-leaves/view-employee-leaves.component';
 
 
 
@@ -70,7 +71,8 @@ import { MakePaymentComponent } from './payroll/make-payment/make-payment.compon
     PaymentHistoryComponent,
     DeleteEmployeeComponent,
     ViewEmployeeComponent,
-    MakePaymentComponent
+    MakePaymentComponent,
+    ViewEmployeeLeavesComponent
   ],
   imports: [
     CommonModule,

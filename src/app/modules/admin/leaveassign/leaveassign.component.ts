@@ -12,6 +12,7 @@ import { EmployeeHasLeave } from '../../../model_class/employeeHasLeave';
 import { HttpStatusClass } from '../../../model_class/httpStatusClass';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { UpdateLeaveAssignComponent } from './update-leave-assign/update-leave-assign.component';
+import { ViewEmployeeLeavesComponent } from './view-employee-leaves/view-employee-leaves.component';
 
 @Component({
   selector: 'app-leaveassign',
@@ -174,6 +175,16 @@ export class LeaveassignComponent implements OnInit {
   openUpdateModal(element: any) {
     console.log(element)
     const modalRef: MdbModalRef<UpdateLeaveAssignComponent> = this.modalService.open(UpdateLeaveAssignComponent);
+    modalRef.component.empId = element.id;
+  }
+
+  openViewModal(element: any) {
+    console.log(element);
+    const modalRef: MdbModalRef<ViewEmployeeLeavesComponent> = this.modalService.open(ViewEmployeeLeavesComponent, {
+      modalClass: 'modal-dialog-centered',
+      animation: true,
+      
+    })
     modalRef.component.empId = element.id;
   }
 }

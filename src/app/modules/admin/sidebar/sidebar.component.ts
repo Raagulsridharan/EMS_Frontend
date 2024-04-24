@@ -8,5 +8,13 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent {
   showFiller = false;
+
+  constructor(
+    private router: Router
+  ) {}
+
+  logout():void{
+    this.router.navigate(['']);
+  }
   
 }
