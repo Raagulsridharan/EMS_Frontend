@@ -7,6 +7,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpStatusClass } from '../../../../model_class/httpStatusClass';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { MakePaymentComponent } from '../make-payment/make-payment.component';
 
 @Component({
   selector: 'app-payment-history',
@@ -19,6 +21,7 @@ export class PaymentHistoryComponent implements OnInit{
   empId!: string;
 
   constructor(
+    private modalService: MdbModalService,
     private adminService: AdminService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute
@@ -81,5 +84,12 @@ export class PaymentHistoryComponent implements OnInit{
  exportPDF(payrollId:number){
   this.adminService.exportPDF(payrollId);
  }
+
+ openUpdateModal(element: any) {
+  console.log(element);
+  const modalRef: MdbModalRef<MakePaymentComponent> = this.modalService.open(MakePaymentComponent);
+  modalRef.component.empId = element.empId;
+  modalRef.component.payrollId = element.id;
+}
 
 }

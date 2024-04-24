@@ -572,4 +572,22 @@ export class AdminService {
         })
       );
   }
+
+  updateEmployeesPayroll(empId: any, payrollId:number, description:string): Observable<HttpStatusClass> {
+    console.log('updating employees payroll...');
+
+    const payrollData = {
+      id: payrollId,
+      description: description
+    }
+
+    return this.httpClient
+      .put<HttpStatusClass>(`${this.payrollURL}/${empId}`,payrollData)
+      .pipe(
+        catchError((error: any) => {
+          console.error('API request failed:', error);
+          return throwError(error);
+        })
+      );
+  }
 }

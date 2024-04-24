@@ -42,6 +42,7 @@ import { UpdateRoleMappingComponent } from './rolemapping/update-role-mapping/up
 import { PaymentHistoryComponent } from './payroll/payment-history/payment-history.component';
 import { DeleteEmployeeComponent } from './employee/delete-employee/delete-employee.component';
 import { ViewEmployeeComponent } from './employee/view-employee/view-employee.component';
+import { MakePaymentComponent } from './payroll/make-payment/make-payment.component';
 
 
 
@@ -68,7 +69,8 @@ import { ViewEmployeeComponent } from './employee/view-employee/view-employee.co
     UpdateRoleMappingComponent,
     PaymentHistoryComponent,
     DeleteEmployeeComponent,
-    ViewEmployeeComponent
+    ViewEmployeeComponent,
+    MakePaymentComponent
   ],
   imports: [
     CommonModule,

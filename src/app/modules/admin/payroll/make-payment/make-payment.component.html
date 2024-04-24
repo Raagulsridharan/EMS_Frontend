@@ -1,0 +1,35 @@
+<div class="modal-header">
+  <h3 class="modal-title" id="exampleModalLabel">Update Payroll</h3>
+  <button
+    type="button"
+    class="btn-close"
+    data-mdb-dismiss="modal"
+    aria-label="Close"
+    (click)="modalRef.close()"
+  ></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="formData">
+    <mdb-form-control>
+      <div class="mb-3">
+        <label for="month" class="form-label">Description : </label>
+        <input
+          type="text"
+          class="form-control"
+          id="description"
+          name="description"
+          formControlName="description"
+        />
+      </div>
+    </mdb-form-control>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="updateEmployeesPayroll()"
+  >
+    Make Payment
+  </button>
+</div>
