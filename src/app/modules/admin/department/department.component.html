@@ -6,32 +6,50 @@
     [attr.aria-expanded]="!collapse.collapsed"
     aria-controls="collapseExample"
   >
-  <i class="fas fa-plus"></i>Add Departments
+    <i class="fas fa-plus"></i>Add Departments
   </button>
   <!--Collapsed content-->
   <div class="mt-3" id="collapseExample" mdbCollapse #collapse="mdbCollapse">
     <form [formGroup]="formData" (submit)="addDepartment()">
-      <mdb-form-control>
+      <div class="form-group">
         <input
-          mdbInput
           type="text"
           formControlName="newDepartmentName"
-          id="form1"
-          class="form-control"
+          id="newDepartmentName"
+          class="form-control form-control-sm"
           placeholder="Enter Department"
+          required
+          [class.is-invalid]="
+            newDepartmentName.invalid &&
+            (newDepartmentName.dirty || newDepartmentName.touched)
+          "
         />
-        <!-- <label mdbLabel class="form-label" for="form1">Enter Designation</label> -->
-      </mdb-form-control>
+        <div
+          *ngIf="
+            newDepartmentName.invalid &&
+            (newDepartmentName.dirty || newDepartmentName.touched)
+          "
+          class="invalid-feedback"
+          id="form-validation"
+        >
+          <div
+            *ngIf="newDepartmentName.errors?.['required']"
+            class="warning-message"
+          >
+            Please provide a newDepartmentName
+          </div>
+        </div>
+      </div>
       <br />
       <button
-      type="submit"
-      class="btn btn-outline-primary"
-      mdbRipple
-      rippleColor="dark"
-      [disabled]="!formData.valid || formData.pristine"
-    >
-      Add
-    </button>
+        type="submit"
+        class="btn btn-outline-primary"
+        mdbRipple
+        rippleColor="dark"
+        [disabled]="!formData.valid || formData.pristine"
+      >
+        Add
+      </button>
     </form>
   </div>
 </div>

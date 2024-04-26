@@ -132,8 +132,7 @@ export class DesignationComponent implements OnInit, AfterViewInit {
 
   openUpdateModal(element: Designation) {
     console.log(element);
-    const modalRef: MdbModalRef<UpdateDesignationComponent> =
-      this.modalService.open(UpdateDesignationComponent);
+    const modalRef: MdbModalRef<UpdateDesignationComponent> = this.modalService.open(UpdateDesignationComponent);
     modalRef.component.designationId = element.id;
     modalRef.component.designationName = element.role;
     modalRef.component.salaryPackage = element.salary_package;

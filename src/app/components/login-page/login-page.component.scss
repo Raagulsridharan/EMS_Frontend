@@ -71,23 +71,6 @@ $box_shadow:lightgrey;
             border: 1px solid #f05e23;
           }
         }
-        .forgot {
-          padding: 8px 5px;
-          border: 1px solid #f05e23;
-          border-radius: 5px;
-          font-size: 16px;
-          transition: 0.3s ease;
-          background-color: #ffffff;
-          color: #f05e23;
-          width: 40%;
-          margin-top: 15px;
-          cursor: pointer;
-          &:hover {
-            background-color: #f05e23;
-            color: #ffffff;
-            border: 1px solid #f05e23;
-          }
-        }
       }
     }
     p {

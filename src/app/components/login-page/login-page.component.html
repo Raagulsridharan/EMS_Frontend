@@ -12,69 +12,60 @@
       <mdb-tab title="Admin">
         <form [formGroup]="loginForm" (submit)="submitForm()">
           <!-- Email input -->
-          <mdb-form-control class="mb-4">
-            <label mdbLabel class="form-label" for="email"
-              >Enter Your Email</label
-            >
+          <div class="form-group mb-4">
+            <label class="form-label" for="email">Enter Your Email</label>
             <input
-              mdbInput
               type="email"
               id="email"
               placeholder="Email"
               formControlName="email"
-              class="form-control"
-              [ngClass]="{
-                'is-invalid':
-                  formControls.email.invalid &&
-                  (formControls.email.dirty || formControls.email.touched)
-              }"
+              class="form-control form-control-sm"
+              required
+              [class.is-invalid]="
+                email.invalid && (email.dirty || email.touched)
+              "
             />
             <div
-              *ngIf="
-                formControls.email.invalid &&
-                (formControls.email.dirty || formControls.email.touched)
-              "
+              *ngIf="email.invalid && (email.dirty || email.touched)"
               class="invalid-feedback"
+              id="form-validation"
             >
-              <div *ngIf="formControls.email.errors.required">
+              <div *ngIf="email.errors?.['required']" class="warning-message">
                 Email is required.
               </div>
-              <div *ngIf="formControls.email.errors.email">
+              <div *ngIf="email.errors?.['valid']" class="warning-message">
                 Please enter a valid email.
               </div>
             </div>
-          </mdb-form-control>
+          </div>
 
           <!-- Password input -->
-          <mdb-form-control class="mb-4">
-            <label mdbLabel class="form-label" for="loginPassword"
-              >Enter Password</label
-            >
+          <div class="form-group mb-4">
+            <label class="form-label" for="loginPassword">Enter Password</label>
             <input
-              mdbInput
               type="{{ hidePassword ? 'password' : 'text' }}"
               id="password"
               placeholder="Password"
               formControlName="password"
-              class="form-control"
-              [ngClass]="{
-                'is-invalid':
-                  formControls.password.invalid &&
-                  (formControls.password.dirty || formControls.password.touched)
-              }"
+              class="form-control form-control-sm"
+              required
+              [class.is-invalid]="
+                password.invalid && (password.dirty || password.touched)
+              "
             />
             <div
-              *ngIf="
-                formControls.password.invalid &&
-                (formControls.password.dirty || formControls.password.touched)
-              "
+              *ngIf="password.invalid && (password.dirty || password.touched)"
               class="invalid-feedback"
+              id="form-validation"
             >
-              <div *ngIf="formControls.password.errors.required">
-                Password is required.
+              <div
+                *ngIf="password.errors?.['required']"
+                class="warning-message"
+              >
+                Email is required.
               </div>
             </div>
-          </mdb-form-control>
+          </div>
 
           <!-- Submit button -->
           <div class="btns">
@@ -91,34 +82,60 @@
       <mdb-tab title="Employee">
         <form [formGroup]="loginForm" (submit)="employeeLogin()">
           <!-- Email input -->
-          <mdb-form-control class="mb-4">
-            <label mdbLabel class="form-label" for="loginName"
-              >Enter Your Email</label
-            >
+          <div class="form-group mb-4">
+            <label class="form-label" for="email">Enter Your Email</label>
             <input
-              mdbInput
               type="email"
               id="email"
               placeholder="Email"
               formControlName="email"
-              class="form-control"
+              class="form-control form-control-sm"
+              required
+              [class.is-invalid]="
+                email.invalid && (email.dirty || email.touched)
+              "
             />
-          </mdb-form-control>
+            <div
+              *ngIf="email.invalid && (email.dirty || email.touched)"
+              class="invalid-feedback"
+              id="form-validation"
+            >
+              <div *ngIf="email.errors?.['required']" class="warning-message">
+                Email is required.
+              </div>
+              <div *ngIf="email.errors?.['valid']" class="warning-message">
+                Please enter a valid email.
+              </div>
+            </div>
+          </div>
 
           <!-- Password input -->
-          <mdb-form-control class="mb-4">
-            <label mdbLabel class="form-label" for="loginPassword"
-              >Enter Password</label
-            >
+          <div class="form-group mb-4">
+            <label class="form-label" for="loginPassword">Enter Password</label>
             <input
-              mdbInput
               type="{{ hidePassword ? 'password' : 'text' }}"
               id="password"
               placeholder="Password"
               formControlName="password"
-              class="form-control"
+              class="form-control form-control-sm"
+              required
+              [class.is-invalid]="
+                password.invalid && (password.dirty || password.touched)
+              "
             />
-          </mdb-form-control>
+            <div
+              *ngIf="password.invalid && (password.dirty || password.touched)"
+              class="invalid-feedback"
+              id="form-validation"
+            >
+              <div
+                *ngIf="password.errors?.['required']"
+                class="warning-message"
+              >
+                Email is required.
+              </div>
+            </div>
+          </div>
 
           <!-- Submit button -->
           <div class="btns">

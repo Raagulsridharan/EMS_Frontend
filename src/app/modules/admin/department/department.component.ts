@@ -1,6 +1,11 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AdminService } from '../../../services/admin.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Department } from '../../../model_class/department';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -12,24 +17,23 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { DepartmentService } from '../../../services/department.service';
 import { FilterOption } from '../../../model_class/filter-option';
 
-
 @Component({
   selector: 'app-department',
   templateUrl: './department.component.html',
   styleUrl: './department.component.scss',
 })
 export class DepartmentComponent implements OnInit {
-  newDepartmentName: string = '';
-  formData!: FormGroup;
+  formData: FormGroup = new FormGroup({
+    newDepartmentName: new FormControl(''),
+  });
 
   searchInput = new FormControl('');
   pageSizeOptions: number[] = [5, 10, 15, 20];
-  currentPage = 1;
-  pageSize = 5;
-  totalItems = 0;
+  currentPage: number;
+  pageSize: number;
+  totalItems: any;
 
-  filterOptions:FilterOption; 
-  
+  filterOptions: FilterOption;
 
   constructor(
     private modalService: MdbModalService,
@@ -40,34 +44,80 @@ export class DepartmentComponent implements OnInit {
 
   ngOnInit() {
     this.filterOptions = new FilterOption();
+    this.pageSize = this.filterOptions.pageSize;
+    this.currentPage = this.filterOptions.pageNo;
     this.loadData();
+
     this.formData = this.formBuilder.group({
-      newDepartmentName: ['', Validators.required]
+      newDepartmentName: ['', Validators.required],
     });
 
     this.searchInput.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
-      .subscribe(() => this.applyFilter()
-    );
+      .subscribe(() => this.applyFilter());
+
+    this.fetchTotalDepartment();
   }
 
   get formControls() {
     return this.formData.controls;
   }
 
-  addDepartment() {
-    const departmentName = this.formData.value.newDepartmentName;
-    this.adminService.addDepartment(departmentName).subscribe(
-      (response) => {
-        console.log('Department added successfully:', response);
-        this.formData.reset(); // Reset the form after successful addition
+  get newDepartmentName() {
+    return this.formData.get('newDepartmentName')!;
+  }
+
+  fetchTotalDepartment() {
+    this.adminService.getCountOfTotalDepartments().subscribe(
+      (total) => {
+        this.totalItems = total.data;
       },
       (error) => {
-        alert('Error in adding department...!');
-        console.error('Error adding department:', error);
-        this.formData.reset();
+        console.error('Error fetching total customers count:', error);
       }
     );
+  }
+
+  addDepartment() {
+    this.isCompetencyFormValid();
+    if (this.formData.valid) {
+      const departmentName = this.formData.value.newDepartmentName;
+      this.adminService.addDepartment(departmentName).subscribe(
+        (response) => {
+          console.log('Department added successfully:', response);
+          this.formData.reset();
+        },
+        (error) => {
+          alert('Error in adding department...!');
+          console.error('Error adding department:', error);
+          this.formData.reset();
+        }
+      );
+    }
+  }
+
+  private isCompetencyFormValid() {
+    if (this.formData.invalid) {
+      for (const control of Object.keys(this.formData.controls)) {
+        this.formData.controls[control].markAsTouched();
+      }
+      this.scrollToError();
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  scrollToValidationMessage(el: Element): void {
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  scrollToError(): void {
+    const firstElementWithError: HTMLElement = document.querySelector(
+      '.ng-invalid[formControlName]'
+    );
+    this.scrollToValidationMessage(firstElementWithError);
   }
 
   //----------------------------------------------------
@@ -79,57 +129,34 @@ export class DepartmentComponent implements OnInit {
   dataSource = new MatTableDataSource<Department>();
 
   loadData() {
-
-    this.departmentService
-      .filter(this.filterOptions)
-      .subscribe((response) => {
-        if (response.statusCode === 200) {
-          this.dataSource.data = response.data;
-          // this.totalItems = response.totalItems;
-        } else {
-          console.error('Error fetching departments:', response.description);
-        }
-      });
+    this.departmentService.filter(this.filterOptions).subscribe((response) => {
+      if (response.statusCode === 200) {
+        this.dataSource.data = response.data;
+        // this.totalItems = response.totalItems;
+      } else {
+        console.error('Error fetching departments:', response.description);
+      }
+    });
   }
 
   changePage(event: any) {
-    this.filterOptions.pageNo = event.pageIndex;
+    this.filterOptions.pageNo = event.pageIndex + 1;
     this.filterOptions.pageSize = event.pageSize;
 
     this.loadData();
   }
 
   applyFilter() {
-    this.currentPage = 0; // Reset to first page when filter changes
+    // this.currentPage = 0;
+    this.filterOptions.searchKey = this.searchInput.value;
     this.loadData();
   }
 
-  // ngAfterViewInit() {
-  //   // Fetch data asynchronously using the service
-  //   this.adminService
-  //     .getAllDepartments()
-  //     .subscribe((response: HttpStatusClass) => {
-  //       if (response.statusCode === 200) {
-  //         // Assign the data to the dataSource
-  //         console.log(response.data);
-  //         this.dataSource.data = response.data;
-
-  //         // Set up sorting and pagination
-  //         this.dataSource.paginator = this.paginator;
-  //         this.dataSource.sort = this.sort;
-  //       } else {
-  //         // Handle error case
-  //         console.error('Error fetching departments:', response.description);
-  //       }
-  //     });
-  // }
-
-
   openUpdateModal(element: Department) {
-    console.log(element)
-    const modalRef: MdbModalRef<UpdateDepartmentComponent> = this.modalService.open(UpdateDepartmentComponent);
+    console.log(element);
+    const modalRef: MdbModalRef<UpdateDepartmentComponent> =
+      this.modalService.open(UpdateDepartmentComponent);
     modalRef.component.departmentId = element.id;
     modalRef.component.departmentName = element.name;
   }
-  
 }
