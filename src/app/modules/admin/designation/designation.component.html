@@ -1,37 +1,100 @@
 <div class="coll-button">
   <button
-  class="btn btn-primary"
-  type="button"
-  (click)="collapse.toggle()"
-  [attr.aria-expanded]="!collapse.collapsed"
-  aria-controls="collapseExample">Add Designation and Salary package</button>
-<!--Collapsed content-->
-<div class="mt-3" id="collapseExample" mdbCollapse #collapse="mdbCollapse">
-  <form [formGroup]="formData" (submit)="addDesignation()">
-    <mdb-form-control>
-      <input mdbInput type="text" formControlName="newDesignationName" id="form1" class="form-control" placeholder="Enter Designation"/>
-      <!-- <label mdbLabel class="form-label" for="form1">Enter Designation</label> -->
-    </mdb-form-control>
-    <br>
-    <mdb-form-control>
-      <input mdbInput type="text" id="salary_package" class="form-control" formControlName="salary_package" placeholder="Enter Salary Package"/>
-      <!-- <label mdbLabel class="form-label" for="salary_package">Enter Salary Package</label> -->
-    </mdb-form-control>
-    <br>
-    <button type="submit" class="btn btn-outline-primary" mdbRipple rippleColor="dark">Add</button>    
-  </form>
-</div>
+    class="btn btn-primary"
+    type="button"
+    (click)="collapse.toggle()"
+    [attr.aria-expanded]="!collapse.collapsed"
+    aria-controls="collapseExample"
+  >
+    Add Designation and Salary package
+  </button>
+  <!--Collapsed content-->
+  <div class="mt-3" id="collapseExample" mdbCollapse #collapse="mdbCollapse">
+    <form [formGroup]="formData" (submit)="addDesignation()">
+      <div class="form-group">
+        <input
+          type="text"
+          id="newDesignationName"
+          class="form-control form-control-sm"
+          formControlName="newDesignationName"
+          placeholder="Enter Designation"
+          required
+          [class.is-invalid]="
+            newDesignationName.invalid &&
+            (newDesignationName.dirty || newDesignationName.touched)
+          "
+        />
+        <div
+          *ngIf="
+            newDesignationName.invalid &&
+            (newDesignationName.dirty || newDesignationName.touched)
+          "
+          class="invalid-feedback"
+          id="form-validation"
+        >
+          <div
+            *ngIf="newDesignationName.errors?.['required']"
+            class="warning-message"
+          >
+            Please provide a newDesignationName
+          </div>
+        </div>
+      </div>
+      <br />
 
+      <div class="form-group">
+        <input
+          type="text"
+          id="salary_package"
+          class="form-control form-control-sm"
+          formControlName="salary_package"
+          placeholder="Enter Salary Package"
+          required
+          [class.is-invalid]="
+            salary_package.invalid &&
+            (salary_package.dirty || salary_package.touched)
+          "
+        />
+
+        <div
+          *ngIf="
+            salary_package.invalid &&
+            (salary_package.dirty || salary_package.touched)
+          "
+          class="invalid-feedback"
+          id="form-validation"
+        >
+          <div
+            *ngIf="salary_package.errors?.['required']"
+            class="warning-message"
+          >
+            Please provide a salary_package
+          </div>
+        </div>
+      </div>
+      <br />
+      <button
+        type="submit"
+        class="btn btn-outline-primary"
+        mdbRipple
+        rippleColor="dark"
+      >
+        Add
+      </button>
+    </form>
+  </div>
 </div>
 <div class="mat-elevation-z8 table">
   <div class="filter">
-    <input mdbInput
-         type="text"
-         id="form1"
-         class="form-control"
-         (keyup)="applyFilter($event)"
-         placeholder="Search here..."
-         #input />
+    <input
+      mdbInput
+      type="text"
+      id="form1"
+      class="form-control"
+      (keyup)="applyFilter($event)"
+      placeholder="Search here..."
+      #input
+    />
     <i class="fa-solid fa-magnifying-glass"></i>
   </div>
   <table mat-table [dataSource]="dataSource" matSort>
@@ -68,5 +131,3 @@
     showFirstLastButtons
   ></mat-paginator>
 </div>
-
-

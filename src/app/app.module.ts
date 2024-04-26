@@ -30,6 +30,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md'; // Assuming mdbCollap
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
+import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 
 
 
@@ -44,9 +45,10 @@ import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    MatIconModule,
     RouterModule,
     HttpClientModule,
+    
+    MatIconModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
@@ -58,12 +60,14 @@ import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
     MatSortModule,
     MatTableModule,
     MatMenuModule,
+
     MdbCollapseModule,
     MdbModalModule,
     MdbTabsModule,
     MdbFormsModule,
     MdbDropdownModule,
     MdbRippleModule,
+    MdbValidationModule,
     MDBBootstrapModule.forRoot()
   ],
   providers: [

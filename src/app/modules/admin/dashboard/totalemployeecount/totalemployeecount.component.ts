@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../../services/admin.service';
+import { HttpStatusClass } from '../../../../model_class/httpStatusClass';
 
 @Component({
   selector: 'app-totalemployeecount',
@@ -8,7 +9,7 @@ import { AdminService } from '../../../../services/admin.service';
 })
 export class TotalemployeecountComponent implements OnInit {
   totalEmployeeCount!: number;
-  totalDepartmentCount!: number;
+  totalDepartmentCount!: any;
   totalLeaveType!: number;
   totalApprovedLeaves!: number;
   totalRajectedLeaves!: number;
@@ -42,7 +43,7 @@ export class TotalemployeecountComponent implements OnInit {
   fetchTotalDepartment() {
     this.adminService.getCountOfTotalDepartments().subscribe(
       (total) => {
-        this.totalDepartmentCount = total;
+        this.totalDepartmentCount = total.data;
         this.updateCards();
       },
       (error) => {

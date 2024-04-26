@@ -16,6 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'; 
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 
 import { DepartmentComponent } from './department/department.component';
 import { TotalemployeecountComponent } from './dashboard/totalemployeecount/totalemployeecount.component';
@@ -31,7 +32,7 @@ import { MatTableModule } from '@angular/material/table';
 import { RejectedLeavesComponent } from './leaveapplied/rejected-leaves/rejected-leaves.component';
 import { RequestedLeavesComponent } from './leaveapplied/requested-leaves/requested-leaves.component';
 import { ApprovedLeavesComponent } from './leaveapplied/approved-leaves/approved-leaves.component';
-import { AddEmployeeComponent } from './add-employee/add-employee.component';
+import { AddEmployeeComponent } from './employee/add-employee/add-employee.component';
 import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { UpdateDepartmentComponent } from './department/update-department/update-department.component';
@@ -93,7 +94,8 @@ import { ViewEmployeeLeavesComponent } from './leaveassign/view-employee-leaves/
     MatSortModule,
     MatTableModule,
     MdbCollapseModule,
-    MdbModalModule
+    MdbModalModule,
+    MdbValidationModule
   ]
 })
 export class AdminModule { }

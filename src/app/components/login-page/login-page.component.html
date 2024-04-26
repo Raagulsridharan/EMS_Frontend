@@ -8,24 +8,83 @@
   <div class="line"></div>
   <div class="login_form">
     <h1>Sign In As</h1>
-    <mdb-tabs [justified]="true" >
+    <mdb-tabs [justified]="true">
       <mdb-tab title="Admin">
         <form [formGroup]="loginForm" (submit)="submitForm()">
           <!-- Email input -->
           <mdb-form-control class="mb-4">
-            <label mdbLabel class="form-label" for="loginName">Enter Your Email</label>
-            <input mdbInput type="email" id="email" placeholder="Email" formControlName="email" class="form-control" />
+            <label mdbLabel class="form-label" for="email"
+              >Enter Your Email</label
+            >
+            <input
+              mdbInput
+              type="email"
+              id="email"
+              placeholder="Email"
+              formControlName="email"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  formControls.email.invalid &&
+                  (formControls.email.dirty || formControls.email.touched)
+              }"
+            />
+            <div
+              *ngIf="
+                formControls.email.invalid &&
+                (formControls.email.dirty || formControls.email.touched)
+              "
+              class="invalid-feedback"
+            >
+              <div *ngIf="formControls.email.errors.required">
+                Email is required.
+              </div>
+              <div *ngIf="formControls.email.errors.email">
+                Please enter a valid email.
+              </div>
+            </div>
           </mdb-form-control>
-    
+
           <!-- Password input -->
           <mdb-form-control class="mb-4">
-            <label mdbLabel class="form-label" for="loginPassword">Enter Password</label>
-            <input mdbInput type="{{ hidePassword ? 'password' : 'text' }}" id="password" placeholder="Password" formControlName="password" class="form-control" />
+            <label mdbLabel class="form-label" for="loginPassword"
+              >Enter Password</label
+            >
+            <input
+              mdbInput
+              type="{{ hidePassword ? 'password' : 'text' }}"
+              id="password"
+              placeholder="Password"
+              formControlName="password"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  formControls.password.invalid &&
+                  (formControls.password.dirty || formControls.password.touched)
+              }"
+            />
+            <div
+              *ngIf="
+                formControls.password.invalid &&
+                (formControls.password.dirty || formControls.password.touched)
+              "
+              class="invalid-feedback"
+            >
+              <div *ngIf="formControls.password.errors.required">
+                Password is required.
+              </div>
+            </div>
           </mdb-form-control>
-    
+
           <!-- Submit button -->
           <div class="btns">
-            <button mdbRipple type="submit" class="signin btn btn-primary btn-block mb-4">Sign in</button>
+            <button
+              mdbRipple
+              type="submit"
+              class="signin btn btn-primary btn-block mb-4"
+            >
+              Sign in
+            </button>
           </div>
         </form>
       </mdb-tab>
@@ -33,20 +92,44 @@
         <form [formGroup]="loginForm" (submit)="employeeLogin()">
           <!-- Email input -->
           <mdb-form-control class="mb-4">
-            <label mdbLabel class="form-label" for="loginName">Enter Your Email</label>
-            <input mdbInput type="email" id="email" placeholder="Email" formControlName="email" class="form-control" />
+            <label mdbLabel class="form-label" for="loginName"
+              >Enter Your Email</label
+            >
+            <input
+              mdbInput
+              type="email"
+              id="email"
+              placeholder="Email"
+              formControlName="email"
+              class="form-control"
+            />
           </mdb-form-control>
-    
+
           <!-- Password input -->
           <mdb-form-control class="mb-4">
-            <label mdbLabel class="form-label" for="loginPassword">Enter Password</label>
-            <input mdbInput type="{{ hidePassword ? 'password' : 'text' }}" id="password" placeholder="Password" formControlName="password" class="form-control" />
+            <label mdbLabel class="form-label" for="loginPassword"
+              >Enter Password</label
+            >
+            <input
+              mdbInput
+              type="{{ hidePassword ? 'password' : 'text' }}"
+              id="password"
+              placeholder="Password"
+              formControlName="password"
+              class="form-control"
+            />
           </mdb-form-control>
-    
+
           <!-- Submit button -->
           <div class="btns">
-            <button mdbRipple type="submit" class="signin btn btn-primary btn-block mb-4">Sign in</button>
-          </div>    
+            <button
+              mdbRipple
+              type="submit"
+              class="signin btn btn-primary btn-block mb-4"
+            >
+              Sign in
+            </button>
+          </div>
         </form>
       </mdb-tab>
     </mdb-tabs>

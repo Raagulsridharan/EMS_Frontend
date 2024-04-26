@@ -13,7 +13,7 @@ import { RolemappingComponent } from './rolemapping/rolemapping.component';
 import { LeaveassignComponent } from './leaveassign/leaveassign.component';
 import { PayrollComponent } from './payroll/payroll.component';
 import { LeaveappliedComponent } from './leaveapplied/leaveapplied.component';
-import { AddEmployeeComponent } from './add-employee/add-employee.component';
+import { AddEmployeeComponent } from './employee/add-employee/add-employee.component';
 import { PaymentHistoryComponent } from './payroll/payment-history/payment-history.component';
 import { ApprovedLeavesComponent } from './leaveapplied/approved-leaves/approved-leaves.component';
 import { RejectedLeavesComponent } from './leaveapplied/rejected-leaves/rejected-leaves.component';

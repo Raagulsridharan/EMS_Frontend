@@ -4,7 +4,7 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import { ActivationPageComponent } from './components/activation-page/activation-page.component';
 
 const routes: Routes = [
-  { path:'',
+  { path:'login',
     component: LoginPageComponent
   },
   { path: 'accountActivation/:id', 
@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: '**',  // Catch-all route for unknown paths, redirect to landing
-    redirectTo: '',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
 ];

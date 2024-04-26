@@ -10,6 +10,7 @@ import { Department } from '../../../../model_class/department';
 import { AdminService } from '../../../../services/admin.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { tick } from '@angular/core/testing';
 
 @Component({
   selector: 'app-update-department',
@@ -54,10 +55,11 @@ export class UpdateDepartmentComponent implements OnInit {
         (response) => {
           console.log('Department updated successfully:', response.data);
           this.formData.reset();
+          this.modalRef.close();
         },
         (error) => {
-          alert('Error in adding department...!');
-          console.error('Error adding department:', error);
+          alert('Error in updating department...!');
+          console.error('Error updating department:', error);
           this.formData.reset();
         }
       );

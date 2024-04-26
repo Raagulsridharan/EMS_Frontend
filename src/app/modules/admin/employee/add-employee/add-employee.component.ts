@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Department } from '../../../model_class/department';
-import { AdminService } from '../../../services/admin.service';
+import { Department } from '../../../../model_class/department';
+import { AdminService } from '../../../../services/admin.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -62,7 +62,11 @@ export class AddEmployeeComponent implements OnInit {
           const email:string = response.data.username;
           const password:string = response.data.password;
           const deptId:number = response.data.employee_login.department.id;
-          this.adminService.sentEmailForLoginCredential(email, password, deptId);
+          this.adminService.sentEmailForLoginCredential(email, password, deptId).subscribe(
+            (response)=>{
+              console.log(response);
+            }
+          );
           this.router.navigateByUrl('/admin/employee');
         },
         (error) => {

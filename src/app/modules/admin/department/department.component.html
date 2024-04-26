@@ -24,13 +24,14 @@
       </mdb-form-control>
       <br />
       <button
-        type="submit"
-        class="btn btn-outline-primary"
-        mdbRipple
-        rippleColor="dark"
-      >
-        Add
-      </button>
+      type="submit"
+      class="btn btn-outline-primary"
+      mdbRipple
+      rippleColor="dark"
+      [disabled]="!formData.valid || formData.pristine"
+    >
+      Add
+    </button>
     </form>
   </div>
 </div>
@@ -42,7 +43,7 @@
       type="text"
       id="form1"
       class="form-control"
-      (keyup)="applyFilter($event)"
+      [formControl]="searchInput"
       placeholder="Search here..."
       #input
     />
@@ -68,12 +69,14 @@
         </button>
       </td>
     </ng-container>
-
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
   <mat-paginator
-    [pageSizeOptions]="[5, 10, 20]"
+    [length]="totalItems"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageSize]="pageSize"
+    (page)="changePage($event)"
     showFirstLastButtons
   ></mat-paginator>
 </div>

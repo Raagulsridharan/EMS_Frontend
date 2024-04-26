@@ -35,9 +35,9 @@ export class AdminService {
     );
   }
 
-  getCountOfTotalDepartments(): Observable<number> {
+  getCountOfTotalDepartments(): Observable<HttpStatusClass> {
     return this.httpClient
-      .get<number>(`${this.departmentURL}/getDeptCount`)
+      .get<HttpStatusClass>(`${this.departmentURL}/count`)
       .pipe(
         catchError((error: any) => {
           console.error('API request failed:', error);
@@ -160,15 +160,11 @@ export class AdminService {
     );
   }
 
-  sentEmailForLoginCredential(
-    username: string,
-    password: string,
-    deptId: number
-  ): Observable<any> {
+  sentEmailForLoginCredential( username: string, password: string, deptId: number): Observable<any> {
     const loginData = { username, password, deptId };
     console.log('Email Credential Data:', loginData);
 
-    return this.httpClient.post(this.emailUrl, loginData).pipe(
+    return this.httpClient.post(`${this.emailUrl}`, loginData).pipe(
       tap((response) => {
         console.log('Email sent...', response);
       }),
@@ -346,6 +342,7 @@ export class AdminService {
     updatedDepartment: string
   ): Observable<HttpStatusClass> {
     const departmentData = {
+      id: departmentId,
       name: updatedDepartment,
     };
 

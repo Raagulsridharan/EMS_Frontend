@@ -41,6 +41,7 @@ export class LoginPageComponent {
   }
 
   submitForm() {
+    
     const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
 
