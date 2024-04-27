@@ -1,11 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AdminService } from '../../../services/admin.service';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Department } from '../../../model_class/department';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -142,7 +137,6 @@ export class DepartmentComponent implements OnInit {
   changePage(event: any) {
     this.filterOptions.pageNo = event.pageIndex + 1;
     this.filterOptions.pageSize = event.pageSize;
-
     this.loadData();
   }
 
@@ -154,8 +148,7 @@ export class DepartmentComponent implements OnInit {
 
   openUpdateModal(element: Department) {
     console.log(element);
-    const modalRef: MdbModalRef<UpdateDepartmentComponent> =
-      this.modalService.open(UpdateDepartmentComponent);
+    const modalRef: MdbModalRef<UpdateDepartmentComponent> = this.modalService.open(UpdateDepartmentComponent);
     modalRef.component.departmentId = element.id;
     modalRef.component.departmentName = element.name;
   }

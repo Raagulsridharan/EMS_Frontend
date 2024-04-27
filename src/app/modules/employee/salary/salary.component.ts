@@ -9,22 +9,4 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 
 export class SalaryComponent {
 
-  form: FormGroup = new FormGroup({
-    name: new FormControl(''),
-  });
-
-  constructor(private formBuilder: FormBuilder) {}
-
-  ngOnInit(): void {
-    this.form = this.formBuilder.group(
-      {
-        name: ['', Validators.required],
-      }
-    );
-  }
-
-  get name() {
-    return this.form.get('name')!;
-  }
-
 }

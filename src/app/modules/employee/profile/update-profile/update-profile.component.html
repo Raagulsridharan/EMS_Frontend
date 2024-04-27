@@ -1,0 +1,68 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Update Your Profile</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formData">
+      <div class="mb-3">
+        <label for="updateName" class="form-label">Name : </label>
+        <input
+          type="text"
+          class="form-control"
+          id="updateName"
+          name="updateName"
+          formControlName="updateName"
+          [value]="defaultName" (input)="onInput1($event)"
+          [readonly]="true"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="updateEmail" class="form-label">Eamil : </label>
+        <input
+          type="email"
+          class="form-control"
+          id="updateEmail"
+          name="updateEmail"
+          formControlName="updateEmail"
+          [value]="defaultEmail" (input)="onInput2($event)"
+          [readonly]="true"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="updateMobile" class="form-label">Mobile : </label>
+        <input
+          type="text"
+          class="form-control"
+          id="updateMobile"
+          name="updateMobile"
+          formControlName="updateMobile"
+          [value]="defaultMobile" (input)="onInput3($event)"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="updateAddress" class="form-label">Address : </label>
+        <input
+          type="text"
+          class="form-control"
+          id="updateAddress"
+          name="updateAddress"
+          formControlName="updateAddress"
+          [value]="defaultAddress" (input)="onInput4($event)"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalRef.close()">
+      Close
+    </button>
+    <button type="button" class="btn btn-primary" (click)="updateProfile()">
+      Save Changes
+    </button>
+  </div>
+  

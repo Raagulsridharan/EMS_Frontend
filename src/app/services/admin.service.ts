@@ -160,7 +160,11 @@ export class AdminService {
     );
   }
 
-  sentEmailForLoginCredential( username: string, password: string, deptId: number): Observable<any> {
+  sentEmailForLoginCredential(
+    username: string,
+    password: string,
+    deptId: number
+  ): Observable<any> {
     const loginData = { username, password, deptId };
     console.log('Email Credential Data:', loginData);
 
@@ -543,7 +547,7 @@ export class AdminService {
     );
   }
 
-  gettingEmployeeLeaves(empId: number): Observable<HttpStatusClass> {
+  gettingEmployeeLeaves(empId: any): Observable<HttpStatusClass> {
     return this.httpClient
       .get<HttpStatusClass>(`${this.empHasLeaveURL}/${empId}`)
       .pipe(
@@ -570,16 +574,20 @@ export class AdminService {
       );
   }
 
-  updateEmployeesPayroll(empId: any, payrollId:number, description:string): Observable<HttpStatusClass> {
+  updateEmployeesPayroll(
+    empId: any,
+    payrollId: number,
+    description: string
+  ): Observable<HttpStatusClass> {
     console.log('updating employees payroll...');
 
     const payrollData = {
       id: payrollId,
-      description: description
-    }
+      description: description,
+    };
 
     return this.httpClient
-      .put<HttpStatusClass>(`${this.payrollURL}/${empId}`,payrollData)
+      .put<HttpStatusClass>(`${this.payrollURL}/${empId}`, payrollData)
       .pipe(
         catchError((error: any) => {
           console.error('API request failed:', error);
@@ -587,4 +595,6 @@ export class AdminService {
         })
       );
   }
+
+  
 }

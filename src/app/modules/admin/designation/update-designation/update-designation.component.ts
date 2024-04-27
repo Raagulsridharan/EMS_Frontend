@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { AdminService } from '../../../../services/admin.service';
@@ -8,7 +8,7 @@ import { AdminService } from '../../../../services/admin.service';
   templateUrl: './update-designation.component.html',
   styleUrl: './update-designation.component.scss'
 })
-export class UpdateDesignationComponent {
+export class UpdateDesignationComponent implements OnInit{
 
   @Input() designationId!: number;
   @Input() designationName!: string;

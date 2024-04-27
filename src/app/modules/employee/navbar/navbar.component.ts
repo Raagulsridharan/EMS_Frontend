@@ -8,24 +8,14 @@ import { AuthService } from '../../../services/auth.service';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent implements OnInit{
-
-  empId!: string;
+export class NavbarComponent {
   
   constructor(
-    private authService: AuthService,
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) {}
-  
-  ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.empId = params['id'];
-    });
-  }
 
-  navigateToSalary(){
-    this.router.navigate(['/salary', this.empId]);
+  logout():void{
+    localStorage.clear();
+    this.router.navigate(['']);
   }
 }

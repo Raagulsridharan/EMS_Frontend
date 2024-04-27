@@ -1,34 +1,38 @@
-<div class="register-form">
-  <form [formGroup]="form">
-    <div class="form-group">
-      <input
-        type="text"
-        id="name"
-        class="form-control form-control-sm"
-        formControlName="name"
-        required
-        minlength="1"
-        maxlength="150"
-        placeholder="Type name"
-        [class.is-invalid]="name.invalid && (name.dirty || name.touched)"
-      />
-
-      <div
-        *ngIf="name.invalid && (name.dirty || name.touched)"
-        class="invalid-feedback"
-        id="form-validation"
-      >
-        <div *ngIf="name.errors?.['required']" class="warning-message">
-          Please provide a name for competency
+<div class="container">
+    <!-- <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <img src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp" class="card-img-top" alt="Wild Landscape"/>
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">
+              This is a wider card with supporting text below as a natural lead-in to additional
+              content. This content is a little bit longer.
+            </p>
+            <p class="card-text">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </p>
+          </div>
         </div>
-        <div *ngIf="name.errors?.['minlength']">
-          Name must have at least 1 character.
-        </div>
-        <div *ngIf="name.errors?.['maxlength']">
-          Name must have at most 150 characters.
+      </div>
+    </div> -->
+  
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">
+              This is a wider card with supporting text below as a natural lead-in to additional
+              content. This content is a little bit longer.
+            </p>
+            <p class="card-text">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </p>
+          </div>
+          <img src="https://mdbcdn.b-cdn.net/img/new/slides/042.webp" class="card-img-bottom" alt="Camera"/>
         </div>
       </div>
     </div>
-    
-  </form>
-</div>
+  </div>
+  

@@ -119,10 +119,9 @@
               formControlName="password"
               class="form-control form-control-sm"
               required
-              [class.is-invalid]="
-                password.invalid && (password.dirty || password.touched)
-              "
+              [class.is-invalid]="password.invalid && (password.dirty || password.touched)"
             />
+            
             <div
               *ngIf="password.invalid && (password.dirty || password.touched)"
               class="invalid-feedback"

@@ -122,8 +122,8 @@ export class LoginPageComponent {
         if (result.flag === 0) {
           this.router.navigate(['/accountActivation', result.empId]);
         } else if (result.flag === 1) {
-          localStorage.set
-          this.router.navigate(['/employee', result.empId]);
+          localStorage.setItem('employeeId', String(result.empId));
+          this.router.navigate(['/employee']);
         } else {
           console.log('else submitform');
         }
