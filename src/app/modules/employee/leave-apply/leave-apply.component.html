@@ -1,1 +1,28 @@
-<p>leave-apply works!</p>
+<mdb-tabs [fill]="true">
+  <mdb-tab title="Apply Leave">
+    <form [formGroup]="leaveForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="leaveType">Leave Type</label>
+          <select formControlName="leaveType" class="form-control" id="leaveType">
+            <option *ngFor="let type of leaveTypes" [value]="type.id">{{ type.leave_types }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="note">Reason</label>
+          <input type="text" formControlName="note" class="form-control" id="note" placeholder="Enter reason for leave">
+        </div>
+        <div class="form-group">
+          <label for="fromDate">From Date</label>
+          <input type="date" formControlName="fromDate" class="form-control" id="fromDate">
+        </div>
+        <div class="form-group">
+          <label for="toDate">To Date</label>
+          <input type="date" formControlName="toDate" class="form-control" id="toDate">
+        </div>
+        <button type="submit" class="btn btn-primary">Apply Leave</button>
+      </form>
+      
+  </mdb-tab>
+  <mdb-tab title="Leave History">Tab content 2</mdb-tab>
+  <mdb-tab title="Assigned Leave">Tab content 3</mdb-tab>
+</mdb-tabs>

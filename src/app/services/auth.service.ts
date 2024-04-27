@@ -45,7 +45,7 @@ export class AuthService {
     return this.http.get<HttpStatusClass>(baseUrl + '/designations/getUserType/' + email);
   }
 
-  updatePassword(empId: string, password: string): Observable<any>{
+  updatePassword(empId: string, password: string): Observable<HttpStatusClass>{
 
     const body = {
       empId: empId,
@@ -56,7 +56,7 @@ export class AuthService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.put(`${baseUrl}/empLogin`,body, { headers });
+    return this.http.put<HttpStatusClass>(`${baseUrl}/empLogin`,body, { headers });
   }
 
 }

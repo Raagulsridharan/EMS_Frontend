@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { EmpFlag } from '../../model_class/empFlag';
+import { HttpStatusClass } from '../../model_class/httpStatusClass';
 
 @Component({
   selector: 'app-activation-page',
   templateUrl: './activation-page.component.html',
   styleUrl: './activation-page.component.scss'
 })
-export class ActivationPageComponent {
+export class ActivationPageComponent implements OnInit{
   myForm:any;
   empId!: string;
 
@@ -21,7 +23,7 @@ export class ActivationPageComponent {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.empId = params['id']; // Assuming the parameter name is 'id' from the URL
+      this.empId = params['id'];
     });
     this.myForm = this.formBuilder.group({
       newpassword: ['', Validators.required],
@@ -44,10 +46,10 @@ export class ActivationPageComponent {
 
     this.authService.updatePassword(this.empId, newPassword)
       .subscribe(
-        () => {
+        (result:HttpStatusClass) => {
           // Password updated successfully, optionally navigate to another page
           alert('Password updated successfully');
-          this.router.navigate(['/employee']);
+          this.router.navigate(['/employee', this.empId]);
         },
         error => {
           console.error('Error updating password:', error);

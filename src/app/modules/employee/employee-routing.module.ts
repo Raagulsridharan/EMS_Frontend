@@ -8,11 +8,11 @@ import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
-    path:'',
+    path:':id',
     component: HomeComponent,
     children: [
       {
-        path: 'salary',
+        path: 'salary/:id',
         component: SalaryComponent
       },
       {
@@ -20,7 +20,7 @@ const routes: Routes = [
         component: LeaveApplyComponent
       },
       {
-        path: 'profile',
+        path: 'profile/:id',
         component: ProfileComponent
       },
       {
