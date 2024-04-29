@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { EmpFlag } from '../model_class/empFlag';
 import { HttpStatusClass } from '../model_class/httpStatusClass';
-
-const baseUrl = ['http://localhost:8080'];
+import { BaseUrl } from '../model_class/baseUrl';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +23,7 @@ export class AuthService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.post<EmpFlag>(`${baseUrl}/empLogin`, body, { headers })
+    return this.http.post<EmpFlag>(BaseUrl.LOGIN_DETAILS_URL, body, { headers })
     .pipe(
       catchError((error: any) => {
         if (error.status === 400 || error.status === 500) {
@@ -42,7 +41,7 @@ export class AuthService {
   }
 
   getUserType(email: string): Observable<HttpStatusClass> {
-    return this.http.get<HttpStatusClass>(baseUrl + '/designations/getUserType/' + email);
+    return this.http.get<HttpStatusClass>(BaseUrl.DESIGNATION_URL + '/user-type/' + email);
   }
 
   updatePassword(empId: string, password: string): Observable<HttpStatusClass>{
@@ -56,7 +55,7 @@ export class AuthService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.put<HttpStatusClass>(`${baseUrl}/empLogin`,body, { headers });
+    return this.http.put<HttpStatusClass>(BaseUrl.LOGIN_DETAILS_URL,body, { headers });
   }
 
 }

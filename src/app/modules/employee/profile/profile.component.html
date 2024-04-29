@@ -26,7 +26,7 @@
   }
 
   .content {
-    margin: 15px;
+    margin: 8px;
   }
 
   .header-btn {
@@ -60,27 +60,27 @@
             <button class="header-btn" (click)="openUpdateModal()">
               Update
             </button>
-            <button class="header-btn" (click)="openUpdatePassword()">Change Password</button>
+            <button class="header-btn" (click)="openChangePassword()">Change Password</button>
           </div>
         </div>
         <hr />
         <div class="card-body content">
-          <h5 class="card-subtitle">Name</h5>
+          <h2 class="card-subtitle">Name</h2>
           <h4 class="card-title">{{ employee.emp_name }}</h4>
         </div>
         <hr />
         <div class="card-body content">
-          <h5 class="card-subtitle">Email</h5>
+          <h2 class="card-subtitle">Email</h2>
           <h4 class="card-title">{{ employee.email }}</h4>
         </div>
         <hr />
         <div class="card-body content">
-          <h5 class="card-subtitle">Phone Number</h5>
+          <h2 class="card-subtitle">Phone Number</h2>
           <h4 class="card-title">{{ employee.mobile }}</h4>
         </div>
         <hr />
         <div class="card-body content">
-          <h5 class="card-subtitle">Address</h5>
+          <h2 class="card-subtitle">Address</h2>
           <h4 class="card-title">{{ employee.address }}</h4>
         </div>
         <hr />

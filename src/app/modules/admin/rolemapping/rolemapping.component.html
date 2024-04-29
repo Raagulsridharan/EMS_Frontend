@@ -21,7 +21,7 @@
       <mdb-form-control>
         <select formControlName="employeeId" id="employeeId" class="form-control">
           <option value="">Select Employee</option>
-          <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.name }}</option>
+          <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.emp_name }}</option>
       </select>
       </mdb-form-control>
       <br>

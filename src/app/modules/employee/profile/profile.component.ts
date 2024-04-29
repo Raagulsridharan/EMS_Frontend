@@ -28,11 +28,14 @@ export class ProfileComponent implements OnInit{
 
   openUpdateModal() {
     console.log(this.employee);
-    const modalRef: MdbModalRef<UpdateProfileComponent> = this.modalService.open(UpdateProfileComponent);
+    const modalRef: MdbModalRef<UpdateProfileComponent> = this.modalService.open(UpdateProfileComponent, {
+      modalClass: 'modal-dialog-centered',
+      animation: true,
+    });
     modalRef.component.employee = this.employee;
   }
 
-  openUpdatePassword() {
+  openChangePassword() {
     console.log(this.employee);
     const modalRef: MdbModalRef<ChangePasswordComponent> = this.modalService.open(ChangePasswordComponent, {
       modalClass: 'modal-dialog-centered',

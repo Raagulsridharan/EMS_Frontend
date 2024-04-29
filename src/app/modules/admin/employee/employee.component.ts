@@ -87,7 +87,7 @@ export class EmployeeComponent {
     console.log(element);
     const modalRef: MdbModalRef<UpdateEmployeeComponent> = this.modalService.open(UpdateEmployeeComponent);
     modalRef.component.empId = element.id;
-    modalRef.component.empName = element.name;
+    modalRef.component.empName = element.emp_name;
     modalRef.component.deptName = element.department;
     modalRef.component.mobille = element.mobile;
     modalRef.component.address = element.address;

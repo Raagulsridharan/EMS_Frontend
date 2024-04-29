@@ -9,6 +9,7 @@ import { Payroll } from '../model_class/payroll';
 import { HttpStatusClass } from '../model_class/httpStatusClass';
 import { Logindetails } from '../model_class/loginDetails';
 import { LeaveAssign } from '../model_class/leaveAssign';
+import { BaseUrl } from '../model_class/baseUrl';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,7 @@ export class AdminService {
   constructor(private httpClient: HttpClient) {}
 
   getCountOfTotalEmployees(): Observable<number> {
-    return this.httpClient.get<number>(`${this.employeeURL}/getEmpCount`).pipe(
+    return this.httpClient.get<number>(`${this.employeeURL}/count`).pipe(
       catchError((error: any) => {
         console.error('API request failed:', error);
         return throwError(error);
@@ -219,9 +220,7 @@ export class AdminService {
     console.log('Fetching Employees by Department for Role assigning...');
 
     return this.httpClient
-      .get<HttpStatusClass>(
-        `${this.employeeURL}/getAllEmployeeByDeptForRoleAssign/${departmentId}`
-      )
+      .get<HttpStatusClass>(BaseUrl.EMPLOYEE_BASE_URL+`/role-assign/${departmentId}`)
       .pipe(
         catchError((error: any) => {
           console.error('API request failed:', error);
@@ -259,9 +258,7 @@ export class AdminService {
     console.log('Fetching Employees by Department for Payroll assigning...');
 
     return this.httpClient
-      .get<HttpStatusClass>(
-        `${this.employeeURL}/getAllEmpByDeptForPayroll/${departmentId}`
-      )
+      .get<HttpStatusClass>(BaseUrl.EMPLOYEE_BASE_URL+`/payroll/${departmentId}`)
       .pipe(
         catchError((error: any) => {
           console.error('API request failed:', error);
@@ -292,9 +289,7 @@ export class AdminService {
     console.log('Fetching Employees by Department for Leave assigning...');
 
     return this.httpClient
-      .get<HttpStatusClass>(
-        `${this.employeeURL}/getAllEmployeeByDeptForLeaveAssign/${departmentId}`
-      )
+      .get<HttpStatusClass>(BaseUrl.EMPLOYEE_BASE_URL+`/leave-assign/${departmentId}`)
       .pipe(
         catchError((error: any) => {
           console.error('API request failed:', error);

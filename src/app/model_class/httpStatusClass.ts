@@ -1,5 +1,5 @@
 export interface HttpStatusClass{
-    data: any[];
+    data: any;
     statusCode: number;
     description: string;
 }

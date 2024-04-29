@@ -170,6 +170,6 @@ export class RolemappingComponent implements OnInit, AfterViewInit {
     modalRef.component.designationName = element.role;
     modalRef.component.dept = element.dept;
     modalRef.component.empId = element.id;
-    modalRef.component.empName = element.name;
+    modalRef.component.empName = element.emp_name;
   }
 }

@@ -9,8 +9,7 @@ import { Employee } from '../model_class/employee';
   providedIn: 'root',
 })
 export class EmployeeService {
-
-  emp:Employee;
+  emp: Employee;
 
   constructor(private http: HttpClient) {}
 
@@ -27,14 +26,60 @@ export class EmployeeService {
       );
   }
 
-  updateEmployeeProfile(empId:number,employee:any,departmentId:number):Observable<HttpStatusClass>{
+  updateEmployeeProfile(
+    empId: number,
+    employee: any,
+    departmentId: number
+  ): Observable<HttpStatusClass> {
     const empData = {
       mobile: employee.updateMobile,
       address: employee.updateAddress,
-      departmentId
-    }
-    console.log(empData,'log')
-    return this.http.put<HttpStatusClass>(BaseUrl.EMPLOYEE_BASE_URL+`/${empId}`,empData)
+      departmentId,
+    };
+    console.log(empData, 'log');
+    return this.http
+      .put<HttpStatusClass>(BaseUrl.EMPLOYEE_BASE_URL + `/${empId}`, empData)
+      .pipe(
+        catchError((error: any) => {
+          console.error('API request failed:', error);
+          return throwError(error);
+        })
+      );
+  }
+
+  changePassword(empId: number, password: string) {
+    const passwordData = {
+      empId,
+      password,
+    };
+    console.log(passwordData, 'log');
+    return this.http
+      .put<HttpStatusClass>(
+        BaseUrl.LOGIN_DETAILS_URL + `/${empId}`,
+        passwordData
+      )
+      .pipe(
+        catchError((error: any) => {
+          console.error('API request failed:', error);
+          return throwError(error);
+        })
+      );
+  }
+
+  employeeDetailsCard(empId:number) :Observable<HttpStatusClass>{
+    return this.http.get<HttpStatusClass>(BaseUrl.EMPLOYEE_BASE_URL+`/card/${empId}`)
+    .pipe(
+      catchError((error: any) => {
+        console.error('API request failed:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  salaryDetailCard(empId:number): Observable<HttpStatusClass> {
+    console.log('Fetching All employees role & salary...');
+
+    return this.http.get<HttpStatusClass>(BaseUrl.PAYROLL_URL+`/detail/${empId}`)
     .pipe(
       catchError((error: any) => {
         console.error('API request failed:', error);

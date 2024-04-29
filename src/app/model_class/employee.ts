@@ -2,7 +2,7 @@ import { Department } from "./department";
 
 export interface Employee{
     id: number;
-    name: string;
+    emp_name: string;
     birthday: number;
     gender: string;
     mobile: number;
