@@ -49,7 +49,7 @@ export class AdminService {
 
   getCountOfTotalLeaveTypes(): Observable<number> {
     return this.httpClient
-      .get<number>(`${this.leaveTypeURL}/getLeaveTypesCount`)
+      .get<number>(`${this.leaveTypeURL}/count`)
       .pipe(
         catchError((error: any) => {
           console.error('API request failed:', error);
@@ -60,7 +60,7 @@ export class AdminService {
 
   getCountOfApprovedLeaves(): Observable<number> {
     return this.httpClient
-      .get<number>(`${this.leaveAppliedURL}/getApprovedLeaveCount`)
+      .get<number>(`${this.leaveAppliedURL}/count/approved`)
       .pipe(
         catchError((error: any) => {
           console.error('API request failed:', error);
@@ -71,7 +71,7 @@ export class AdminService {
 
   getCountOfRequestedLeaves(): Observable<number> {
     return this.httpClient
-      .get<number>(`${this.leaveAppliedURL}/getRequestedLeaveCount`)
+      .get<number>(`${this.leaveAppliedURL}/count/requested`)
       .pipe(
         catchError((error: any) => {
           console.error('API request failed:', error);
@@ -82,7 +82,7 @@ export class AdminService {
 
   getCountOfRejectedLeaves(): Observable<number> {
     return this.httpClient
-      .get<number>(`${this.leaveAppliedURL}/getRejectedLeaveCount`)
+      .get<number>(`${this.leaveAppliedURL}/count/rejected`)
       .pipe(
         catchError((error: any) => {
           console.error('API request failed:', error);
@@ -270,7 +270,7 @@ export class AdminService {
   createPayrollForEmployee(empId: number): Observable<any> {
     const body = {};
     return this.httpClient
-      .post(`${this.payrollURL}/createPayroll/${empId}`, body)
+      .post(`${this.payrollURL}/create/${empId}`, body)
       .pipe(
         tap((response) => {
           console.log('Add Payroll Response:', response);
@@ -430,6 +430,7 @@ export class AdminService {
         catchError((error) => {
           console.error('Error adding Role and salary:', error);
           console.log('Error Response Body:', error.error);
+          console.log(roleSalaryData)
           throw error;
         })
       );
@@ -479,7 +480,7 @@ export class AdminService {
           const blob = new Blob([response], { type: 'application/pdf' });
           const link = document.createElement('a');
           link.href = window.URL.createObjectURL(blob);
-          link.download = `payslip_${empId}.pdf`;
+          link.download = `Payslip_EMP_NO:${empId}.pdf`;
           link.click();
         },
         (error: any) => {
@@ -491,7 +492,7 @@ export class AdminService {
 
   getAllApprovedLeaves(): Observable<HttpStatusClass> {
     return this.httpClient
-      .get<HttpStatusClass>(`${this.leaveAppliedURL}/getAllApprovedLeaves`)
+      .get<HttpStatusClass>(`${this.leaveAppliedURL}/approved`)
       .pipe(
         catchError((error: any) => {
           console.error('API request failed:', error);
@@ -502,7 +503,7 @@ export class AdminService {
 
   getAllRequestedLeaves(): Observable<HttpStatusClass> {
     return this.httpClient
-      .get<HttpStatusClass>(`${this.leaveAppliedURL}/getAllRequestedLeaves`)
+      .get<HttpStatusClass>(`${this.leaveAppliedURL}/requested`)
       .pipe(
         catchError((error: any) => {
           console.error('API request failed:', error);
@@ -512,7 +513,7 @@ export class AdminService {
   }
   getAllRejectedLeaves(): Observable<HttpStatusClass> {
     return this.httpClient
-      .get<HttpStatusClass>(`${this.leaveAppliedURL}/getAllRejectedLeaves`)
+      .get<HttpStatusClass>(`${this.leaveAppliedURL}/rejected`)
       .pipe(
         catchError((error: any) => {
           console.error('API request failed:', error);

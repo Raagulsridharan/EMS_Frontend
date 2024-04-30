@@ -1,5 +1,6 @@
 export interface Payroll{
     id: number;
+    empId: number;
     emp_name: string;
     dept: string;
     role: string;

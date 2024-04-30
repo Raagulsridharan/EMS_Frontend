@@ -62,6 +62,8 @@ export class UpdateRoleMappingComponent {
         (response) => {
           console.log('Role&Salary updated successfully:', response);
           this.formData.reset(); // Reset the form after successful addition
+          this.modalRef.close();
+          window.location.reload();
         },
         (error) => {
           alert('Error in updating Role&Salary...!');

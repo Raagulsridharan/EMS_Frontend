@@ -39,6 +39,7 @@ export class LeaveassignComponent implements OnInit {
     this.initForm();
     this.fetchDepartments();
     this.fetchAllLeaveTypes();
+    this.ngAfterViewInit();
   }
 
   initForm(): void {

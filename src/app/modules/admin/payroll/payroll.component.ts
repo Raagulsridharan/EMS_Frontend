@@ -28,6 +28,7 @@ export class PayrollComponent implements OnInit, AfterViewInit{
   ngOnInit(){
     this.initForm();
     this.fetchDepartments();
+    this.ngAfterViewInit();
   }
 
   initForm(): void {

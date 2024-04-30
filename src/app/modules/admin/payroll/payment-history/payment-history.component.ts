@@ -35,6 +35,7 @@ export class PaymentHistoryComponent implements OnInit{
       month: ['',Validators.required],
       description: ['', Validators.required]
     });
+    this.ngAfterViewInit();
   }
 
   submitForm(): void{
@@ -44,6 +45,7 @@ export class PaymentHistoryComponent implements OnInit{
       response => {
         console.log('Payment make successfully:', response);
         this.formData.reset();
+        this.ngAfterViewInit();
       },
       error => {
         alert('Error in send Payment...!')
@@ -81,8 +83,8 @@ export class PaymentHistoryComponent implements OnInit{
    this.dataSource.filter = filterValue.trim().toLowerCase();
  }
 
- exportPDF(payrollId:number){
-  this.adminService.exportPDF(payrollId);
+ exportPDF(){
+  this.adminService.exportPDF(this.empId);
  }
 
  openUpdateModal(element: any) {

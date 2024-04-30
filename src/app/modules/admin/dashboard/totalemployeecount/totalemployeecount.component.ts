@@ -116,7 +116,7 @@ export class TotalemployeecountComponent implements OnInit {
       {
         title: 'Leave Types',
         count: this.totalLeaveType,
-        router: 'leaveType',
+        router: '/admin/leaveassign',
       },
       {
         title: 'Approved Leaves',

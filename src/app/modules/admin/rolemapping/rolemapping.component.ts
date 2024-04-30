@@ -28,6 +28,8 @@ export class RolemappingComponent implements OnInit, AfterViewInit {
   selectedRole!: number;
   selectedRoleSalaryPackage!: number;
 
+  empId: number;
+
   constructor(
     private modalService: MdbModalService,
     private adminService: AdminService,
@@ -98,6 +100,7 @@ export class RolemappingComponent implements OnInit, AfterViewInit {
         (response) => {
           console.log('Role&Salary added successfully:', response);
           this.formData.reset(); // Reset the form after successful addition
+          this.ngAfterViewInit();
         },
         (error) => {
           alert('Error in adding Role&Salary...!');
@@ -169,7 +172,7 @@ export class RolemappingComponent implements OnInit, AfterViewInit {
     const modalRef: MdbModalRef<UpdateRoleMappingComponent> = this.modalService.open(UpdateRoleMappingComponent);
     modalRef.component.designationName = element.role;
     modalRef.component.dept = element.dept;
-    modalRef.component.empId = element.id;
+    modalRef.component.empId = element.empId;
     modalRef.component.empName = element.emp_name;
   }
 }
