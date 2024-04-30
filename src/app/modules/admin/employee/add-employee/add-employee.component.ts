@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Department } from '../../../../model_class/department';
 import { AdminService } from '../../../../services/admin.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,7 +10,10 @@ import { Router } from '@angular/router';
   styleUrl: './add-employee.component.scss',
 })
 export class AddEmployeeComponent implements OnInit {
-  formData!: FormGroup;
+  formData: FormGroup = new FormGroup({
+    firstName: new FormControl(''),
+    email: new FormControl('')
+  });
   departments: Department[] = [];
 
   constructor(
@@ -22,6 +25,18 @@ export class AddEmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.loadDepartments();
     this.initForm();
+  }
+
+  get formControls() {
+    return this.formData.controls;
+  }
+
+  get firstName() {
+    return this.formData.get('firstName')!;
+  }
+
+  get email() {
+    return this.formData.get('email')!;
   }
 
   initForm(): void {
@@ -50,6 +65,7 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.isCompetencyFormValid();
     if (this.formData.valid) {
       const empName = this.formData.value.firstName + ' ' + this.formData.value.lastName;
       const formDataWithEmpName = { ...this.formData.value, emp_name: empName };
@@ -76,9 +92,33 @@ export class AddEmployeeComponent implements OnInit {
         }
       );
     } else {
-      alert('Error...!')
+      //alert('Error...!')
       console.log("ElsePart In OnSubmit()")
       // Handle form validation errors
     }
+  }
+
+  private isCompetencyFormValid() {
+    if (this.formData.invalid) {
+      for (const control of Object.keys(this.formData.controls)) {
+        this.formData.controls[control].markAsTouched();
+      }
+      this.scrollToError();
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  scrollToValidationMessage(el: Element): void {
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  scrollToError(): void {
+    const firstElementWithError: HTMLElement = document.querySelector(
+      '.ng-invalid[formControlName]'
+    );
+    this.scrollToValidationMessage(firstElementWithError);
   }
 }

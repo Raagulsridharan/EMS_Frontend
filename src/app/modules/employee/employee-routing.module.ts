@@ -9,8 +9,8 @@ import { ProfileComponent } from './profile/profile.component';
 const routes: Routes = [
   {
     path:'',
-    component: HomeComponent,
-    children: [
+    component: HomeComponent
+  },
       {
         path: 'salary',
         component: SalaryComponent
@@ -27,9 +27,7 @@ const routes: Routes = [
         path: '', // Redirect empty path to HomeComponent
         pathMatch: 'full',
         redirectTo: 'home'
-      }
-    ]
-  },
+      },
   { 
     path: '**', // Wildcard route for unmatched paths
     redirectTo: 'home'

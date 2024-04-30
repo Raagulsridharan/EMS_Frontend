@@ -87,4 +87,19 @@ export class EmployeeService {
       })
     );
   }
+
+  filter(filterData: any): Observable<any>{
+    return this.http.post<HttpStatusClass>(BaseUrl.EMPLOYEE_BASE_URL+'/all', filterData)
+    .pipe(
+      catchError((error: any) => {
+        if (error.statusCode === 400 || error.statusCode === 500) {
+          alert('Invalid inputs. Please try again.');
+        }
+        else {
+          console.error('Failed to filter Departments. Error:', error);
+        }
+        return throwError(error);
+      })
+    );
+  }
 }

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from '../../../services/admin.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -11,6 +11,9 @@ import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { UpdateEmployeeComponent } from './update-employee/update-employee.component';
 import { DeleteEmployeeComponent } from './delete-employee/delete-employee.component';
 import { ViewEmployeeComponent } from './view-employee/view-employee.component';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { FilterOption } from '../../../model_class/filter-option';
+import { EmployeeService } from '../../../services/employee.service';
 
 @Component({
   selector: 'app-employee',
@@ -21,11 +24,20 @@ export class EmployeeComponent {
   isAddEmployeeRoute: boolean = false;
   formData!: FormGroup;
 
+  searchInput = new FormControl('');
+  pageSizeOptions: number[] = [5, 10, 15, 20];
+  currentPage: number;
+  pageSize: number;
+  totalItems: any;
+
+  filterOptions: FilterOption;
+
   constructor(
     private modalService: MdbModalService,
     private route: ActivatedRoute,
     private adminService: AdminService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder, 
+    private employeeService: EmployeeService
   ) {}
 
   ngOnInit() {
@@ -40,17 +52,39 @@ export class EmployeeComponent {
       address: ['', [Validators.required]],
       department: ['', [Validators.required]],
     });
+    
+    this.filterOptions = new FilterOption();
+    this.pageSize = this.filterOptions.pageSize;
+    this.currentPage = this.filterOptions.pageNo;
+    this.loadData();
+
+    this.searchInput.valueChanges
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe(() => this.applyFilter());
+
+    this.fetchTotalEmployees();
   }
 
   get formControls() {
     return this.formData.controls;
   }
 
+  fetchTotalEmployees() {
+    this.adminService.getCountOfTotalEmployees().subscribe(
+      (total) => {
+        this.totalItems = total;
+      },
+      (error) => {
+        console.error('Error fetching total customers count:', error);
+      }
+    );
+  }
+
   //addEmployee(){}
   //----------------------------------------------
 
-  @ViewChild(MatSort) sort: MatSort = {} as MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns: string[] = [
     'id',
@@ -64,23 +98,27 @@ export class EmployeeComponent {
   ];
   dataSource = new MatTableDataSource<Employee>();
 
-  ngAfterViewInit() {
-    // Fetch data asynchronously using the service
-    this.adminService.getAllEmployees().subscribe((response) => {
-      // Assign the data to the dataSource
-      console.log(response);
-
-      this.dataSource.data = response.data;
-
-      // Set up sorting and pagination
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+  loadData() {
+    this.employeeService.filter(this.filterOptions).subscribe((response) => {
+      if (response.statusCode === 200) {
+        this.dataSource.data = response.data;
+        // this.totalItems = response.totalItems;
+      } else {
+        console.error('Error fetching employees:', response.description);
+      }
     });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  changePage(event: any) {
+    this.filterOptions.pageNo = event.pageIndex + 1;
+    this.filterOptions.pageSize = event.pageSize;
+    this.loadData();
+  }
+
+  applyFilter() {
+    // this.currentPage = 0;
+    this.filterOptions.searchKey = this.searchInput.value;
+    this.loadData();
   }
 
   openUpdateModal(element: Employee) {

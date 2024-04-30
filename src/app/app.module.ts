@@ -33,6 +33,7 @@ import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
+import { EmployeeComponent } from './components/employee/employee.component';
 
 
 
@@ -40,7 +41,8 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
   declarations: [
     AppComponent,
     LoginPageComponent,
-    ActivationPageComponent
+    ActivationPageComponent,
+    EmployeeComponent
   ],
   imports: [
     BrowserModule,

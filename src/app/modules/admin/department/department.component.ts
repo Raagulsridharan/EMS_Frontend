@@ -68,7 +68,7 @@ export class DepartmentComponent implements OnInit {
         this.totalItems = total.data;
       },
       (error) => {
-        console.error('Error fetching total customers count:', error);
+        console.error('Error fetching total departments count:', error);
       }
     );
   }

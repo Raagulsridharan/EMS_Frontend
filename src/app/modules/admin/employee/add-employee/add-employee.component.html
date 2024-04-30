@@ -7,33 +7,58 @@
           style="border-radius: 15px"
         >
           <div class="card-body p-4 p-md-5">
-            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5" style="font-size: xx-large; text-align: center;">
+            <h3
+              class="mb-4 pb-2 pb-md-0 mb-md-5"
+              style="font-size: xx-large; text-align: center"
+            >
               Register Employee
             </h3>
             <form [formGroup]="formData">
-              <div class="row">
-                <div class="col-md-6 mb-4">
-                  <div data-mdb-input-init class="form-outline">
-                    <input
-                      type="text"
-                      id="firstName"
-                      class="form-control form-control-lg"
-                      placeholder="First Name"
-                      formControlName="firstName"
-                    />
-                    <!-- <label class="form-label" for="firstName">First Name</label> -->
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div data-mdb-input-init class="form-outline">
+                      <input
+                        type="text"
+                        formControlName="firstName"
+                        id="firstName"
+                        class="form-control form-control-lg"
+                        placeholder="First Name"
+                        required
+                        [class.is-invalid]="
+                          firstName.invalid &&
+                          (firstName.dirty || firstName.touched)
+                        "
+                      />
+                      <div
+                        *ngIf="
+                          firstName.invalid &&
+                          (firstName.dirty || firstName.touched)
+                        "
+                        class="invalid-feedback"
+                        id="form-validation"
+                      >
+                        <div
+                          *ngIf="firstName.errors?.['required']"
+                          class="warning-message"
+                        >
+                          Please provide a First Name
+                        </div>
+                      </div>
+                      <!-- <label class="form-label" for="firstName">First Name</label> -->
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                  <div data-mdb-input-init class="form-outline">
-                    <input
-                      type="text"
-                      id="lastName"
-                      class="form-control form-control-lg"
-                      placeholder="Last Name"
-                      formControlName="lastName"
-                    />
-                    <!-- <label class="form-label" for="lastName">Last Name</label> -->
+                  <div class="col-md-6 mb-4">
+                    <div data-mdb-input-init class="form-outline">
+                      <input
+                        type="text"
+                        id="lastName"
+                        class="form-control form-control-lg"
+                        placeholder="Last Name"
+                        formControlName="lastName"
+                      />
+                      <!-- <label class="form-label" for="lastName">Last Name</label> -->
+                    </div>
                   </div>
                 </div>
               </div>
@@ -54,7 +79,7 @@
                     <!-- <label for="birthdayDate" class="form-label">Birthday</label> -->
                   </div>
                 </div>
-                <div class="col-md-6 mb-4" style="font-size: medium;">
+                <div class="col-md-6 mb-4" style="font-size: medium">
                   <h3 class="mb-2 pb-1" style="font-size: large">Gender:</h3>
 
                   <div class="form-check form-check-inline">
@@ -81,7 +106,9 @@
                       id="maleGender"
                       value="Male"
                     />
-                    <label class="form-check-label" for="maleGender">Male</label>
+                    <label class="form-check-label" for="maleGender"
+                      >Male</label
+                    >
                   </div>
 
                   <div class="form-check form-check-inline">
@@ -99,30 +126,46 @@
                   </div>
                 </div>
               </div>
-
-              <div class="row">
-                <div class="col-md-6 mb-4 pb-2">
-                  <div data-mdb-input-init class="form-outline">
-                    <input
-                      type="email"
-                      id="emailAddress"
-                      class="form-control form-control-lg"
-                      formControlName="email"
-                      placeholder="E-Mail"
-                    />
-                    <!-- <label class="form-label" for="emailAddress">Email</label> -->
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-6 mb-4 pb-2">
+                    <div data-mdb-input-init class="form-outline">
+                      <input
+                        type="email"
+                        formControlName="email"
+                        id="emailAddress"
+                        class="form-control form-control-lg"
+                        placeholder="E-Mail"
+                        required
+                        [class.is-invalid]="
+                          email.invalid && (email.dirty || email.touched)
+                        "
+                      />
+                      <div
+                        *ngIf="email.invalid && (email.dirty || email.touched)"
+                        class="invalid-feedback"
+                        id="form-validation"
+                      >
+                        <div
+                          *ngIf="email.errors?.['required']"
+                          class="warning-message"
+                        >
+                          Please provide a E-Mmail
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-6 mb-4 pb-2">
-                  <div data-mdb-input-init class="form-outline">
-                    <input
-                      type="tel"
-                      id="phoneNumber"
-                      class="form-control form-control-lg"
-                      placeholder="Phone Number"
-                      formControlName="mobile"
-                    />
-                    <!-- <label class="form-label" for="phoneNumber">Phone Number</label> -->
+                  <div class="col-md-6 mb-4 pb-2">
+                    <div data-mdb-input-init class="form-outline">
+                      <input
+                        type="tel"
+                        id="phoneNumber"
+                        class="form-control form-control-lg"
+                        placeholder="Phone Number"
+                        formControlName="mobile"
+                      />
+                      <!-- <label class="form-label" for="phoneNumber">Phone Number</label> -->
+                    </div>
                   </div>
                 </div>
               </div>
@@ -140,7 +183,7 @@
                   </div>
                 </div>
               </div>
-              <br>
+              <br />
               <div class="row">
                 <div class="col-12">
                   <label
@@ -148,9 +191,17 @@
                     style="font-size: large"
                     >Choose Department</label
                   ><br />
-                  <select class="select form-control-lg" formControlName="departmentId">
+                  <select
+                    class="select form-control-lg"
+                    formControlName="departmentId"
+                  >
                     <option value="1" disabled>Choose Department</option>
-                    <option *ngFor="let department of departments" [value]="department.id">{{ department?.name }}</option>
+                    <option
+                      *ngFor="let department of departments"
+                      [value]="department.id"
+                    >
+                      {{ department?.name }}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -163,7 +214,7 @@
                 >
                   Submit
                 </button>
-              </div>              
+              </div>
             </form>
           </div>
         </div>

@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'employee',
-    loadChildren: () => import('../app/modules/employee/employee.module').then((m)=>m.EmployeeModule)
+    loadChildren: () => import('./modules/employee/employee.module').then((m)=>m.EmployeeModule)
   },
   {
     path: '**',  // Catch-all route for unknown paths, redirect to landing
