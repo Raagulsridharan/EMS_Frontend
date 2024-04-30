@@ -51,6 +51,7 @@
 }
 
 mat-sidenav{
+  overflow: hidden !important;
   .info {
     text-align: center;
     line-height: 4px;
@@ -76,4 +77,8 @@ mat-sidenav-container {
   overflow : hidden !important;
 }
 
+.content{
+  padding: 0px 50px;
+  overflow: hidden;
+}
 

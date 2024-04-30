@@ -150,7 +150,7 @@
                           *ngIf="email.errors?.['required']"
                           class="warning-message"
                         >
-                          Please provide a E-Mmail
+                          Please provide a E-Mail
                         </div>
                       </div>
                     </div>
@@ -184,25 +184,39 @@
                 </div>
               </div>
               <br />
-              <div class="row">
-                <div class="col-12">
-                  <label
-                    class="form-label select-label"
-                    style="font-size: large"
-                    >Choose Department</label
-                  ><br />
-                  <select
-                    class="select form-control-lg"
-                    formControlName="departmentId"
+              <div class="form-group">
+                <select
+                  class="select form-control-lg"
+                  formControlName="departmentId"
+                  id="departmentId"
+                  required
+                  [class.is-invalid]="
+                    departmentId.invalid &&
+                    (departmentId.dirty || departmentId.touched)
+                  "
+                >
+                  <option value="1" disabled>Choose Department</option>
+                  <option
+                    *ngFor="let department of departments"
+                    [value]="department.id"
                   >
-                    <option value="1" disabled>Choose Department</option>
-                    <option
-                      *ngFor="let department of departments"
-                      [value]="department.id"
-                    >
-                      {{ department?.name }}
-                    </option>
-                  </select>
+                    {{ department?.name }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    departmentId.invalid &&
+                    (departmentId.dirty || departmentId.touched)
+                  "
+                  class="invalid-feedback"
+                  id="form-validation"
+                >
+                  <div
+                    *ngIf="departmentId.errors?.['required']"
+                    class="warning-message"
+                  >
+                    Please provide a Department
+                  </div>
                 </div>
               </div>
 

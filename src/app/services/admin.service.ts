@@ -471,16 +471,16 @@ export class AdminService {
       );
   }
 
-  exportPDF(empId: any): void {
+  exportPDF(payrollId: any): void {
     console.log('Exporting PDF...');
     this.httpClient
-      .get(`${this.payrollURL}/exportPDF/${empId}`, { responseType: 'blob' })
+      .get(`${this.payrollURL}/exportPDF/${payrollId}`, { responseType: 'blob' })
       .subscribe(
         (response: Blob) => {
           const blob = new Blob([response], { type: 'application/pdf' });
           const link = document.createElement('a');
           link.href = window.URL.createObjectURL(blob);
-          link.download = `Payslip_EMP_NO:${empId}.pdf`;
+          link.download = `Payslip_${payrollId}.pdf`;
           link.click();
         },
         (error: any) => {

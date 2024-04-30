@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 export class AddEmployeeComponent implements OnInit {
   formData: FormGroup = new FormGroup({
     firstName: new FormControl(''),
-    email: new FormControl('')
+    email: new FormControl(''),
+    departmentId: new FormControl('')
   });
   departments: Department[] = [];
 
@@ -37,6 +38,10 @@ export class AddEmployeeComponent implements OnInit {
 
   get email() {
     return this.formData.get('email')!;
+  }
+
+  get departmentId() {
+    return this.formData.get('departmentId')!;
   }
 
   initForm(): void {

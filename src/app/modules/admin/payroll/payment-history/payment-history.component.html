@@ -102,7 +102,7 @@
         <button
           *ngIf="element.status === 'Paid'"
           class="btn btn-light"
-          (click)="exportPDF()"
+          (click)="exportPDF(element.id)"
         >
           <i class="fas fa-file-download"></i>
         </button>

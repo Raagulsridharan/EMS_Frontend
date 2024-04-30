@@ -83,8 +83,8 @@ export class PaymentHistoryComponent implements OnInit{
    this.dataSource.filter = filterValue.trim().toLowerCase();
  }
 
- exportPDF(){
-  this.adminService.exportPDF(this.empId);
+ exportPDF(payrollId:number){
+  this.adminService.exportPDF(payrollId);
  }
 
  openUpdateModal(element: any) {
