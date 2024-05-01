@@ -14,7 +14,7 @@
     padding: 36px 0;
     border-radius: 4px;
     margin: 30px 0;
-    box-shadow: 0px 0 5px 0 #f05e23;
+    box-shadow: 0px 0 5px 0 #235af0;
 }
 
 #signupLogo {
@@ -27,13 +27,13 @@
 .formTitle {
     font-weight: 600;
     margin-top: 20px;
-    color: #f05e23;
+    color: #235af0;
     text-align: center;
 }
 
 .inputLabel {
     font-size: 15px;
-    color: #f05e23;
+    color: #235af0;
     margin-bottom: 6px;
     margin-top: 24px;
 }
@@ -69,8 +69,8 @@ input:disabled {
     margin: auto;
     display: block;
     color: #ffffff;
-    background-color: #f05e23;
-    border-color: #f05e23;
+    background-color: #235af0;
+    border-color: #235af0;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.035);
     border-radius: 4px;
@@ -79,8 +79,8 @@ input:disabled {
 
     &:hover {
         background-color: #ffffff;
-        color: #f05e23;
-        border: 1px solid #f05e23;
+        color: #235af0;
+        border: 1px solid #235af0;
     }
 }
 

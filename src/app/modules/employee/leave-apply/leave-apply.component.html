@@ -20,11 +20,30 @@
                   formControlName="leaveType"
                   class="form-control"
                   id="leaveType"
+                  required
+                  [class.is-invalid]="
+                    leaveType.invalid && (leaveType.dirty || leaveType.touched)
+                  "
                 >
+                  <option value="1" disabled>Select LeaveType</option>
                   <option *ngFor="let type of leaveTypes" [value]="type.id">
-                    {{ type.leave_types }}
+                    {{ type?.leave_types }}
                   </option>
                 </select>
+                <div
+                  *ngIf="
+                    leaveType.invalid && (leaveType.dirty || leaveType.touched)
+                  "
+                  class="invalid-feedback"
+                  id="form-validation"
+                >
+                  <div
+                    *ngIf="leaveType.errors?.['required']"
+                    class="warning-message"
+                  >
+                    Please Select a LeaveType
+                  </div>
+                </div>
               </div>
               <br />
               <div class="form-group">
@@ -34,7 +53,25 @@
                   formControlName="fromDate"
                   class="form-control"
                   id="fromDate"
+                  required
+                  [class.is-invalid]="
+                    fromDate.invalid && (fromDate.dirty || fromDate.touched)
+                  "
                 />
+                <div
+                  *ngIf="
+                    fromDate.invalid && (fromDate.dirty || fromDate.touched)
+                  "
+                  class="invalid-feedback"
+                  id="form-validation"
+                >
+                  <div
+                    *ngIf="fromDate.errors?.['required']"
+                    class="warning-message"
+                  >
+                    Please Select From Date
+                  </div>
+                </div>
               </div>
             </div>
             <!-- Second Column -->
@@ -51,13 +88,31 @@
               </div>
               <br />
               <div class="form-group">
-                <label for="toDate">To Date</label>
+                <label for="fromDate">To Date</label>
                 <input
                   type="date"
-                  formControlName="toDate"
+                  formControlName="fromDate"
                   class="form-control"
                   id="toDate"
+                  required
+                  [class.is-invalid]="
+                  toDate.invalid && (toDate.dirty || toDate.touched)
+                  "
                 />
+                <div
+                  *ngIf="
+                  toDate.invalid && (toDate.dirty || toDate.touched)
+                  "
+                  class="invalid-feedback"
+                  id="form-validation"
+                >
+                  <div
+                    *ngIf="toDate.errors?.['required']"
+                    class="warning-message"
+                  >
+                    Please Select To Date
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -71,7 +126,7 @@
         </form>
       </div>
     </mdb-tab>
-<!-- ------------------------------------------------------------------------------------------------------------------------ -->
+    <!-- ------------------------------------------------------------------------------------------------------------------------ -->
     <mdb-tab title="Leave History">
       <div class="mat-elevation-z8 table">
         <div class="filter">
@@ -87,71 +142,77 @@
           <i class="fa-solid fa-magnifying-glass"></i>
         </div>
         <table mat-table [dataSource]="dataSource" matSort>
-              <!-- Id Column -->
-              <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
-                <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-              </ng-container>
-              <!-- Employee Name Column -->
-              <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.employee_leave_applied.name }}
-                </td>
-              </ng-container>
-              <!-- Department Name Column -->
-              <ng-container matColumnDef="dept">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Department</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.employee_leave_applied.department.name }}
-                </td>
-              </ng-container>
-              <!-- Leave Type Column -->
-              <ng-container matColumnDef="leaveType">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Leave Type</th>
-                <td mat-cell *matCellDef="let element">
-                  {{element.leavePolicy.leave_types }}
-                </td>
-              </ng-container>
-              <!-- From Date Column -->
-              <ng-container matColumnDef="fromDate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>From Date</th>
-                <td mat-cell *matCellDef="let element">
-                  {{element.from_date }}
-                </td>
-              </ng-container>
-              <!-- To Date Column -->
-              <ng-container matColumnDef="toDate">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>To Date</th>
-                <td mat-cell *matCellDef="let element">
-                  {{element.to_date }}
-                </td>
-              </ng-container>
-              <!-- Note Column -->
-              <ng-container matColumnDef="note">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Note</th>
-                <td mat-cell *matCellDef="let element">
-                  {{element.note }}
-                </td>
-              </ng-container>
-              <!-- Submitted On Column -->
-              <ng-container matColumnDef="submittedOn">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Submitted On</th>
-                <td mat-cell *matCellDef="let element">
-                  {{element.submitted_on }}
-                </td>
-              </ng-container>
-        
-              <!-- Status Column -->
-              <ng-container matColumnDef="Status">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-                <td mat-cell *matCellDef="let element">
-                  {{element.status}}
-                </td>
-              </ng-container>
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
+          <!-- Id Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          </ng-container>
+          <!-- Employee Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.employee_leave_applied.name }}
+            </td>
+          </ng-container>
+          <!-- Department Name Column -->
+          <ng-container matColumnDef="dept">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Department
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.employee_leave_applied.department.name }}
+            </td>
+          </ng-container>
+          <!-- Leave Type Column -->
+          <ng-container matColumnDef="leaveType">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Leave Type
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.leavePolicy.leave_types }}
+            </td>
+          </ng-container>
+          <!-- From Date Column -->
+          <ng-container matColumnDef="fromDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>From Date</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.from_date }}
+            </td>
+          </ng-container>
+          <!-- To Date Column -->
+          <ng-container matColumnDef="toDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>To Date</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.to_date }}
+            </td>
+          </ng-container>
+          <!-- Note Column -->
+          <ng-container matColumnDef="note">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Note</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.note }}
+            </td>
+          </ng-container>
+          <!-- Submitted On Column -->
+          <ng-container matColumnDef="submittedOn">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Submitted On
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.submitted_on }}
+            </td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.status }}
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
         <mat-paginator
           [length]="totalItems"
           [pageSizeOptions]="pageSizeOptions"
@@ -182,7 +243,6 @@
           </ng-container>
         </table>
       </div>
-      
     </mdb-tab>
   </mdb-tabs>
 </div>

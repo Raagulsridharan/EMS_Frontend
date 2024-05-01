@@ -10,25 +10,94 @@
 
       <h2 class="formTitle">Update your account Password</h2>
 
-      <div class="inputDiv">
+      <div class="form-group inputDiv">
         <label class="inputLabel" for="password">New Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          formControlName="newpassword"
-          required
-        />
+        <div class="input-group">
+          <input
+            type="{{ hidePassword ? 'password' : 'text' }}"
+            id="newpassword"
+            name="newpassword"
+            class="form-control form-control-sm"
+            formControlName="newpassword"
+            required
+            [class.is-invalid]="
+              newpassword.invalid && (newpassword.dirty || newpassword.touched)
+            "
+          />
+          <!-- <div class="input-group-append">
+            <span class="input-group-text" style="border: none;" (click)="togglePasswordVisibility()">
+              <i
+                class="far"
+                [ngClass]="{
+                  'fa-eye': !hidePassword,
+                  'fa-eye-slash': hidePassword
+                }"
+              ></i>
+            </span>
+          </div> -->
+          <div
+            *ngIf="
+              newpassword.invalid && (newpassword.dirty || newpassword.touched)
+            "
+            class="invalid-feedback"
+            id="form-validation"
+          >
+            <div
+              *ngIf="newpassword.errors?.['required']"
+              class="warning-message"
+            >
+              New Password is required.
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="inputDiv">
-        <label class="inputLabel" for="confirmPassword">Confirm Password</label>
-        <input
-          type="password"
-          id="confirmPassword"
-          name="confirmPassword"
-          formControlName="confirmnewpassword"
-        />
+      <div class="form-group inputDiv">
+        <label class="inputLabel" for="password">Confirm Password</label>
+        <div class="input-group">
+          <input
+            type="{{ hidePassword ? 'password' : 'text' }}"
+            id="confirmnewpassword"
+            name="confirmnewpassword"
+            class="form-control form-control-sm"
+            formControlName="confirmnewpassword"
+            required
+            [class.is-invalid]="
+              confirmnewpassword.invalid &&
+              (confirmnewpassword.dirty || confirmnewpassword.touched)
+            "
+          />
+          <div class="input-group-append">
+            <span
+              class="input-group-text"
+              style="border: none; margin-top: 8px"
+              (click)="togglePasswordVisibility()"
+            >
+              <i
+                class="far"
+                [ngClass]="{
+                  'fa-eye': !hidePassword,
+                  'fa-eye-slash': hidePassword
+                }"
+              ></i>
+            </span>
+          </div>
+          <div
+            *ngIf="
+              confirmnewpassword.invalid &&
+              (confirmnewpassword.dirty || confirmnewpassword.touched)
+            "
+            class="invalid-feedback"
+            id="form-validation"
+          >
+            <div
+              *ngIf="confirmnewpassword.errors?.['required']"
+              class="warning-message"
+            >
+              Confirm Password is required.
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="buttonWrapper">

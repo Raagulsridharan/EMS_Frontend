@@ -1,5 +1,10 @@
 <div class="welcome">
-  <h1>.</h1>
+  <h1 class="card-title text-center">WELCOME TO EMPLOYEE MANAGEMENT SYSTEM</h1>
+  <p class="card-text text-center">
+    Welcome to our Employee Management System (EMS). We strive to provide a
+    comprehensive platform for managing all aspects of employee administration
+    efficiently.
+  </p>
 </div>
 <div class="login">
   <div class="svg">
@@ -53,6 +58,14 @@
                 password.invalid && (password.dirty || password.touched)
               "
             />
+            <i
+              class="far"
+              [ngClass]="{
+                'fa-eye': !hidePassword,
+                'fa-eye-slash': hidePassword
+              }"
+              (click)="togglePasswordVisibility()"
+            ></i>
             <div
               *ngIf="password.invalid && (password.dirty || password.touched)"
               class="invalid-feedback"
@@ -119,9 +132,18 @@
               formControlName="password"
               class="form-control form-control-sm"
               required
-              [class.is-invalid]="password.invalid && (password.dirty || password.touched)"
+              [class.is-invalid]="
+                password.invalid && (password.dirty || password.touched)
+              "
             />
-            
+            <i
+              class="far"
+              [ngClass]="{
+                'fa-eye': !hidePassword,
+                'fa-eye-slash': hidePassword
+              }"
+              (click)="togglePasswordVisibility()"
+            ></i>
             <div
               *ngIf="password.invalid && (password.dirty || password.touched)"
               class="invalid-feedback"

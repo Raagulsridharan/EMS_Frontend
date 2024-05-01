@@ -32,11 +32,14 @@
 <div class="mat-elevation-z8 table">
     <div class="filter">
       <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Search here..."
-        #input
-      />
+      mdbInput
+      type="text"
+      id="form1"
+      class="form-control"
+      [formControl]="searchInput"
+      placeholder="Search here..."
+      #input
+    />
       <i class="fa-solid fa-magnifying-glass"></i>
     </div>
     <table mat-table [dataSource]="dataSource" matSort>
@@ -88,8 +91,11 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     <mat-paginator
-      [pageSizeOptions]="[5, 10, 20]"
-      showFirstLastButtons
-    ></mat-paginator>
+    [length]="totalItems"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageSize]="pageSize"
+    (page)="changePage($event)"
+    showFirstLastButtons
+  ></mat-paginator>
   </div>
   

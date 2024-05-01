@@ -5,5 +5,7 @@ export class BaseUrl {
     static DESIGNATION_URL: string = `${BaseUrl.BASE_URL}/designations`;
     static LEAVE_APPLIED_URL: string = `${BaseUrl.BASE_URL}/leaveApplied`;
     static LOGIN_DETAILS_URL: string = `${BaseUrl.BASE_URL}/empLogin`;
-    static PAYROLL_URL: string = `${BaseUrl.BASE_URL}/payroll`
+    static PAYROLL_URL: string = `${BaseUrl.BASE_URL}/payroll`;
+    static EMP_ROLE_SALARY: string = `${BaseUrl.BASE_URL}/empRoleSalary`;
+    static EMPLOYEE_HAS_LEAVE: string = `${BaseUrl.BASE_URL}/employeeHasLeave`;
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Department } from '../../../model_class/department';
 import { Employee } from '../../../model_class/employee';
 import { AdminService } from '../../../services/admin.service';
@@ -13,6 +13,9 @@ import { HttpStatusClass } from '../../../model_class/httpStatusClass';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { UpdateLeaveAssignComponent } from './update-leave-assign/update-leave-assign.component';
 import { ViewEmployeeLeavesComponent } from './view-employee-leaves/view-employee-leaves.component';
+import { FilterOption } from '../../../model_class/filter-option';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { LeaveService } from '../../../services/leave.service';
 
 @Component({
   selector: 'app-leaveassign',
@@ -29,9 +32,18 @@ export class LeaveassignComponent implements OnInit {
   selectedDepartmet!: number;
   selectedEmployee!: number;
 
+  searchInput = new FormControl('');
+  pageSizeOptions: number[] = [5, 10, 15, 20];
+  currentPage: number;
+  pageSize: number;
+  totalItems: any;
+
+  filterOptions: FilterOption;
+
   constructor(
     private modalService: MdbModalService,
     private adminService: AdminService,
+    private leaveService: LeaveService,
     private formBuilder: FormBuilder
   ) {}
 
@@ -39,7 +51,17 @@ export class LeaveassignComponent implements OnInit {
     this.initForm();
     this.fetchDepartments();
     this.fetchAllLeaveTypes();
-    this.ngAfterViewInit();
+
+    this.filterOptions = new FilterOption();
+    this.pageSize = this.filterOptions.pageSize;
+    this.currentPage = this.filterOptions.pageNo;
+    this.loadData();
+    this.searchInput.valueChanges
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe(() => this.applyFilter()
+    );
+
+    this.fetchLeaveAssign();
   }
 
   initForm(): void {
@@ -125,6 +147,7 @@ export class LeaveassignComponent implements OnInit {
         (response) => {
           console.log('Response from backend:', response);
           this.formData.reset();
+          this.loadData();
         },
         (error) => {
           console.error('Error from backend:', error);
@@ -134,6 +157,17 @@ export class LeaveassignComponent implements OnInit {
   }
 
   //----------------------------------------------------
+
+  fetchLeaveAssign() {
+    this.leaveService.getCountOfLeaveAssign().subscribe(
+      (total) => {
+        this.totalItems = total.data;
+      },
+      (error) => {
+        console.error('Error fetching total departments count:', error);
+      }
+    );
+  }
 
   @ViewChild(MatSort) sort: MatSort = {} as MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
@@ -148,29 +182,28 @@ export class LeaveassignComponent implements OnInit {
   ];
   dataSource = new MatTableDataSource<EmployeeHasLeave>();
 
-  ngAfterViewInit() {
-    // Fetch data asynchronously using the service
-    this.adminService
-      .getAllEmployeesHasLeave()
-      .subscribe((response: HttpStatusClass) => {
-        if (response.statusCode === 200) {
-          // Assign the data to the dataSource
-          console.log(response.data);
-          this.dataSource.data = response.data;
-
-          // Set up sorting and pagination
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        } else {
-          // Handle error case
-          console.error('Error fetching departments:', response.description);
-        }
-      });
+  loadData() {
+    this.fetchLeaveAssign();
+    this.leaveService.filter(this.filterOptions).subscribe((response) => {
+      if (response.statusCode === 200) {
+        this.dataSource.data = response.data;
+        // this.totalItems = response.totalItems;
+      } else {
+        console.error('Error fetching Leaveassign:', response.description);
+      }
+    });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  changePage(event: any) {
+    this.filterOptions.pageNo = event.pageIndex + 1;
+    this.filterOptions.pageSize = event.pageSize;
+    this.loadData();
+  }
+
+  applyFilter() {
+    // this.currentPage = 0;
+    this.filterOptions.searchKey = this.searchInput.value;
+    this.loadData();
   }
 
   openUpdateModal(element: any) {
@@ -186,6 +219,6 @@ export class LeaveassignComponent implements OnInit {
       animation: true,
       
     })
-    modalRef.component.empId = element.id;
+    modalRef.component.empId = element[0];
   }
 }

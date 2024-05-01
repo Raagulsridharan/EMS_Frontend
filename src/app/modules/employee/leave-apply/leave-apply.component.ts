@@ -27,7 +27,13 @@ import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
   styleUrl: './leave-apply.component.scss',
 })
 export class LeaveApplyComponent implements OnInit {
-  leaveForm: FormGroup;
+  leaveForm: FormGroup = new FormGroup({
+    leaveType: new FormControl(''),
+    note: new FormControl(''),
+    departmentId: new FormControl(''),
+    toDate: new FormControl('')
+  });
+
   leaveTypes: LeaveType[] = [];
   empId!: string;
   leaveApplied: LeaveApplied;
@@ -67,6 +73,22 @@ export class LeaveApplyComponent implements OnInit {
     return this.leaveForm.controls;
   }
 
+  get leaveType() {
+    return this.leaveForm.get('leaveType');
+  }
+
+  get note() {
+    return this.leaveForm.get('note')!;
+  }
+
+  get fromDate() {
+    return this.leaveForm.get('fromDate')!;
+  }
+
+  get toDate() {
+    return this.leaveForm.get('toDate')!;
+  }
+
   fetchAllLeaveTypes(): void {
     this.adminService.getAllLeaveType().subscribe(
       (leaves: HttpStatusClass) => {
@@ -80,6 +102,7 @@ export class LeaveApplyComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.isCompetencyFormValid();
     if (this.leaveForm.valid) {
       console.log('Leave application submitted:', this.empId);
       this.leaveApplied = this.leaveForm.value;
@@ -90,10 +113,33 @@ export class LeaveApplyComponent implements OnInit {
         });
       this.leaveForm.reset();
     } else {
-      alert('please fill form');
+      //alert('please fill form');
     }
+   
+  }
 
-    
+  private isCompetencyFormValid() {
+    if (this.leaveForm.invalid) {
+      for (const control of Object.keys(this.leaveForm.controls)) {
+        this.leaveForm.controls[control].markAsTouched();
+      }
+      this.scrollToError();
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  scrollToValidationMessage(el: Element): void {
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  scrollToError(): void {
+    const firstElementWithError: HTMLElement = document.querySelector(
+      '.ng-invalid[formControlName]'
+    );
+    this.scrollToValidationMessage(firstElementWithError);
   }
 
   //----------------------------------------------

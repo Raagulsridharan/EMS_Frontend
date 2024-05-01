@@ -43,4 +43,34 @@ export class LeaveService {
       );
   }
 
+  getCountOfLeaveAssign(): Observable<any>{
+    return this.http.get<HttpStatusClass>(BaseUrl.EMPLOYEE_HAS_LEAVE+'/count')
+    .pipe(
+      catchError((error: any) => {
+        if (error.statusCode === 400 || error.statusCode === 500) {
+          alert('Invalid inputs. Please try again.');
+        }
+        else {
+          console.error('Failed to getting LeaveAssign. Error:', error);
+        }
+        return throwError(error);
+      })
+    );
+  }
+
+  filter(filterData: any): Observable<any>{
+    return this.http.post<HttpStatusClass>(BaseUrl.EMPLOYEE_HAS_LEAVE, filterData)
+    .pipe(
+      catchError((error: any) => {
+        if (error.statusCode === 400 || error.statusCode === 500) {
+          alert('Invalid inputs. Please try again.');
+        }
+        else {
+          console.error('Failed to filter Leaveassign. Error:', error);
+        }
+        return throwError(error);
+      })
+    );
+  }
+
 }

@@ -62,6 +62,7 @@ export class UpdateProfileComponent implements OnInit {
           console.log('Profile updated successfully:', response.data);
           this.formData.reset();
           this.modalRef.close();
+          window.location.reload();
         },
         (error) => {
           alert('Error in updating Profile...!'+this.employee.name);

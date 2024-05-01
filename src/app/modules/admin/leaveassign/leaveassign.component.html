@@ -48,7 +48,7 @@
           </mdb-form-control>
         </div>
       </div>
-      <br>
+      <br />
       <!-- Dynamic rows for leave types and days -->
       <div *ngFor="let leave of leaveTypes; let i = index" class="row mb-3">
         <!-- First Column -->
@@ -89,6 +89,8 @@
         class="btn btn-outline-primary"
         mdbRipple
         rippleColor="dark"
+        (click)="collapse.toggle()"
+        [attr.aria-expanded]="!collapse.collapsed"
       >
         Add
       </button>
@@ -96,12 +98,14 @@
   </div>
 </div>
 
-
 <div class="mat-elevation-z8 table">
   <div class="filter">
     <input
-      matInput
-      (keyup)="applyFilter($event)"
+      mdbInput
+      type="text"
+      id="form1"
+      class="form-control"
+      [formControl]="searchInput"
       placeholder="Search here..."
       #input
     />
@@ -111,27 +115,27 @@
     <!-- Id Column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
-      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      <td mat-cell *matCellDef="let element">{{ element[0] }}</td>
     </ng-container>
     <!-- Employee Name Column -->
     <ng-container matColumnDef="empName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Name</th>
-      <td mat-cell *matCellDef="let element">{{ element.empName }}</td>
+      <td mat-cell *matCellDef="let element">{{ element[1] }}</td>
     </ng-container>
     <!-- Department name Column -->
     <ng-container matColumnDef="department">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Department.</th>
-      <td mat-cell *matCellDef="let element">{{ element.department }}</td>
+      <td mat-cell *matCellDef="let element">{{ element[2] }}</td>
     </ng-container>
     <!-- role Column -->
     <ng-container matColumnDef="role">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
-      <td mat-cell *matCellDef="let element">{{ element.role }}</td>
+      <td mat-cell *matCellDef="let element">{{ element[3] }}</td>
     </ng-container>
     <!-- annual package Column -->
     <ng-container matColumnDef="activatedOn">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Activated On</th>
-      <td mat-cell *matCellDef="let element">{{ element.activatedOn }}</td>
+      <td mat-cell *matCellDef="let element">{{ element[4] }}</td>
     </ng-container>
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
@@ -149,7 +153,10 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
   <mat-paginator
-    [pageSizeOptions]="[5, 10, 20]"
+    [length]="totalItems"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageSize]="pageSize"
+    (page)="changePage($event)"
     showFirstLastButtons
   ></mat-paginator>
 </div>
