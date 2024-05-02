@@ -22,7 +22,12 @@ import { RoleService } from '../../../services/role.service';
   styleUrl: './rolemapping.component.scss',
 })
 export class RolemappingComponent implements OnInit{
-  formData!: FormGroup;
+  formData: FormGroup = new FormGroup({
+    departmentId: new FormControl(''),
+    employeeId: new FormControl(''),
+    roleId: new FormControl(''),
+    salary: new FormControl('')
+  });
   departments: Department[] = [];
   employees: Employee[] = [];
   roles: Designation[] = [];
@@ -32,6 +37,8 @@ export class RolemappingComponent implements OnInit{
   selectedRoleSalaryPackage!: number;
 
   empId: number;
+
+  isEmployeeSelectDisabled = true;
 
   searchInput = new FormControl('');
   pageSizeOptions: number[] = [5, 10, 15, 20];
@@ -66,6 +73,26 @@ export class RolemappingComponent implements OnInit{
     this.fetchTotalEmpRolesalary();
   }
 
+  get formControls() {
+    return this.formData.controls;
+  }
+
+  get departmentId() {
+    return this.formData.get('departmentId');
+  }
+
+  get employeeId() {
+    return this.formData.get('employeeId')!;
+  }
+
+  get roleId() {
+    return this.formData.get('roleId')!;
+  }
+
+  get salary() {
+    return this.formData.get('salary')!;
+  }
+
   initForm(): void {
     this.formData = this.formBuilder.group({
       departmentId: ['', Validators.required],
@@ -88,12 +115,16 @@ export class RolemappingComponent implements OnInit{
   }
 
   fetchEmployeesByDepartment(departmentId: number): void {
+
+    this.employees.splice(0, this.employees.length);
     this.adminService
       .getEmployeesForRoleAssigningByDepartment(departmentId)
       .subscribe(
-        (employees) => {
-          this.employees = employees.data || [];
-          console.log(employees);
+        (response) => {
+          this.employees = response.data || [];
+          console.log(response);
+          this.isEmployeeSelectDisabled = this.employees.length === 0;
+          console.log('isEmployeeSelectDisabled:', this.isEmployeeSelectDisabled);
         },
         (error) => {
           console.log('Error fetching employees:', error);
@@ -114,7 +145,9 @@ export class RolemappingComponent implements OnInit{
   }
 
   submitForm(): void {
-    console.log(this.formData);
+    this.isCompetencyFormValid();
+    if(this.formData.valid){
+      console.log(this.formData);
     const empId: number = this.formData.value.employeeId;
     const roleId: number = this.formData.value.roleId;
     const enteredSalary = this.formData.value.salary;
@@ -131,6 +164,31 @@ export class RolemappingComponent implements OnInit{
           this.formData.reset();
         }
       );
+    }
+  }
+
+  private isCompetencyFormValid() {
+    if (this.formData.invalid) {
+      for (const control of Object.keys(this.formData.controls)) {
+        this.formData.controls[control].markAsTouched();
+      }
+      this.scrollToError();
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  scrollToValidationMessage(el: Element): void {
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  scrollToError(): void {
+    const firstElementWithError: HTMLElement = document.querySelector(
+      '.ng-invalid[formControlName]'
+    );
+    this.scrollToValidationMessage(firstElementWithError);
   }
 
   updateSalaryPlaceholder(): void {

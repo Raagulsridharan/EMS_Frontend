@@ -8,37 +8,34 @@ import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
-    path:'',
-    component: HomeComponent
+    path: '',
+    component: HomeComponent,
   },
-      {
-        path: 'salary',
-        component: SalaryComponent
-      },
-      {
-        path: 'leaveApply',
-        component: LeaveApplyComponent
-      },
-      {
-        path: 'profile',
-        component: ProfileComponent
-      },
-      {
-        path: '', // Redirect empty path to HomeComponent
-        pathMatch: 'full',
-        redirectTo: 'home'
-      },
-  { 
+  {
+    path: 'salary',
+    component: SalaryComponent,
+  },
+  {
+    path: 'leaveApply',
+    component: LeaveApplyComponent,
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+  },
+  {
+    path: '', // Redirect empty path to HomeComponent
+    pathMatch: 'full',
+    redirectTo: '',
+  },
+  {
     path: '**', // Wildcard route for unmatched paths
-    redirectTo: 'home'
-  }
+    redirectTo: '',
+  },
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-  ],
-  exports: [RouterModule]
+  imports: [CommonModule, RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class EmployeeRoutingModule { }
+export class EmployeeRoutingModule {}

@@ -209,7 +209,7 @@ export class LeaveassignComponent implements OnInit {
   openUpdateModal(element: any) {
     console.log(element)
     const modalRef: MdbModalRef<UpdateLeaveAssignComponent> = this.modalService.open(UpdateLeaveAssignComponent);
-    modalRef.component.empId = element.id;
+    modalRef.component.empId = element[0];
   }
 
   openViewModal(element: any) {

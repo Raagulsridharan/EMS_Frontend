@@ -12,28 +12,78 @@
   <div class="mt-3" id="collapseExample" mdbCollapse #collapse="mdbCollapse">
     <form [formGroup]="formData" (ngSubmit)="submitForm()">
       <mdb-form-control>
-        <select formControlName="departmentId" id="departmentId" class="form-control" #mySelect (change)="fetchEmployeesByDepartment(+mySelect.value)">
-          <option value="" disabled selected >Select Department</option>
-          <option *ngFor="let department of departments" [value]="department.id">{{ department.name }}</option>
-      </select>
-      </mdb-form-control>
-      <br>
-      <mdb-form-control>
-        <select formControlName="employeeId" id="employeeId" class="form-control">
-          <option value="">Select Employee</option>
-          <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.emp_name }}</option>
-      </select>
-      </mdb-form-control>
-      <br>
-      <mdb-form-control>
-        <select formControlName="roleId" id="roleId" class="form-control" (change)="updateSalaryPlaceholder()">
-          <option value="">Select Role</option>
-          <option *ngFor="let role of roles" [value]="role.id">{{ role.role }}</option>
-      </select>
+        <select
+          formControlName="departmentId"
+          id="departmentId"
+          class="form-control"
+          #mySelect
+          (change)="fetchEmployeesByDepartment(+mySelect.value)"
+          required
+          [class.is-invalid]="
+            departmentId.invalid && (departmentId.dirty || departmentId.touched)
+          "
+        >
+          <option value="" disabled selected>Select Department</option>
+          <option
+            *ngFor="let department of departments"
+            [value]="department.id"
+          >
+            {{ department.name }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            departmentId.invalid && (departmentId.dirty || departmentId.touched)
+          "
+          class="invalid-feedback"
+          id="form-validation"
+        >
+          <div
+            *ngIf="departmentId.errors?.['required']"
+            class="warning-message"
+          >
+            Please Select a Department
+          </div>
+        </div>
       </mdb-form-control>
       <br />
       <mdb-form-control>
-        <input type="number" formControlName="salary" id="salary" class="form-control" [placeholder]="getSalaryPlaceholder()">
+        <select
+          formControlName="employeeId"
+          id="employeeId"
+          class="form-control"
+          [disabled]="isEmployeeSelectDisabled"
+        >
+          <option value="">Select Employee</option>
+          <option *ngFor="let employee of employees" [value]="employee.id">
+            {{ employee.emp_name }}
+          </option>
+        </select>
+      </mdb-form-control>
+      <br />
+      <mdb-form-control>
+        <select
+          formControlName="roleId"
+          id="roleId"
+          class="form-control"
+          (change)="updateSalaryPlaceholder()"
+          
+        >
+          <option value="">Select Role</option>
+          <option *ngFor="let role of roles" [value]="role.id">
+            {{ role.role }}
+          </option>
+        </select>
+      </mdb-form-control>
+      <br />
+      <mdb-form-control>
+        <input
+          type="number"
+          formControlName="salary"
+          id="salary"
+          class="form-control"
+          [placeholder]="getSalaryPlaceholder()"
+        />
       </mdb-form-control>
       <br />
 
@@ -86,7 +136,9 @@
     <!-- annual package Column -->
     <ng-container matColumnDef="salaryPack">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Annual Package</th>
-      <td mat-cell *matCellDef="let element">{{ element?.annual_package }} LPA</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element?.annual_package }} LPA
+      </td>
     </ng-container>
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
