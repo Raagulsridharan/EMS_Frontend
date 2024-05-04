@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Department } from '../../../model_class/department';
 import { Employee } from '../../../model_class/employee';
 import { AdminService } from '../../../services/admin.service';
@@ -58,8 +63,7 @@ export class LeaveassignComponent implements OnInit {
     this.loadData();
     this.searchInput.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
-      .subscribe(() => this.applyFilter()
-    );
+      .subscribe(() => this.applyFilter());
 
     this.fetchLeaveAssign();
   }
@@ -86,6 +90,7 @@ export class LeaveassignComponent implements OnInit {
   }
 
   fetchEmployeesByDepartment(departmentId: number): void {
+    this.employees.splice(0, this.employees.length);
     this.adminService
       .getEmployeesForLeaveAssigningByDepartment(departmentId)
       .subscribe(
@@ -101,7 +106,7 @@ export class LeaveassignComponent implements OnInit {
 
   fetchAllLeaveTypes(): void {
     this.adminService.getAllLeaveType().subscribe(
-      (leaves:HttpStatusClass) => {
+      (leaves: HttpStatusClass) => {
         this.leaveTypes = leaves.data || [];
         console.log(leaves);
         this.initLeaveTypeFormControls();
@@ -127,33 +132,34 @@ export class LeaveassignComponent implements OnInit {
   }
 
   submitForm(): void {
-    console.log(this.formData);
-    const empId: number = this.formData.value.employeeId;
-    this.leaveAssignList = [];
-    this.leaveTypes.forEach((leaveType, index) => {
-      const leaveId = this.formData.get(`leaveId${index}`)?.value;
-      const noOfdays = this.formData.get(`noOfDays${index}`)?.value;
-      if (leaveId !== null && noOfdays !== null) {
-        this.leaveAssignList.push({
-          leaveId: leaveId.toString(),
-          noOfdays: +noOfdays,
-        });
-      }
-    });
-    console.log(empId, this.leaveAssignList);
-    this.adminService
-      .assignLeaveForEmployee(empId, this.leaveAssignList)
-      .subscribe(
-        (response) => {
-          console.log('Response from backend:', response);
-          this.formData.reset();
-          this.loadData();
-        },
-        (error) => {
-          console.error('Error from backend:', error);
-          this.formData.reset();
+    if (this.formData.valid) {
+      const empId: number = this.formData.value.employeeId;
+      this.leaveAssignList = [];
+      this.leaveTypes.forEach((leaveType, index) => {
+        const leaveId = this.formData.get(`leaveId${index}`)?.value;
+        const noOfdays = this.formData.get(`noOfDays${index}`)?.value;
+        if (leaveId !== null && noOfdays !== null) {
+          this.leaveAssignList.push({
+            leaveId: leaveId.toString(),
+            noOfdays: +noOfdays,
+          });
         }
-      );
+      });
+      console.log(empId, this.leaveAssignList);
+      this.adminService
+        .assignLeaveForEmployee(empId, this.leaveAssignList)
+        .subscribe({
+          next: (response) => {
+            console.log('Response from backend:', response);
+            this.formData.reset();
+            this.loadData();
+          },
+          error: (error) => {
+            console.error('Error from backend:', error);
+            this.formData.reset();
+          },
+        });
+    }
   }
 
   //----------------------------------------------------
@@ -207,18 +213,19 @@ export class LeaveassignComponent implements OnInit {
   }
 
   openUpdateModal(element: any) {
-    console.log(element)
-    const modalRef: MdbModalRef<UpdateLeaveAssignComponent> = this.modalService.open(UpdateLeaveAssignComponent);
+    console.log(element);
+    const modalRef: MdbModalRef<UpdateLeaveAssignComponent> =
+      this.modalService.open(UpdateLeaveAssignComponent);
     modalRef.component.empId = element[0];
   }
 
   openViewModal(element: any) {
     console.log(element);
-    const modalRef: MdbModalRef<ViewEmployeeLeavesComponent> = this.modalService.open(ViewEmployeeLeavesComponent, {
-      modalClass: 'modal-dialog-centered',
-      animation: true,
-      
-    })
+    const modalRef: MdbModalRef<ViewEmployeeLeavesComponent> =
+      this.modalService.open(ViewEmployeeLeavesComponent, {
+        modalClass: 'modal-dialog-centered',
+        animation: true,
+      });
     modalRef.component.empId = element[0];
   }
 }

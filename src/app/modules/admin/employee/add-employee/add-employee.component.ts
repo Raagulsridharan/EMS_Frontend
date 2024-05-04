@@ -99,8 +99,7 @@ export class AddEmployeeComponent implements OnInit {
         error: (error) => {
           this.toastr.error(''+error.error.message)
         }
-      }
-      );
+      });
     } else {
       console.log("ElsePart In OnSubmit()")
     }
@@ -130,6 +129,7 @@ export class AddEmployeeComponent implements OnInit {
     this.scrollToValidationMessage(firstElementWithError);
   }
 }
+
 function _isNil(data: any) {
   throw new Error('Function not implemented.');
 }

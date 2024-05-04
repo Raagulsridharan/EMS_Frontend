@@ -119,27 +119,27 @@ export class AdminService {
     );
   }
 
-  addDesignation(designation: string, salary_package: string): Observable<any> {
-    const designationData = {
-      role: designation,
-      salary_package: salary_package,
-    };
-    console.log('Designation Data:', designationData);
+  designation:Designation;
+  addDesignation(designationData:Designation): Observable<Designation> {
 
-    return this.httpClient.post(this.designationURL, designationData).pipe(
-      tap((response) => {
-        console.log('Add Designation Response:', response);
+    //console.log('Designation Data:', designationData);
+
+    return this.httpClient.post<HttpStatusClass>(BaseUrl.DESIGNATION_URL, designationData).pipe(
+      map((response:HttpStatusClass) => {
+        //console.log('Add Designation Response:', response);
+        this.designation = response.data;
+        return this.designation;
       }),
       catchError((error) => {
-        console.error('Error adding designation:', error);
-        console.log('Error Response Body:', error.error);
+        //console.error('Error adding designation:', error);
+        //console.log('Error Response Body:', error.error);
         throw error;
       })
     );
   }
 
   getAllDesignation(): Observable<HttpStatusClass> {
-    console.log('Fetching All designation...');
+    //console.log('Fetching All designation...');
 
     return this.httpClient.get<HttpStatusClass>(`${this.designationURL}`).pipe(
       catchError((error: any) => {
@@ -216,16 +216,22 @@ export class AdminService {
     );
   }
 
+  employees: Employee[];
+
   getEmployeesForRoleAssigningByDepartment(
     departmentId: number
-  ): Observable<HttpStatusClass> {
-    console.log('Fetching Employees by Department for Role assigning...');
+  ): Observable<Employee[]> {
+    //console.log('Fetching Employees by Department for Role assigning...');
 
     return this.httpClient
       .get<HttpStatusClass>(BaseUrl.EMPLOYEE_BASE_URL+`/role-assign/${departmentId}`)
       .pipe(
+        map ((response:HttpStatusClass)=>{
+          this.employees = response.data;
+          return this.employees;
+        }),
         catchError((error: any) => {
-          console.error('API request failed:', error);
+          //console.error('API request failed:', error);
           return throwError(error);
         })
       );
@@ -360,25 +366,20 @@ export class AdminService {
       );
   }
 
-  updateDesignation(
-    designationId: number,
-    updatedDesignation: string,
-    salaryPackage: string
-  ): Observable<HttpStatusClass> {
-    const designationData = {
-      role: updatedDesignation,
-      salary_package: salaryPackage,
-    };
+  updateDesignation(designationId:number,designationData:Designation): Observable<Designation> {
 
     return this.httpClient
-      .put<HttpStatusClass>(
-        `${this.designationURL}/${designationId}`,
-        designationData
-      )
+      .put<HttpStatusClass>(BaseUrl.DESIGNATION_URL+`/${designationId}`,designationData)
       .pipe(
-        catchError((error: any) => {
-          console.error('API request failed:', error);
-          return throwError(error);
+        map((response:HttpStatusClass) => {
+          //console.log('Update Designation Response:', response);
+          this.designation = response.data;
+          return this.designation;
+        }),
+        catchError((error) => {
+          console.error('Error adding designation:', error);
+          console.log('Error Response Body:', error.error);
+          throw error;
         })
       );
   }
