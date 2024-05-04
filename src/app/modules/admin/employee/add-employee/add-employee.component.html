@@ -70,10 +70,9 @@
                     class="form-outline datepicker w-100"
                   >
                     <input
-                      type="text"
+                      type="date"
                       class="form-control form-control-lg"
                       id="birthdayDate"
-                      placeholder="Date Of Birth(YYYY-MM-DD)"
                       formControlName="birthday"
                     />
                     <!-- <label for="birthdayDate" class="form-label">Birthday</label> -->
@@ -186,7 +185,7 @@
               <br />
               <div class="form-group">
                 <select
-                  class="select form-control-lg"
+                  class="form-control"
                   formControlName="departmentId"
                   id="departmentId"
                   required
@@ -195,7 +194,7 @@
                     (departmentId.dirty || departmentId.touched)
                   "
                 >
-                  <option value="1" disabled>Choose Department</option>
+                  <option value="" disabled selected>Choose Department</option>
                   <option
                     *ngFor="let department of departments"
                     [value]="department.id"

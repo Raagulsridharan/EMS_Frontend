@@ -1,4 +1,4 @@
-export interface EmpFlag{
+export class EmpFlag{
     empId: number;
     flag: number;
 }

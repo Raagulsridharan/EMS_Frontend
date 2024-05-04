@@ -12,7 +12,7 @@ import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 export class UpdateEmployeeComponent implements OnInit {
   @Input() empId!: number;
   @Input() empName!: string;
-  @Input() deptName!: Department[];
+  @Input() deptName!: Department;
   @Input() mobille!: number;
   @Input() address!: string;
 

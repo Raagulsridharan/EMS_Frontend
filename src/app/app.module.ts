@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -34,7 +36,9 @@ import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbDropdownModule } from 'mdb-angular-ui-kit/dropdown';
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
+
 import { EmployeeComponent } from './components/employee/employee.component';
+
 
 
 
@@ -52,6 +56,8 @@ import { EmployeeComponent } from './components/employee/employee.component';
     ReactiveFormsModule,
     RouterModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     
     MatIconModule,
     MatToolbarModule,

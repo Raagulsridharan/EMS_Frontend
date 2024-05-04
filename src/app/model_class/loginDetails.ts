@@ -1,10 +1,10 @@
 import { Employee } from "./employee";
 
-export interface Logindetails{
+export class LoginDetails{
     id: number;
     username: string;
     password: string;
     flag: number;
     acctivatedOn: Date;
-    employee: Employee[];
+    deptId: number;
 }

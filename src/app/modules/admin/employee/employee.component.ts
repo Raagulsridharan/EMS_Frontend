@@ -56,13 +56,19 @@ export class EmployeeComponent {
     this.filterOptions = new FilterOption();
     this.pageSize = this.filterOptions.pageSize;
     this.currentPage = this.filterOptions.pageNo;
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
     this.loadData();
 
     this.searchInput.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
-      .subscribe(() => this.applyFilter());
+      .subscribe(() => this.applyFilter()
+    );
 
     this.fetchTotalEmployees();
+
+    this.dataSource.sort = this.sort;
+
   }
 
   get formControls() {
@@ -100,12 +106,14 @@ export class EmployeeComponent {
 
   loadData() {
     this.employeeService.filter(this.filterOptions).subscribe((response) => {
+      if(response !==null || response != undefined){
       if (response.statusCode === 200) {
         this.dataSource.data = response.data;
         // this.totalItems = response.totalItems;
       } else {
         console.error('Error fetching employees:', response.description);
       }
+    }
     });
   }
 
@@ -116,8 +124,10 @@ export class EmployeeComponent {
   }
 
   applyFilter() {
-    // this.currentPage = 0;
     this.filterOptions.searchKey = this.searchInput.value;
+    this.filterOptions.sortBy = this.sort.active; // Get sorted column
+    console.log(this.sort)
+    //this.filterOptions.sortOrder = this.sort.direction; // Get sort order
     this.loadData();
   }
 

@@ -3,6 +3,10 @@ import { Department } from '../../../../model_class/department';
 import { AdminService } from '../../../../services/admin.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as _ from 'lodash';
+import { ToastrService } from 'ngx-toastr';
+import { Employee } from '../../../../model_class/employee';
+import { LoginDetails } from '../../../../model_class/loginDetails';
 
 @Component({
   selector: 'app-add-employee',
@@ -16,8 +20,11 @@ export class AddEmployeeComponent implements OnInit {
     departmentId: new FormControl('')
   });
   departments: Department[] = [];
+  employeeData: Employee = new Employee();
+  loginDetails: LoginDetails = new LoginDetails();
 
   constructor(
+    private toastr: ToastrService,
     private router: Router,
     private adminService: AdminService,
     private formBuilder: FormBuilder
@@ -48,58 +55,54 @@ export class AddEmployeeComponent implements OnInit {
     this.formData = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      birthday: [''],
-      gender: [''], // Add form control for gender
-      email: [''],
-      mobile: [''],
-      address: [''],
-      departmentId: [''] // Add form control for department if needed
+      birthday: ['', Validators.required],
+      gender: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      mobile: ['', [Validators.required, Validators.pattern('[0-9]+')]],
+      address: ['', Validators.required],
+      departmentId: ['', Validators.required]
     });
   }
 
   loadDepartments(): void {
-    this.adminService.getAllDepartments().subscribe(
-      (departments) => {
-        this.departments = departments.data;
-        console.log(departments);
+    this.adminService.getAllDepartments().subscribe({
+      next:(response) =>{
+        if (response.data){
+          this.departments = response.data;
+        }
       },
-      (error) => {
+      error:(error) =>{
         console.log('Error fetching departments:', error);
       }
-    );
+    });
   }
 
   onSubmit(): void {
     this.isCompetencyFormValid();
     if (this.formData.valid) {
       const empName = this.formData.value.firstName + ' ' + this.formData.value.lastName;
-      const formDataWithEmpName = { ...this.formData.value, emp_name: empName };
-      console.log(formDataWithEmpName); // Use this to send the form data to backend
-      this.adminService.addEmployee(formDataWithEmpName).subscribe(
-        (response) => {
-          console.log('Employee added successfully:', response);
+      this.employeeData = { ...this.formData.value, emp_name: empName };
+      this.adminService.addEmployee(this.employeeData).subscribe({
+        next: (response:any) => {
           this.formData.reset();
-
-          const email:string = response.data.username;
-          const password:string = response.data.password;
-          const deptId:number = response.data.employee_login.department.id;
-          this.adminService.sentEmailForLoginCredential(email, password, deptId).subscribe(
-            (response)=>{
-              console.log(response);
-            }
-          );
           this.router.navigateByUrl('/admin/employee');
+          this.toastr.success('Successfully Profile created!'+response.employee.name)
+          // this.loginDetails.username = response.username;
+          // this.loginDetails.password = response.password;
+          // this.loginDetails.deptId = response.employee.department.id;
+          // this.adminService.sentEmailForLoginCredential(this.loginDetails).subscribe(
+          //   (response)=>{
+          //     console.log(response);
+          //   }
+          // );
         },
-        (error) => {
-          alert('Error in adding employee...!')
-          console.error('Error adding employee:', error);
-          this.formData.reset();
+        error: (error) => {
+          this.toastr.error(''+error.error.message)
         }
+      }
       );
     } else {
-      //alert('Error...!')
       console.log("ElsePart In OnSubmit()")
-      // Handle form validation errors
     }
   }
 
@@ -127,3 +130,7 @@ export class AddEmployeeComponent implements OnInit {
     this.scrollToValidationMessage(firstElementWithError);
   }
 }
+function _isNil(data: any) {
+  throw new Error('Function not implemented.');
+}
+

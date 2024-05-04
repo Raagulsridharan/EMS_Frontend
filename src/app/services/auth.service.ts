@@ -1,61 +1,60 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { EmpFlag } from '../model_class/empFlag';
 import { HttpStatusClass } from '../model_class/httpStatusClass';
 import { BaseUrl } from '../model_class/baseUrl';
+import { ToastrService } from 'ngx-toastr';
+import { LoginDetails } from '../model_class/loginDetails';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  constructor(private http: HttpClient, private toastr: ToastrService) {}
 
-  constructor(private http: HttpClient) {}
+  empFlag: EmpFlag = new EmpFlag();
 
-  login(email: string, password: string) {
-
-    const body = {
-      username: email,
-      password: password
-    };
+  login(loginData:LoginDetails):Observable<EmpFlag>{
 
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     });
 
-    return this.http.post<EmpFlag>(BaseUrl.LOGIN_DETAILS_URL, body, { headers })
-    .pipe(
-      catchError((error: any) => {
-        if (error.status === 400 || error.status === 500) {
-          alert('Invalid credentials. Please try again.');
-        }
-        else {
-          console.log(
-            'Setting alert message: Login failed. Please try again later.'
-          );
-          console.error('Login failed. Error:', error);
-        }
-        return throwError(error);
-      })
-    );
+    return this.http
+      .post<HttpStatusClass>(BaseUrl.LOGIN_DETAILS_URL, loginData, { headers })
+      .pipe(
+        map((response) => {
+          //console.log(response);
+          this.empFlag.empId = response.data.empId;
+          this.empFlag.flag = response.data.flag;
+          return this.empFlag;
+        }),
+        catchError((error) => {
+          
+          throw error;
+        })
+      );
   }
 
   getUserType(email: string): Observable<HttpStatusClass> {
-    return this.http.get<HttpStatusClass>(BaseUrl.DESIGNATION_URL + '/user-type/' + email);
+    return this.http.get<HttpStatusClass>(
+      BaseUrl.DESIGNATION_URL + '/user-type/' + email
+    );
   }
 
-  updatePassword(empId: string, password: string): Observable<HttpStatusClass>{
-
+  updatePassword(empId: string, password: string): Observable<HttpStatusClass> {
     const body = {
       empId: empId,
-      password: password
+      password: password,
     };
 
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     });
 
-    return this.http.put<HttpStatusClass>(BaseUrl.LOGIN_DETAILS_URL,body, { headers });
+    return this.http.put<HttpStatusClass>(BaseUrl.LOGIN_DETAILS_URL, body, {
+      headers,
+    });
   }
-
 }

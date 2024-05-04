@@ -1,175 +1,88 @@
-<div class="welcome">
-  <h1 class="card-title text-center">WELCOME TO EMPLOYEE MANAGEMENT SYSTEM</h1>
-  <p class="card-text text-center">
-    Welcome to our Employee Management System (EMS). We strive to provide a
-    comprehensive platform for managing all aspects of employee administration
-    efficiently.
-  </p>
-</div>
 <div class="login">
   <div class="svg">
     <img src="assets/login_svg.svg" alt />
   </div>
   <div class="line"></div>
   <div class="login_form">
-    <h1>Sign In As</h1>
-    <mdb-tabs [justified]="true">
-      <mdb-tab title="Admin">
-        <form [formGroup]="loginForm" (submit)="submitForm()">
-          <!-- Email input -->
-          <div class="form-group mb-4">
-            <label class="form-label" for="email">Enter Your Email</label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Email"
-              formControlName="email"
-              class="form-control form-control-sm"
-              required
-              [class.is-invalid]="
-                email.invalid && (email.dirty || email.touched)
-              "
-            />
-            <div
-              *ngIf="email.invalid && (email.dirty || email.touched)"
-              class="invalid-feedback"
-              id="form-validation"
-            >
-              <div *ngIf="email.errors?.['required']" class="warning-message">
-                Email is required.
-              </div>
-              <div *ngIf="email.errors?.['valid']" class="warning-message">
-                Please enter a valid email.
-              </div>
-            </div>
+    <h1>Sign In</h1>
+    <form [formGroup]="loginForm" (submit)="submitForm()">
+      <!-- Email input -->
+      <div class="form-group mb-4">
+        <label class="form-label" for="email">Enter Your Email</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="Email"
+          formControlName="email"
+          class="form-control form-control-sm"
+          required
+          [class.is-invalid]="email.invalid && (email.dirty || email.touched)"
+        />
+        <div
+          *ngIf="email.invalid && (email.dirty || email.touched)"
+          class="invalid-feedback"
+          id="form-validation"
+        >
+          <div *ngIf="email.errors?.['required']" class="warning-message">
+            Email is required.
           </div>
+          <div *ngIf="email.errors?.['valid']" class="warning-message">
+            Please enter a valid email.
+          </div>
+        </div>
+      </div>
 
-          <!-- Password input -->
-          <div class="form-group mb-4">
-            <label class="form-label" for="loginPassword">Enter Password</label>
-            <input
-              type="{{ hidePassword ? 'password' : 'text' }}"
-              id="password"
-              placeholder="Password"
-              formControlName="password"
-              class="form-control form-control-sm"
-              required
-              [class.is-invalid]="
-                password.invalid && (password.dirty || password.touched)
-              "
-            />
-            <i
-              class="far"
-              [ngClass]="{
-                'fa-eye': !hidePassword,
-                'fa-eye-slash': hidePassword
-              }"
+      <!-- Password input -->
+      <div class="form-group mb-4">
+        <label class="form-label" for="loginPassword">Enter Password</label>
+        <div class="input-group">
+          <input
+            type="{{ hidePassword ? 'password' : 'text' }}"
+            id="password"
+            placeholder="Password"
+            formControlName="password"
+            class="form-control form-control-sm"
+            required
+            [class.is-invalid]="
+              password.invalid && (password.dirty || password.touched)
+            "
+          />
+          <div class="input-group-append">
+            <span
+              class="input-group-text"
+              style="border: none; margin-top: 35px"
               (click)="togglePasswordVisibility()"
-            ></i>
-            <div
-              *ngIf="password.invalid && (password.dirty || password.touched)"
-              class="invalid-feedback"
-              id="form-validation"
             >
-              <div
-                *ngIf="password.errors?.['required']"
-                class="warning-message"
-              >
-                Password is required.
-              </div>
+              <i
+                class="far"
+                [ngClass]="{
+                  'fa-eye': !hidePassword,
+                  'fa-eye-slash': hidePassword
+                }"
+              ></i>
+            </span>
+          </div>
+          <div
+            *ngIf="password.invalid && (password.dirty || password.touched)"
+            class="invalid-feedback"
+            id="form-validation"
+          >
+            <div *ngIf="password.errors?.['required']" class="warning-message">
+              Password is required.
             </div>
           </div>
+        </div>
+      </div>
 
-          <!-- Submit button -->
-          <div class="btns">
-            <button
-              mdbRipple
-              type="submit"
-              class="signin btn btn-primary btn-block mb-4"
-            >
-              Sign in
-            </button>
-          </div>
-        </form>
-      </mdb-tab>
-      <mdb-tab title="Employee">
-        <form [formGroup]="loginForm" (submit)="employeeLogin()">
-          <!-- Email input -->
-          <div class="form-group mb-4">
-            <label class="form-label" for="email">Enter Your Email</label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Email"
-              formControlName="email"
-              class="form-control form-control-sm"
-              required
-              [class.is-invalid]="
-                email.invalid && (email.dirty || email.touched)
-              "
-            />
-            <div
-              *ngIf="email.invalid && (email.dirty || email.touched)"
-              class="invalid-feedback"
-              id="form-validation"
-            >
-              <div *ngIf="email.errors?.['required']" class="warning-message">
-                Email is required.
-              </div>
-              <div *ngIf="email.errors?.['valid']" class="warning-message">
-                Please enter a valid email.
-              </div>
-            </div>
-          </div>
-
-          <!-- Password input -->
-          <div class="form-group mb-4">
-            <label class="form-label" for="loginPassword">Enter Password</label>
-            <input
-              type="{{ hidePassword ? 'password' : 'text' }}"
-              id="password"
-              placeholder="Password"
-              formControlName="password"
-              class="form-control form-control-sm"
-              required
-              [class.is-invalid]="
-                password.invalid && (password.dirty || password.touched)
-              "
-            />
-            <i
-              class="far"
-              [ngClass]="{
-                'fa-eye': !hidePassword,
-                'fa-eye-slash': hidePassword
-              }"
-              (click)="togglePasswordVisibility()"
-            ></i>
-            <div
-              *ngIf="password.invalid && (password.dirty || password.touched)"
-              class="invalid-feedback"
-              id="form-validation"
-            >
-              <div
-                *ngIf="password.errors?.['required']"
-                class="warning-message"
-              >
-                Password is required.
-              </div>
-            </div>
-          </div>
-
-          <!-- Submit button -->
-          <div class="btns">
-            <button
-              mdbRipple
-              type="submit"
-              class="signin btn btn-primary btn-block mb-4"
-            >
-              Sign in
-            </button>
-          </div>
-        </form>
-      </mdb-tab>
-    </mdb-tabs>
+      <!-- Submit button -->
+      <div class="btns">
+        <button
+          type="submit"
+          class="signin btn btn-primary btn-block mb-4"
+        >
+          Sign in
+        </button>
+      </div>
+    </form>
   </div>
 </div>

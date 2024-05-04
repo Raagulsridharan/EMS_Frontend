@@ -1,16 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { EmpFlag } from '../../model_class/empFlag';
 import { HttpStatusClass } from '../../model_class/httpStatusClass';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-activation-page',
   templateUrl: './activation-page.component.html',
-  styleUrl: './activation-page.component.scss'
+  styleUrl: './activation-page.component.scss',
 })
-export class ActivationPageComponent implements OnInit{
+export class ActivationPageComponent implements OnInit {
   empId!: string;
   hidePassword: boolean = true;
 
@@ -20,6 +26,7 @@ export class ActivationPageComponent implements OnInit{
   });
 
   constructor(
+    private toastr: ToastrService,
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router,
@@ -27,12 +34,12 @@ export class ActivationPageComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.empId = params['id'];
     });
     this.myForm = this.formBuilder.group({
       newpassword: ['', Validators.required],
-      confirmnewpassword: ['', Validators.required]
+      confirmnewpassword: ['', Validators.required],
     });
   }
 
@@ -75,7 +82,7 @@ export class ActivationPageComponent implements OnInit{
     this.scrollToValidationMessage(firstElementWithError);
   }
 
-  updatePassword(): void{
+  updatePassword(): void {
     this.isCompetencyFormValid();
     if (this.myForm.invalid) {
       return;
@@ -85,22 +92,20 @@ export class ActivationPageComponent implements OnInit{
     const confirmNewPassword = this.myForm.value.confirmnewpassword;
 
     if (newPassword !== confirmNewPassword) {
-      alert('enter correct passwords!');
+      this.toastr.error('Enter Correct Password!');
       this.myForm.reset();
       return;
     }
 
-    this.authService.updatePassword(this.empId, newPassword)
-      .subscribe(
-        (result:HttpStatusClass) => {
-          alert('Password updated successfully');
-          this.router.navigate(['', this.empId]);
-        },
-        error => {
-          console.error('Error updating password:', error);
-          alert('Error in Password updating...');
-        }
-      );
+    this.authService.updatePassword(this.empId, newPassword).subscribe(
+      () => {
+        this.toastr.success('Password Updated Successfully!');
+        this.router.navigate(['']);
+      },
+      (error) => {
+        console.error('Error updating password:', error);
+        this.toastr.error('Error updating password:');
+      }
+    );
   }
-
 }

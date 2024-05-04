@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import { Employee } from '../model_class/employee';
 import { Department } from '../model_class/department';
 import { Designation } from '../model_class/designation';
 import { RoleMapping } from '../model_class/roleMapping';
 import { Payroll } from '../model_class/payroll';
 import { HttpStatusClass } from '../model_class/httpStatusClass';
-import { Logindetails } from '../model_class/loginDetails';
+import { LoginDetails } from '../model_class/loginDetails';
 import { LeaveAssign } from '../model_class/leaveAssign';
 import { BaseUrl } from '../model_class/baseUrl';
 
@@ -108,9 +108,10 @@ export class AdminService {
   }
 
   getAllDepartments(): Observable<HttpStatusClass> {
-    console.log('Fetching All departments...');
+    //console.log('Fetching All departments...');
 
-    return this.httpClient.get<HttpStatusClass>(`${this.departmentURL}`).pipe(
+    return this.httpClient.get<HttpStatusClass>(`${this.departmentURL}`)
+    .pipe(
       catchError((error: any) => {
         console.error('API request failed:', error);
         return throwError(error);
@@ -148,30 +149,31 @@ export class AdminService {
     );
   }
 
-  addEmployee(employeeData: any): Observable<any> {
-    return this.httpClient.post(`${this.employeeURL}`, employeeData).pipe(
-      tap((response) => {
+  employee:LoginDetails;
+  addEmployee(employeeData: Employee): Observable<LoginDetails> {
+    return this.httpClient.post(BaseUrl.EMPLOYEE_BASE_URL, employeeData)
+    .pipe(
+      map((response:HttpStatusClass) => {
+        this.employee = response.data;
         console.log('Add Employee Response:', response);
+        return this.employee;
       }),
       catchError((error) => {
-        console.error('Error adding employee:', error);
-        console.log('Error Response Body:', error.error);
+        //console.error('Error adding employee:', error);
+        //console.log('Error Response Body:', error.error);
         throw error;
       })
     );
   }
 
-  sentEmailForLoginCredential(
-    username: string,
-    password: string,
-    deptId: number
-  ): Observable<any> {
-    const loginData = { username, password, deptId };
+  sentEmailForLoginCredential(loginData:LoginDetails): Observable<HttpStatusClass | LoginDetails> {
+    //const loginData = { username, password, deptId };
     console.log('Email Credential Data:', loginData);
 
     return this.httpClient.post(`${this.emailUrl}`, loginData).pipe(
-      tap((response) => {
+      tap((response:HttpStatusClass) => {
         console.log('Email sent...', response);
+        return response.data;
       }),
       catchError((error) => {
         console.error('Error in email sending:', error);

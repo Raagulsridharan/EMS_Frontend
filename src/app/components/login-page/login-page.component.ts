@@ -10,6 +10,8 @@ import { AuthService } from '../../services/auth.service';
 import { EmpFlag } from '../../model_class/empFlag';
 import { MdbTabChange } from 'mdb-angular-ui-kit/tabs';
 import { HttpStatusClass } from '../../model_class/httpStatusClass';
+import { ToastrService } from 'ngx-toastr';
+import { LoginDetails } from '../../model_class/loginDetails';
 
 @Component({
   selector: 'app-login-page',
@@ -22,9 +24,11 @@ export class LoginPageComponent {
     password: new FormControl(''),
   });
 
+  loginDetails: LoginDetails = new LoginDetails();
   hidePassword: boolean = true;
 
   constructor(
+    private toastr: ToastrService,
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router
@@ -84,50 +88,39 @@ export class LoginPageComponent {
   submitForm() {
     this.isCompetencyFormValid();
     if (this.loginForm.valid) {
-      const email = this.loginForm.value.email;
-      const password = this.loginForm.value.password;
+      this.loginDetails.username = this.loginForm.value.email;
+      this.loginDetails.password = this.loginForm.value.password;
 
-      this.authService.login(email, password).subscribe((result: EmpFlag) => {
-        console.log(result);
-        if (result.flag === 0) {
-          this.router.navigate(['/accountActivation', result.empId]);
-        } else if (result.flag === 1) {
-          //this.router.navigate(['/admin']);
-          this.authService
-            .getUserType(email)
-            .subscribe((userType: HttpStatusClass) => {
-              console.log(userType);
-              const user: string[] = userType.data;
-              if (user.includes('Admin')) {
-                this.router.navigate(['/admin/dashboard']);
-              } else {
-                alert('You are not an admin!!!');
-              }
-            });
-        } else {
-          console.log('else submitform');
+      this.authService.login(this.loginDetails).subscribe({
+        next: (result: EmpFlag) => {
+          //console.log(result);
+          if (result.flag === 0) {
+            this.router.navigate(['/accountActivation', result.empId]);
+          } else if (result.flag === 1) {
+            localStorage.setItem('employeeId', String(result.empId));
+            this.authService
+              .getUserType(this.loginDetails.username)
+              .subscribe((userType: HttpStatusClass) => {
+                //console.log(userType);
+                const user: string[] = userType.data;
+                if (user.includes('Admin')) {
+                  this.router.navigate(['/admin/dashboard']);
+                } else {
+                  this.router.navigate(['/employee']);
+                }
+              });
+          } else {
+            console.log('else submitform');
+          }
+        },
+        error: (error) => {
+          this.toastr.error('Invalid Credential !')
         }
       });
     }
   }
 
-  employeeLogin() {
-    this.isCompetencyFormValid();
-    if (this.loginForm.valid) {
-      const email = this.loginForm.value.email;
-      const password = this.loginForm.value.password;
-
-      this.authService.login(email, password).subscribe((result: EmpFlag) => {
-        console.log(result);
-        if (result.flag === 0) {
-          this.router.navigate(['/accountActivation', result.empId]);
-        } else if (result.flag === 1) {
-          localStorage.setItem('employeeId', String(result.empId));
-          this.router.navigate(['/employee']);
-        } else {
-          console.log('else submitform');
-        }
-      });
-    }
+  clearField() {
+    this.loginForm.reset();
   }
 }

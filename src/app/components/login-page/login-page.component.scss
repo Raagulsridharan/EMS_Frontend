@@ -1,7 +1,7 @@
 $orange: #f05e23;
 $head_text: #333;
 $error: red;
-$box_shadow:lightgrey;
+$box_shadow: lightgrey;
 .login {
   display: flex;
   width: 98%;
@@ -35,16 +35,14 @@ $box_shadow:lightgrey;
     form {
       display: flex;
       flex-direction: column;
-      input,
-      select {
+      input{
         border: none;
         border-bottom: 2px solid $orange;
         box-shadow: 0px -2px 7px -2px $box_shadow;
         padding: 10px 5px;
         border-radius: 5px 5px 0 0;
         outline: none;
-        margin-bottom: 10px;
-        margin-bottom: 25px;
+        margin: 25px;
       }
       i {
         cursor: pointer;
@@ -53,7 +51,8 @@ $box_shadow:lightgrey;
       }
       .btns {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: center;
+        align-items: center;
         .signin {
           padding: 8px 5px;
           border: 1px solid #f05e23;
