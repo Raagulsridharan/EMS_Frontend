@@ -12,7 +12,7 @@
       <div class="mb-3">
         <p>Employee Name: {{ empName }}</p>
         <p>Department Name: {{ dept }}</p>
-        <label for="designation" class="form-label">Designation Name</label>
+        <!-- <label for="designation" class="form-label">Designation Name</label> -->
         <mdb-form-control>
           <select
             formControlName="designation"
@@ -31,13 +31,14 @@
         </mdb-form-control>
       </div>
       <div class="mb-3">
-        <label for="salaryPackage" class="form-label">Salary Package : </label>
+        <!-- <label for="salaryPackage" class="form-label">Salary Package : </label> -->
         <input
           type="text"
           class="form-control"
           id="salaryPackage"
           name="salaryPackage"
           formControlName="updateSalaryPackage"
+          placeholder="Enter Salary Package"
         />
       </div>
     </form>

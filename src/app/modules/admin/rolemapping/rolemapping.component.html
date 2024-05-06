@@ -53,12 +53,26 @@
           id="employeeId"
           class="form-control"
           [disabled]="isEmployeeSelectDisabled"
+          required
+          [class.is-invalid]="
+            employeeId.invalid && (employeeId.dirty || employeeId.touched)
+          "
         >
           <option value="">Select Employee</option>
           <option *ngFor="let employee of employees" [value]="employee.id">
             {{ employee.emp_name }}
           </option>
         </select>
+
+        <div
+          *ngIf="employeeId.invalid && (employeeId.dirty || employeeId.touched)"
+          class="invalid-feedback"
+          id="form-validation"
+        >
+          <div *ngIf="employeeId.errors?.['required']" class="warning-message">
+            Please Select a Employee
+          </div>
+        </div>
       </mdb-form-control>
       <br />
       <mdb-form-control>
@@ -67,13 +81,25 @@
           id="roleId"
           class="form-control"
           (change)="updateSalaryPlaceholder()"
-          
+          required
+          [class.is-invalid]="
+            roleId.invalid && (roleId.dirty || roleId.touched)
+          "
         >
           <option value="">Select Role</option>
           <option *ngFor="let role of roles" [value]="role.id">
             {{ role.role }}
           </option>
         </select>
+        <div
+          *ngIf="roleId.invalid && (roleId.dirty || roleId.touched)"
+          class="invalid-feedback"
+          id="form-validation"
+        >
+          <div *ngIf="roleId.errors?.['required']" class="warning-message">
+            Please Select a Role
+          </div>
+        </div>
       </mdb-form-control>
       <br />
       <mdb-form-control>
@@ -83,7 +109,20 @@
           id="salary"
           class="form-control"
           [placeholder]="getSalaryPlaceholder()"
+          required
+          [class.is-invalid]="
+            salary.invalid && (salary.dirty || salary.touched)
+          "
         />
+        <div
+          *ngIf="salary.invalid && (salary.dirty || salary.touched)"
+          class="invalid-feedback"
+          id="form-validation"
+        >
+          <div *ngIf="salary.errors?.['required']" class="warning-message">
+            Please provide a Salary
+          </div>
+        </div>
       </mdb-form-control>
       <br />
 
@@ -113,7 +152,6 @@
     <i class="fa-solid fa-magnifying-glass"></i>
   </div>
   <table mat-table [dataSource]="dataSource" matSort>
-    
     <!-- Employee Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Name</th>

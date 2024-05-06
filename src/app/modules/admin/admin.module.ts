@@ -47,7 +47,6 @@ import { MakePaymentComponent } from './payroll/make-payment/make-payment.compon
 import { ViewEmployeeLeavesComponent } from './leaveassign/view-employee-leaves/view-employee-leaves.component';
 
 
-
 @NgModule({
   declarations: [
     SidebarComponent,
@@ -95,7 +94,7 @@ import { ViewEmployeeLeavesComponent } from './leaveassign/view-employee-leaves/
     MatTableModule,
     MdbCollapseModule,
     MdbModalModule,
-    MdbValidationModule
+    MdbValidationModule,
   ]
 })
 export class AdminModule { }

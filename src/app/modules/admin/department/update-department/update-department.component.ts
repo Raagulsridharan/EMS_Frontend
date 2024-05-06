@@ -11,6 +11,7 @@ import { AdminService } from '../../../../services/admin.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { tick } from '@angular/core/testing';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-update-department',
@@ -28,6 +29,7 @@ export class UpdateDepartmentComponent implements OnInit {
   defaultValue: string = '';
 
   constructor(
+    private toastrService: ToastrService,
     private formBuilder: FormBuilder,
     private adminService: AdminService,
     public modalRef: MdbModalRef<UpdateDepartmentComponent>
@@ -45,23 +47,25 @@ export class UpdateDepartmentComponent implements OnInit {
   }
 
   updateDepartment(): void {
-    console.log(this.departmentId, this.formData.value.updateDepartmentName);
-    this.adminService
+    //console.log(this.departmentId, this.formData.value.updateDepartmentName);
+    if(this.formData.valid){
+      this.adminService
       .updateDepartment(
         this.departmentId,
         this.formData.value.updateDepartmentName
       )
-      .subscribe(
-        (response) => {
-          console.log('Department updated successfully:', response.data);
+      .subscribe({
+        next:(response) => {
           this.formData.reset();
           this.modalRef.close();
         },
-        (error) => {
-          alert('Error in updating department...!');
-          console.error('Error updating department:', error);
+        error:(error) => {
           this.formData.reset();
+          this.toastrService.error('Duplicate entry!')
         }
-      );
+      });
+    }else{
+      this.toastrService.warning('Please Update!')
+    }
   }
 }

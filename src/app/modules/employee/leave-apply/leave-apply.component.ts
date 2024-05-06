@@ -20,6 +20,8 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { UpdateLeave } from '../../../model_class/updateLeave';
 import { ViewEmployeeLeavesComponent } from '../../admin/leaveassign/view-employee-leaves/view-employee-leaves.component';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
+import { ToastrService } from 'ngx-toastr';
+import moment from 'moment';
 
 @Component({
   selector: 'app-leave-apply',
@@ -31,7 +33,7 @@ export class LeaveApplyComponent implements OnInit {
     leaveType: new FormControl(''),
     note: new FormControl(''),
     departmentId: new FormControl(''),
-    toDate: new FormControl('')
+    toDate: new FormControl(''),
   });
 
   leaveTypes: LeaveType[] = [];
@@ -39,6 +41,7 @@ export class LeaveApplyComponent implements OnInit {
   leaveApplied: LeaveApplied;
 
   constructor(
+    private toastrService: ToastrService,
     private formBuilder: FormBuilder,
     private leaveService: LeaveService,
     private adminService: AdminService,
@@ -47,7 +50,8 @@ export class LeaveApplyComponent implements OnInit {
 
   ngOnInit(): void {
     this.empId = localStorage.getItem('employeeId');
-    this.fetchAllLeaveTypes();
+    //this.fetchAllLeaveTypes();
+    this.fetchEmployeeLeaveTypes();
     this.leaveForm = this.formBuilder.group({
       leaveType: ['', Validators.required],
       note: ['', Validators.required],
@@ -55,14 +59,12 @@ export class LeaveApplyComponent implements OnInit {
       toDate: ['', Validators.required],
     });
 
-
     this.filterOptions = new FilterOption();
     this.pageSize = this.filterOptions.pageSize;
     this.currentPage = this.filterOptions.pageNo;
     this.searchInput.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
-      .subscribe(() => this.applyFilter()
-    );
+      .subscribe(() => this.applyFilter());
     this.fetchTotalLeaveHistoryCount();
     this.loadData();
 
@@ -101,6 +103,18 @@ export class LeaveApplyComponent implements OnInit {
     );
   }
 
+  fetchEmployeeLeaveTypes(): void {
+    this.leaveService.getEmployeeLeaveTypes(this.empId).subscribe({
+      next: (leaves) => {
+        this.leaveTypes = leaves || [];
+        console.log(leaves);
+      },
+      error: (error) => {
+        console.log('Error fetching all leave types:', error);
+      },
+    });
+  }
+
   onSubmit(): void {
     this.isCompetencyFormValid();
     if (this.leaveForm.valid) {
@@ -108,14 +122,24 @@ export class LeaveApplyComponent implements OnInit {
       this.leaveApplied = this.leaveForm.value;
       this.leaveService
         .applyingLeave(Number(this.empId), this.leaveApplied)
-        .subscribe((response) => {
-          console.log(response);
+        .subscribe({
+          next: (response:LeaveApplied) => {
+            //console.log(response);
+            if(response && response.submittedOn === moment().format('YYYY-MM-DD')){
+              this.toastrService.success('Leave Applied !')
+              this.loadData();
+            }else if(response!==null){
+              this.toastrService.warning('Already applied !')
+            }
+          },
+          error: (error) => {
+            this.toastrService.error('Something error')
+          },
         });
       this.leaveForm.reset();
     } else {
       //alert('please fill form');
     }
-   
   }
 
   private isCompetencyFormValid() {
@@ -156,9 +180,6 @@ export class LeaveApplyComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns: string[] = [
-    'id',
-    'name',
-    'dept',
     'leaveType',
     'fromDate',
     'toDate',
@@ -199,7 +220,10 @@ export class LeaveApplyComponent implements OnInit {
           this.dataSource.data = response.data;
           // this.totalItems = response.totalItems;
         } else {
-          console.error('Error fetching count of employee leave history:', response.description);
+          console.error(
+            'Error fetching count of employee leave history:',
+            response.description
+          );
         }
       });
   }
@@ -218,7 +242,7 @@ export class LeaveApplyComponent implements OnInit {
 
   //-----------------------------------------
   leaves!: UpdateLeave[];
-  
+
   fetchEmployeeLeaves() {
     this.adminService
       .gettingEmployeeLeaves(this.empId)
@@ -227,7 +251,10 @@ export class LeaveApplyComponent implements OnInit {
           console.log(response.data);
           this.leaves = response.data;
         } else {
-          console.error('Error fetching leaves of employees:', response.description);
+          console.error(
+            'Error fetching leaves of employees:',
+            response.description
+          );
         }
       });
   }

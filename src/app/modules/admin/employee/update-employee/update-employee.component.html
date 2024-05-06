@@ -10,13 +10,18 @@
 <div class="modal-body">
   <form [formGroup]="formData">
     <div class="mb-3">
-      <p>Employee ID: {{ empId }}</p>
       <label for="departmentName" class="form-label">Department Name</label>
       <mdb-form-control>
         <select
           formControlName="departmentId"
           id="departmentId"
           class="form-control"
+          #mySelect
+          (change)="fetchRoleByDepartment(+mySelect.value)"
+          required
+          [class.is-invalid]="
+            departmentId.invalid && (departmentId.dirty || departmentId.touched)
+          "
         >
           <option value="" disabled selected>Change Department</option>
           <option
@@ -27,6 +32,71 @@
             {{ department.name }}
           </option>
         </select>
+        <div
+          *ngIf="
+            departmentId.invalid && (departmentId.dirty || departmentId.touched)
+          "
+          class="invalid-feedback"
+          id="form-validation"
+        >
+          <div
+            *ngIf="departmentId.errors?.['required']"
+            class="warning-message"
+          >
+            Please Select a Department
+          </div>
+        </div>
+      </mdb-form-control>
+    </div>
+    <div class="mb-3">
+      <mdb-form-control>
+        <select
+          formControlName="roleId"
+          id="roleId"
+          class="form-control"
+          required
+          [class.is-invalid]="
+            roleId.invalid && (roleId.dirty || roleId.touched)
+          "
+        >
+          <option value="" disabled selected>Select Role</option>
+          <option *ngFor="let role of roles" [value]="role.id">
+            {{ role.role }}
+          </option>
+        </select>
+        <div
+          *ngIf="roleId.invalid && (roleId.dirty || roleId.touched)"
+          class="invalid-feedback"
+          id="form-validation"
+        >
+          <div *ngIf="roleId.errors?.['required']" class="warning-message">
+            Please Select a Role
+          </div>
+        </div>
+      </mdb-form-control>
+    </div>
+    <div class="mb-3">
+      <mdb-form-control>
+        <input
+          type="number"
+          formControlName="salary"
+          id="salary"
+          class="form-control"
+          placeholder="Enter Salary Package"
+          required
+          [class.is-invalid]="
+            salary.invalid && (salary.dirty || salary.touched)
+          "
+        />
+        <div
+          *ngIf="salary.invalid && (salary.dirty || salary.touched)"
+          class="invalid-feedback"
+          id="form-validation"
+        >
+          <div *ngIf="salary.errors?.['required']" class="warning-message">
+            Please Provide a Salary
+          </div>
+        </div>
       </mdb-form-control>
     </div>
   </form>

@@ -6,6 +6,7 @@ import { UpdateLeave } from '../../../../model_class/updateLeave';
 import { HttpStatusClass } from '../../../../model_class/httpStatusClass';
 import { LeaveAssign } from '../../../../model_class/leaveAssign';
 import { LeaveType } from '../../../../model_class/leaveType';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-update-leave-assign',
@@ -21,6 +22,7 @@ export class UpdateLeaveAssignComponent {
   leaveAssignList: LeaveAssign[] = [];
 
   constructor(
+    private toastr: ToastrService,
     private formBuilder: FormBuilder,
     private adminService: AdminService,
     public modalRef: MdbModalRef<UpdateLeaveAssignComponent>
@@ -33,66 +35,61 @@ export class UpdateLeaveAssignComponent {
 
   initForm(): void {
     this.formData = this.formBuilder.group({
-      leaveId: ['', Validators.required],
-      // noOfDays: ['', Validators.required],
-      updatedNoOfDays: ['', Validators.required],
+      // leaveId: ['', Validators.required],
+      // updatedNoOfDays: ['', Validators.required],
     });
   }
 
   fetchAllLeaveTypes(): void {
-    this.adminService.getAllLeaveType().subscribe(
-      (leaves) => {
+    this.adminService.getAllLeaveType().subscribe({
+      next: (leaves) => {
         this.leaveTypes = leaves.data || [];
-        console.log(leaves);
         this.initLeaveTypeFormControls();
       },
-      (error) => {
-        console.log('Error fetching departments:', error);
-      }
-    );
+      error: (error) => {
+        //console.log('Error fetching departments:', error);
+      },
+    });
   }
 
   initLeaveTypeFormControls(): void {
-    // Dynamically add form controls for each leave type
     this.leaveTypes.forEach((leaveType, index) => {
       this.formData.addControl(
-        `leaveId${index}`,
-        this.formBuilder.control('', Validators.required)
-      );
-      this.formData.addControl(
-        `updatedNoOfDays${index}`,
+        `updatedNoOfDays${leaveType.id}`,
         this.formBuilder.control('', Validators.required)
       );
     });
   }
 
-  updateLeave(){
-    console.log(this.formData);
-    //const empId: number = this.formData.value.employeeId;
-    this.leaveAssignList = [];
-    this.leaveTypes.forEach((leaveType, index) => {
-      const leaveId = this.formData.get(`leaveId${index}`)?.value;
-      const updatedNoOfDays = this.formData.get(`updatedNoOfDays${index}`)?.value;
-      if (leaveId !== null && updatedNoOfDays !== null) {
-        this.leaveAssignList.push({
-          leaveId: leaveId.toString(),
-          noOfdays: +updatedNoOfDays,
-        });
-      }
-    });
-    console.log(this.empId, this.leaveAssignList);
-    this.adminService
-      .updateLeaveForEmployee(this.empId, this.leaveAssignList)
-      .subscribe(
-        (response) => {
-          console.log('Response from backend:', response);
-          this.formData.reset();
-          this.modalRef.close();
-        },
-        (error) => {
-          console.error('Error from backend:', error);
-          this.formData.reset();
+  updateLeave() {
+    if (this.formData.valid) {
+      this.leaveAssignList = [];
+      this.leaveTypes.forEach((leaveType, index) => {
+        const updatedNoOfDays = this.formData.get(
+          `updatedNoOfDays${leaveType.id}`
+        )?.value;
+        if (updatedNoOfDays !== null) {
+          this.leaveAssignList.push({
+            leaveId: leaveType.id,
+            noOfdays: updatedNoOfDays,
+          });
         }
-      );
+      });
+      console.log(this.empId, this.leaveAssignList);
+      this.adminService
+        .updateLeaveForEmployee(this.empId, this.leaveAssignList)
+        .subscribe({
+          next: (response) => {
+            this.formData.reset();
+            this.modalRef.close();
+            this.toastr.success('Leave Updated');
+          },
+          error: (error) => {
+            this.formData.reset();
+          },
+        });
+    }else{
+      this.toastr.warning('Enter All fields!!!')
+    }
   }
 }

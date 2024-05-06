@@ -10,6 +10,7 @@ import { HttpStatusClass } from '../model_class/httpStatusClass';
 import { LoginDetails } from '../model_class/loginDetails';
 import { LeaveAssign } from '../model_class/leaveAssign';
 import { BaseUrl } from '../model_class/baseUrl';
+import { Payment } from '../model_class/payment';
 
 @Injectable({
   providedIn: 'root',
@@ -113,7 +114,7 @@ export class AdminService {
     return this.httpClient.get<HttpStatusClass>(`${this.departmentURL}`)
     .pipe(
       catchError((error: any) => {
-        console.error('API request failed:', error);
+        //console.error('API request failed:', error);
         return throwError(error);
       })
     );
@@ -294,40 +295,40 @@ export class AdminService {
   getEmployeesForLeaveAssigningByDepartment(
     departmentId: number
   ): Observable<HttpStatusClass> {
-    console.log('Fetching Employees by Department for Leave assigning...');
+    //console.log('Fetching Employees by Department for Leave assigning...');
 
     return this.httpClient
       .get<HttpStatusClass>(BaseUrl.EMPLOYEE_BASE_URL+`/leave-assign/${departmentId}`)
       .pipe(
         catchError((error: any) => {
-          console.error('API request failed:', error);
+          //console.error('API request failed:', error);
           return throwError(error);
         })
       );
   }
 
   getAllLeaveType(): Observable<HttpStatusClass> {
-    console.log('Fetching All LeaveTypes...');
+    //console.log('Fetching All LeaveTypes...');
 
     return this.httpClient.get<HttpStatusClass>(`${this.leaveTypeURL}`).pipe(
       catchError((error: any) => {
-        console.error('API request failed:', error);
+        //console.error('API request failed:', error);
         return throwError(error);
       })
     );
   }
 
   assignLeaveForEmployee(empId: number, leaveAssign: any): Observable<any> {
-    console.log(empId, leaveAssign);
+    //console.log(empId, leaveAssign);
     return this.httpClient
       .post(`${this.empHasLeaveURL}/${empId}`, leaveAssign)
       .pipe(
         tap((response) => {
-          console.log('Add Leave For Employee Response:', response);
+          //console.log('Add Leave For Employee Response:', response);
         }),
         catchError((error) => {
-          console.error('Error adding Leave For Employee:', error);
-          console.log('Error Response Body:', error.error);
+          // console.error('Error adding Leave For Employee:', error);
+          // console.log('Error Response Body:', error.error);
           throw error;
         })
       );
@@ -406,6 +407,19 @@ export class AdminService {
       );
   }
 
+  updateEmployeeDepartmentRoleSalary(empId: number, departmentId: number, roleId: number, salaryPack: number): Observable<HttpStatusClass> {
+    const employeeData = { departmentId, roleId, salaryPack };
+
+    return this.httpClient
+      .put<HttpStatusClass>(`${this.employeeURL}/update/${empId}`, employeeData)
+      .pipe(
+        catchError((error: any) => {
+          console.error('API request failed:', error);
+          return throwError(error);
+        })
+      );
+  }
+
   deleteEmployee(empId: number): Observable<any> {
     return this.httpClient.delete(`${this.employeeURL}/${empId}`).pipe(
       catchError((error: any) => {
@@ -443,19 +457,20 @@ export class AdminService {
     empId: string,
     month: string,
     description: string
-  ): Observable<any> {
+  ): Observable<Payment> {
     const paymentData = { month, description };
     console.log('Email Credential Data:', paymentData, empId);
 
     return this.httpClient
-      .post(`${this.payrollURL}/${empId}`, paymentData)
+      .post<HttpStatusClass>(`${this.payrollURL}/${empId}`, paymentData)
       .pipe(
-        tap((response) => {
-          console.log('Payment done...', response);
+        map((response) => {
+          return response.data;
+          // console.log('Payment done...', response);
         }),
         catchError((error) => {
-          console.error('Error in payment sending:', error);
-          console.log('Error Response Body:', error.error);
+          // console.error('Error in payment sending:', error);
+          // console.log('Error Response Body:', error.error);
           throw error;
         })
       );
@@ -563,11 +578,11 @@ export class AdminService {
       .put(`${this.empHasLeaveURL}/${empId}`, leaveAssign)
       .pipe(
         tap((response) => {
-          console.log('Update Leave For Employee Response:', response);
+          //console.log('Update Leave For Employee Response:', response);
         }),
         catchError((error) => {
-          console.error('Error Updating Leave For Employee:', error);
-          console.log('Error Response Body:', error.error);
+          // console.error('Error Updating Leave For Employee:', error);
+          // console.log('Error Response Body:', error.error);
           throw error;
         })
       );

@@ -19,19 +19,9 @@
       <!-- First Column -->
       <div class="col-md-6">
         <mdb-form-control>
-          <select
-            formControlName="leaveId{{ i }}"
-            id="leaveId{{ i }}"
-            class="form-control"
-          >
-            <option value="">Select Leave Type</option>
-            <option
-              *ngFor="let leaveType of leaveTypes"
-              [value]="leaveType.id"
-            >
-              {{ leaveType.leave_types }}
-            </option>
-          </select>
+          <label class="form-control">
+            {{leave.leaveType}}
+          </label>
         </mdb-form-control>
       </div>
       <!-- Second Column -->
@@ -39,8 +29,8 @@
         <mdb-form-control>
           <input
             type="number"
-            formControlName="updatedNoOfDays{{ i }}"
-            id="updatedNoOfDays{{ i }}"
+            formControlName="updatedNoOfDays{{ leave.id }}"
+            id="updatedNoOfDays{{ leave.id }}"
             class="form-control"
             placeholder="Enter No Of Days"
           />

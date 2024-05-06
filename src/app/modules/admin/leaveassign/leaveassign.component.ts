@@ -21,6 +21,7 @@ import { ViewEmployeeLeavesComponent } from './view-employee-leaves/view-employe
 import { FilterOption } from '../../../model_class/filter-option';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { LeaveService } from '../../../services/leave.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-leaveassign',
@@ -28,7 +29,10 @@ import { LeaveService } from '../../../services/leave.service';
   styleUrl: './leaveassign.component.scss',
 })
 export class LeaveassignComponent implements OnInit {
-  formData!: FormGroup;
+  formData: FormGroup = new FormGroup({
+    departmentId: new FormControl(''),
+    employeeId: new FormControl('')
+  });
   departments: Department[] = [];
   employees: Employee[] = [];
   leaveTypes: LeaveType[] = [];
@@ -46,6 +50,7 @@ export class LeaveassignComponent implements OnInit {
   filterOptions: FilterOption;
 
   constructor(
+    private toastr: ToastrService,
     private modalService: MdbModalService,
     private adminService: AdminService,
     private leaveService: LeaveService,
@@ -65,101 +70,127 @@ export class LeaveassignComponent implements OnInit {
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe(() => this.applyFilter());
 
-    this.fetchLeaveAssign();
+    //this.fetchLeaveAssign();
   }
 
   initForm(): void {
     this.formData = this.formBuilder.group({
       departmentId: ['', Validators.required],
       employeeId: ['', Validators.required],
-      leaveId: ['', Validators.required],
-      noOfDays: ['', Validators.required],
     });
   }
 
+  get formControls() {
+    return this.formData.controls;
+  }
+
+  get departmentId() {
+    return this.formData.get('departmentId')!;
+  }
+
+  get employeeId() {
+    return this.formData.get('employeeId')!;
+  }
+
   fetchDepartments(): void {
-    this.adminService.getAllDepartments().subscribe(
-      (departments) => {
+    this.adminService.getAllDepartments().subscribe({
+      next: (departments) => {
         this.departments = departments.data || [];
-        console.log(departments);
       },
-      (error) => {
-        console.log('Error fetching departments:', error);
-      }
-    );
+      error: (error) => {
+        //console.log('Error fetching departments:', error);
+      },
+    });
   }
 
   fetchEmployeesByDepartment(departmentId: number): void {
     this.employees.splice(0, this.employees.length);
     this.adminService
       .getEmployeesForLeaveAssigningByDepartment(departmentId)
-      .subscribe(
-        (employees) => {
+      .subscribe({
+        next: (employees) => {
           this.employees = employees.data || [];
-          console.log(employees);
         },
-        (error) => {
-          console.log('Error fetching employees:', error);
-        }
-      );
+        error: (error) => {
+          //console.log('Error fetching employees:', error);
+        },
+      });
   }
 
   fetchAllLeaveTypes(): void {
-    this.adminService.getAllLeaveType().subscribe(
-      (leaves: HttpStatusClass) => {
+    this.adminService.getAllLeaveType().subscribe({
+      next:(leaves) => {
         this.leaveTypes = leaves.data || [];
-        console.log(leaves);
         this.initLeaveTypeFormControls();
       },
-      (error) => {
-        console.log('Error fetching departments:', error);
+      error:(error) => {
+        //console.log('Error fetching departments:', error);
       }
-    );
+    });
   }
 
   initLeaveTypeFormControls(): void {
-    // Dynamically add form controls for each leave type
     this.leaveTypes.forEach((leaveType, index) => {
       this.formData.addControl(
-        `leaveId${index}`,
-        this.formBuilder.control('', Validators.required)
-      );
-      this.formData.addControl(
-        `noOfDays${index}`,
+        `noOfDays${leaveType.id}`,
         this.formBuilder.control('', Validators.required)
       );
     });
   }
 
   submitForm(): void {
+    this.isCompetencyFormValid();
     if (this.formData.valid) {
       const empId: number = this.formData.value.employeeId;
       this.leaveAssignList = [];
       this.leaveTypes.forEach((leaveType, index) => {
-        const leaveId = this.formData.get(`leaveId${index}`)?.value;
-        const noOfdays = this.formData.get(`noOfDays${index}`)?.value;
-        if (leaveId !== null && noOfdays !== null) {
+        const noOfdays = this.formData.get(`noOfDays${leaveType.id}`)?.value;
+        if (noOfdays !== null) {
           this.leaveAssignList.push({
-            leaveId: leaveId.toString(),
-            noOfdays: +noOfdays,
+            leaveId: leaveType.id,
+            noOfdays: noOfdays,
           });
         }
       });
-      console.log(empId, this.leaveAssignList);
       this.adminService
         .assignLeaveForEmployee(empId, this.leaveAssignList)
         .subscribe({
           next: (response) => {
-            console.log('Response from backend:', response);
             this.formData.reset();
             this.loadData();
+            this.toastr.success('Leave Assigned')
           },
           error: (error) => {
-            console.error('Error from backend:', error);
             this.formData.reset();
           },
         });
+    }else{
+      this.toastr.warning('Please enter all filds!!!')
     }
+  }
+
+  private isCompetencyFormValid() {
+    if (this.formData.invalid) {
+      for (const control of Object.keys(this.formData.controls)) {
+        this.formData.controls[control].markAsTouched();
+      }
+      this.scrollToError();
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  scrollToValidationMessage(el: Element): void {
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  scrollToError(): void {
+    const firstElementWithError: HTMLElement = document.querySelector(
+      '.ng-invalid[formControlName]'
+    );
+    this.scrollToValidationMessage(firstElementWithError);
   }
 
   //----------------------------------------------------
@@ -170,7 +201,7 @@ export class LeaveassignComponent implements OnInit {
         this.totalItems = total.data;
       },
       (error) => {
-        console.error('Error fetching total departments count:', error);
+        //console.error('Error fetching total departments count:', error);
       }
     );
   }
@@ -179,7 +210,6 @@ export class LeaveassignComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
 
   displayedColumns: string[] = [
-    'id',
     'empName',
     'department',
     'role',
@@ -189,13 +219,13 @@ export class LeaveassignComponent implements OnInit {
   dataSource = new MatTableDataSource<EmployeeHasLeave>();
 
   loadData() {
-    this.fetchLeaveAssign();
+    // this.fetchLeaveAssign();
     this.leaveService.filter(this.filterOptions).subscribe((response) => {
       if (response.statusCode === 200) {
         this.dataSource.data = response.data;
-        // this.totalItems = response.totalItems;
+        this.totalItems = response.data[0].totalCount;
       } else {
-        console.error('Error fetching Leaveassign:', response.description);
+        //console.error('Error fetching Leaveassign:', response.description);
       }
     });
   }
@@ -213,19 +243,17 @@ export class LeaveassignComponent implements OnInit {
   }
 
   openUpdateModal(element: any) {
-    console.log(element);
     const modalRef: MdbModalRef<UpdateLeaveAssignComponent> =
       this.modalService.open(UpdateLeaveAssignComponent);
-    modalRef.component.empId = element[0];
+    modalRef.component.empId = element.id;
   }
 
   openViewModal(element: any) {
-    console.log(element);
-    const modalRef: MdbModalRef<ViewEmployeeLeavesComponent> =
+   const modalRef: MdbModalRef<ViewEmployeeLeavesComponent> =
       this.modalService.open(ViewEmployeeLeavesComponent, {
         modalClass: 'modal-dialog-centered',
         animation: true,
       });
-    modalRef.component.empId = element[0];
+    modalRef.component.empId = element.id;
   }
 }

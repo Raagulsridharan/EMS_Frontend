@@ -65,7 +65,7 @@ export class EmployeeComponent {
       .subscribe(() => this.applyFilter()
     );
 
-    this.fetchTotalEmployees();
+    //this.fetchTotalEmployees();
 
     this.dataSource.sort = this.sort;
 
@@ -93,7 +93,6 @@ export class EmployeeComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns: string[] = [
-    'id',
     'emp_name',
     'birthday',
     'gender',
@@ -109,7 +108,7 @@ export class EmployeeComponent {
       if(response !==null || response != undefined){
       if (response.statusCode === 200) {
         this.dataSource.data = response.data;
-        // this.totalItems = response.totalItems;
+        this.totalItems = response.data[0].totalCount;
       } else {
         console.error('Error fetching employees:', response.description);
       }

@@ -165,7 +165,7 @@ export class DesignationComponent implements OnInit, AfterViewInit {
     modalRef.component.designationId = element.id;
     modalRef.component.designationName = element.role;
     modalRef.component.salaryPackage = element.salary_package;
-    //modalRef.component.department = element.deparment;
+    modalRef.component.department = element.department;
     modalRef.component.departmentId = element.department.id;
   }
 }

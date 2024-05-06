@@ -21,6 +21,7 @@ import { FilterOption } from '../../../model_class/filter-option';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { RoleService } from '../../../services/role.service';
 import { DesignationService } from '../../../services/designation.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-rolemapping',
@@ -55,6 +56,7 @@ export class RolemappingComponent implements OnInit {
   filterOptions: FilterOption;
 
   constructor(
+    private toastr: ToastrService,
     private modalService: MdbModalService,
     private adminService: AdminService,
     private designationService: DesignationService,
@@ -76,7 +78,7 @@ export class RolemappingComponent implements OnInit {
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe(() => this.applyFilter());
 
-    this.fetchTotalEmpRolesalary();
+    //this.fetchTotalEmpRolesalary();
   }
 
   get formControls() {
@@ -109,15 +111,15 @@ export class RolemappingComponent implements OnInit {
   }
 
   fetchDepartments(): void {
-    this.adminService.getAllDepartments().subscribe(
-      (departments: HttpStatusClass) => {
+    this.adminService.getAllDepartments().subscribe({
+      next:(departments: HttpStatusClass) => {
         this.departments = departments.data;
         //console.log(departments);
       },
-      (error) => {
+      error:(error) => {
         //console.log('Error fetching departments:', error);
       }
-    );
+    });
   }
 
   fetchEmployeesByDepartment(departmentId: number): void {
@@ -126,7 +128,7 @@ export class RolemappingComponent implements OnInit {
       .getEmployeesForRoleAssigningByDepartment(departmentId)
       .subscribe({
         next: (response) => {
-          this.employees = response || []; 
+          this.employees = response || [];
           //console.log(response);
           this.isEmployeeSelectDisabled = this.employees.length === 0;
           //console.log( 'isEmployeeSelectDisabled:',this.isEmployeeSelectDisabled);
@@ -140,24 +142,24 @@ export class RolemappingComponent implements OnInit {
     this.designationService.getRolesByDepartment(departmentId).subscribe({
       next: (response) => {
         this.roles = response || [];
-        console.log(response);
+        //console.log(response);
       },
       error: (error) => {
-        console.log('Error fetching employees:', error.error.message);
+        //console.log('Error fetching employees:', error.error.message);
       },
     });
   }
 
   fetchRoles(): void {
-    this.adminService.getAllDesignation().subscribe(
-      (designation) => {
+    this.adminService.getAllDesignation().subscribe({
+      next:(designation) => {
         this.roles = designation.data || [];
-        console.log(designation);
+        //console.log(designation);
       },
-      (error) => {
-        console.log('Error fetching designation:', error);
+      error:(error) => {
+        //console.log('Error fetching designation:', error);
       }
-    );
+    });
   }
 
   submitForm(): void {
@@ -169,17 +171,19 @@ export class RolemappingComponent implements OnInit {
       const enteredSalary = this.formData.value.salary;
       this.adminService
         .addRoleAndSalaryForEmployee(empId, roleId, enteredSalary)
-        .subscribe(
-          (response) => {
-            console.log('Role&Salary added successfully:', response);
-            this.formData.reset(); // Reset the form after successful addition
-          },
-          (error) => {
-            alert('Error in adding Role&Salary...!');
-            console.error('Error adding Role&Salary:', error);
+        .subscribe({
+          next: (response) => {
+            //console.log('Role&Salary added successfully:', response);
             this.formData.reset();
-          }
-        );
+            this.loadData();
+            this.toastr.success('Successfully Role Assigned!')
+          },
+          error: (error) => {
+            // alert('Error in adding Role&Salary...!');
+            // console.error('Error adding Role&Salary:', error);
+            this.formData.reset();
+          },
+        });
     }
   }
 
@@ -230,7 +234,6 @@ export class RolemappingComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns: string[] = [
-    
     'name',
     'dept',
     'role',
@@ -254,7 +257,7 @@ export class RolemappingComponent implements OnInit {
     this.roleService.filter(this.filterOptions).subscribe((response) => {
       if (response.statusCode === 200) {
         this.dataSource.data = response.data;
-        // this.totalItems = response.totalItems;
+        this.totalItems = response.data[0].totalCount;
       } else {
         console.error('Error fetching EmpRoleSalary:', response.description);
       }
@@ -275,7 +278,8 @@ export class RolemappingComponent implements OnInit {
 
   openUpdateModal(element) {
     console.log(element);
-    const modalRef: MdbModalRef<UpdateRoleMappingComponent> = this.modalService.open(UpdateRoleMappingComponent);
+    const modalRef: MdbModalRef<UpdateRoleMappingComponent> =
+      this.modalService.open(UpdateRoleMappingComponent);
     modalRef.component.designationName = element.role;
     modalRef.component.dept = element.department;
     modalRef.component.deptId = element.departmentId;

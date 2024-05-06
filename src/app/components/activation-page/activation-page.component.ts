@@ -99,11 +99,11 @@ export class ActivationPageComponent implements OnInit {
 
     this.authService.updatePassword(this.empId, newPassword).subscribe(
       () => {
-        this.toastr.success('Password Updated Successfully!');
+        this.toastr.success('Successfully account activated!');
         this.router.navigate(['']);
       },
       (error) => {
-        console.error('Error updating password:', error);
+        //console.error('Error updating password:', error);
         this.toastr.error('Error updating password:');
       }
     );

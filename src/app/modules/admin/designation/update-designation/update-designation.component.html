@@ -8,6 +8,7 @@
     ></button>
   </div>
   <div class="modal-body">
+    <h4>Department : {{department.name}}</h4>
     <form [formGroup]="formData">
       <div class="mb-3">
         <label for="designation" class="form-label">Role : </label>
@@ -27,6 +28,7 @@
           class="form-control"
           id="salaryPackage"
           name="salaryPackage"
+          placeholder="Enter Salary Package"
           formControlName="updateSalaryPackage"
           [value]="defualtPackage" (input)="onInput2($event)"
         />

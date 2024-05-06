@@ -4,6 +4,7 @@ import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { AdminService } from '../../../../services/admin.service';
 import { Designation } from '../../../../model_class/designation';
 import { DesignationService } from '../../../../services/designation.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-update-role-mapping',
@@ -21,6 +22,7 @@ export class UpdateRoleMappingComponent {
   designations: Designation[] = [];
 
   constructor(
+    private toastrService: ToastrService,
     private formBuilder: FormBuilder,
     private adminService: AdminService,
     private designationService: DesignationService,
@@ -76,6 +78,9 @@ export class UpdateRoleMappingComponent {
           this.formData.reset();
         }
       );
+    }
+    else{
+      this.toastrService.warning('Enter Valid values!')
     }
   }
 }

@@ -1,22 +1,37 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LeaveApplied } from '../model_class/leaveApplied';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { BaseUrl } from '../model_class/baseUrl';
 import { HttpStatusClass } from '../model_class/httpStatusClass';
+import { ToastrService } from 'ngx-toastr';
+import { LeaveType } from '../model_class/leaveType';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LeaveService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private toastr: ToastrService,
+    private http: HttpClient
+  ) {}
 
-  applyingLeave(empId: number, leaveData: LeaveApplied): Observable<any> {
+  leaveApplied: LeaveApplied;
+  applyingLeave(empId: number, leaveData: LeaveApplied): Observable<LeaveApplied> {
     return this.http
-      .post(BaseUrl.LEAVE_APPLIED_URL+`/${empId}`, leaveData)
+      .post<HttpStatusClass>(BaseUrl.LEAVE_APPLIED_URL+`/${empId}`, leaveData)
       .pipe(
-        catchError((error: any) => {
-          return throwError(error);
+        map((response)=>{
+          if(response.data){
+            this.leaveApplied = response.data;
+            return this.leaveApplied;
+          }else{
+            this.toastr.error('Insufficient Days');
+            return null;
+          }
+        }),
+        catchError((error) => {
+          throw error;
         })
       );
   }
@@ -63,12 +78,24 @@ export class LeaveService {
     .pipe(
       catchError((error: any) => {
         if (error.statusCode === 400 || error.statusCode === 500) {
-          alert('Invalid inputs. Please try again.');
+          //alert('Invalid inputs. Please try again.');
         }
         else {
-          console.error('Failed to filter Leaveassign. Error:', error);
+          //console.error('Failed to filter Leaveassign. Error:', error);
+          this.toastr.error('Something Error occurs!')
         }
         return throwError(error);
+      })
+    );
+  }
+
+  getEmployeeLeaveTypes(empId:any): Observable<LeaveType[]>{
+    return this.http.get<HttpStatusClass>(BaseUrl.LEAVE_POLICY+'/employee/'+empId).pipe(
+      map((response)=>{
+        return response.data;
+      }),
+      catchError((error: any) => {
+        throw error;
       })
     );
   }

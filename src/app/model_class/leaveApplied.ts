@@ -1,10 +1,10 @@
 import { Employee } from "./employee";
 import { LeaveType } from "./leaveType";
 
-export interface LeaveApplied{
+export class LeaveApplied{
     id: number;
-    employee: Employee;
-    leaveType: LeaveType;
+    employee: Employee = new Employee;
+    leaveType: LeaveType = new LeaveType;
     note: string;
     noOfdays: number;
     fromDate: any;

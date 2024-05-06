@@ -11,6 +11,7 @@ import { UpdateDepartmentComponent } from './update-department/update-department
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { DepartmentService } from '../../../services/department.service';
 import { FilterOption } from '../../../model_class/filter-option';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-department',
@@ -31,6 +32,7 @@ export class DepartmentComponent implements OnInit {
   filterOptions: FilterOption;
 
   constructor(
+    private toastrService: ToastrService,
     private modalService: MdbModalService,
     private adminService: AdminService,
     private departmentService: DepartmentService,
@@ -51,7 +53,7 @@ export class DepartmentComponent implements OnInit {
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe(() => this.applyFilter());
 
-    this.fetchTotalDepartment();
+    //this.fetchTotalDepartment();
   }
 
   get formControls() {
@@ -79,13 +81,16 @@ export class DepartmentComponent implements OnInit {
       const departmentName = this.formData.value.newDepartmentName;
       this.adminService.addDepartment(departmentName).subscribe(
         (response) => {
-          console.log('Department added successfully:', response);
+          //console.log('Department added successfully:', response);
           this.formData.reset();
+          this.toastrService.success('Added Successfully')
         },
         (error) => {
-          alert('Error in adding department...!');
-          console.error('Error adding department:', error);
+          // alert('Error in adding department...!');
+          // console.error('Error adding department:', error);
           this.formData.reset();
+          this.toastrService.error('Duplicate Entry!')
+          
         }
       );
     }
@@ -120,14 +125,14 @@ export class DepartmentComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['id', 'name', 'Action'];
+  displayedColumns: string[] = [ 'name', 'Action'];
   dataSource = new MatTableDataSource<Department>();
 
   loadData() {
     this.departmentService.filter(this.filterOptions).subscribe((response) => {
       if (response.statusCode === 200) {
         this.dataSource.data = response.data;
-        // this.totalItems = response.totalItems;
+        this.totalItems = response.data[0].totalCount;
       } else {
         console.error('Error fetching departments:', response.description);
       }
