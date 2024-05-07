@@ -1,6 +1,11 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AdminService } from '../../../services/admin.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Department } from '../../../model_class/department';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -79,20 +84,20 @@ export class DepartmentComponent implements OnInit {
     this.isCompetencyFormValid();
     if (this.formData.valid) {
       const departmentName = this.formData.value.newDepartmentName;
-      this.adminService.addDepartment(departmentName).subscribe(
-        (response) => {
-          //console.log('Department added successfully:', response);
+      this.adminService.addDepartment(departmentName).subscribe({
+        next: (response) => {
           this.formData.reset();
-          this.toastrService.success('Added Successfully')
+          this.toastrService.success('Added Successfully');
         },
-        (error) => {
-          // alert('Error in adding department...!');
-          // console.error('Error adding department:', error);
+        error: (error) => {
           this.formData.reset();
-          this.toastrService.error('Duplicate Entry!')
-          
-        }
-      );
+          if (error.error.statusCode == 409) {
+            this.toastrService.error(error.error.description);
+          } else {
+            this.toastrService.error('Failure while saving department');
+          }
+        },
+      });
     }
   }
 
@@ -125,7 +130,7 @@ export class DepartmentComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = [ 'name', 'Action'];
+  displayedColumns: string[] = ['name', 'Action'];
   dataSource = new MatTableDataSource<Department>();
 
   loadData() {
@@ -153,7 +158,8 @@ export class DepartmentComponent implements OnInit {
 
   openUpdateModal(element: Department) {
     console.log(element);
-    const modalRef: MdbModalRef<UpdateDepartmentComponent> = this.modalService.open(UpdateDepartmentComponent);
+    const modalRef: MdbModalRef<UpdateDepartmentComponent> =
+      this.modalService.open(UpdateDepartmentComponent);
     modalRef.component.departmentId = element.id;
     modalRef.component.departmentName = element.name;
   }

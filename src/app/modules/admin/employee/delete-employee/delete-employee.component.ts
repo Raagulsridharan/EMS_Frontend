@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { AdminService } from '../../../../services/admin.service';
 import { Department } from '../../../../model_class/department';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-delete-employee',
@@ -17,21 +18,22 @@ export class DeleteEmployeeComponent {
   @Input() address!: string;
 
   constructor(
+    private toastr: ToastrService,
     private adminService: AdminService,
     public modalRef: MdbModalRef<DeleteEmployeeComponent>
   ) {}
 
   deleteEmployee() {
-    this.adminService.deleteEmployee(this.empId).subscribe(
-      (response) => {
-        console.log('Employee Deleted successfully:' + response);
+    this.adminService.deleteEmployee(this.empId).subscribe({
+      next:(response) => {
+        //console.log('Employee Deleted successfully:' + response);
         this.modalRef.close();
         window.location.reload();
       },
-      (error) => {
-        alert('Error in deleting employee...!');
-        console.error('Error deleting employee:', error);
+      error:(error) => {
+        //alert('Error in deleting employee...!');
+        //console.error('Error deleting employee:', error);
       }
-    );
+    });
   }
 }

@@ -58,7 +58,7 @@
             employeeId.invalid && (employeeId.dirty || employeeId.touched)
           "
         >
-          <option value="">Select Employee</option>
+          <option value="" disabled selected>Select Employee</option>
           <option *ngFor="let employee of employees" [value]="employee.id">
             {{ employee.emp_name }}
           </option>
@@ -86,7 +86,7 @@
             roleId.invalid && (roleId.dirty || roleId.touched)
           "
         >
-          <option value="">Select Role</option>
+          <option value="" disabled selected>Select Role</option>
           <option *ngFor="let role of roles" [value]="role.id">
             {{ role.role }}
           </option>

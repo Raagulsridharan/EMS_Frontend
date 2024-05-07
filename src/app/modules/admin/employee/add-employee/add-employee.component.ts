@@ -86,7 +86,7 @@ export class AddEmployeeComponent implements OnInit {
         next: (response:any) => {
           this.formData.reset();
           this.router.navigateByUrl('/admin/employee');
-          this.toastr.success('Successfully Profile created!'+response.employee.name)
+          this.toastr.success('Successfully Profile created!\n'+response.employee.name)
           // this.loginDetails.username = response.username;
           // this.loginDetails.password = response.password;
           // this.loginDetails.deptId = response.employee.department.id;

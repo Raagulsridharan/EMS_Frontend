@@ -61,6 +61,7 @@ export class RejectedLeavesComponent {
     const modalRef: MdbModalRef<LeaveappliedComponent> = this.modalService.open(LeaveappliedComponent);
     modalRef.component.id = element.id;
     modalRef.component.empId = element.employee_leave_applied.id;
+    modalRef.component.empName = element.employee_leave_applied.name;
     modalRef.component.leaveType = element.leavePolicy.id;
     modalRef.component.status = element.status;
   }

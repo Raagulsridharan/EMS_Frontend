@@ -165,7 +165,7 @@ export class LeaveassignComponent implements OnInit {
           },
         });
     }else{
-      this.toastr.warning('Please enter all filds!!!')
+      this.toastr.warning('Please enter all fields!!!')
     }
   }
 

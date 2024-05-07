@@ -12,6 +12,7 @@ export class LeaveappliedComponent implements OnInit{
   
   @Input() id!: number;
   @Input() empId!: number;
+  @Input() empName!: string;
   @Input() leaveType!: number;
   @Input() status!: string;
 
