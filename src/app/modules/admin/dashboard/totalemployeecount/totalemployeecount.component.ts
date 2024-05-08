@@ -121,7 +121,7 @@ export class TotalemployeecountComponent implements OnInit {
       {
         title: 'Approved Leaves',
         count: this.totalApprovedLeaves,
-        router: '/admin/approvedLeaves',
+        router: '/admin/approved-leaves',
       },
       {
         title: 'Rejected Leaves',

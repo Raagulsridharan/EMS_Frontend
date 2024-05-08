@@ -95,7 +95,7 @@ export class LoginPageComponent {
         next: (result: EmpFlag) => {
           //console.log(result);
           if (result.flag === 0) {
-            this.router.navigate(['/accountActivation', result.empId]);
+            this.router.navigate(['/account-activation', result.empId]);
           } else if (result.flag === 1) {
             localStorage.setItem('employeeId', String(result.empId));
             this.authService

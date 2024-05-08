@@ -9,11 +9,11 @@
     Assign Leave
   </button>
   <!-- Collapsed content -->
-  <div class="mt-3" id="collapseExample" mdbCollapse #collapse="mdbCollapse">
+  <div class="mt-3 " id="collapseExample" mdbCollapse #collapse="mdbCollapse">
     <form [formGroup]="formData" (ngSubmit)="submitForm()">
-      <div class="row">
+      <div class="row justify-content-center">
         <!-- First Column -->
-        <div class="col-md-6">
+        <div class="col-md-3">
           <mdb-form-control>
             <select
               formControlName="departmentId"
@@ -36,56 +36,61 @@
               </option>
             </select>
             <div
-                *ngIf="
-                  departmentId.invalid &&
-                  (departmentId.dirty || departmentId.touched)
-                "
-                class="invalid-feedback"
-                id="form-validation"
+              *ngIf="
+                departmentId.invalid &&
+                (departmentId.dirty || departmentId.touched)
+              "
+              class="invalid-feedback"
+              id="form-validation"
+            >
+              <div
+                *ngIf="departmentId.errors?.['required']"
+                class="warning-message"
               >
-                <div
-                  *ngIf="departmentId.errors?.['required']"
-                  class="warning-message"
-                >
-                  Please provide a Department
-                </div>
+                Please provide a Department
               </div>
+            </div>
           </mdb-form-control>
         </div>
         <!-- Second Column -->
-        <div class="col-md-6">
+        <div class="col-md-3">
           <mdb-form-control>
             <select
               formControlName="employeeId"
               id="employeeId"
               class="form-control"
               required
-          [class.is-invalid]="
-            employeeId.invalid && (employeeId.dirty || employeeId.touched)
-          "
+              [class.is-invalid]="
+                employeeId.invalid && (employeeId.dirty || employeeId.touched)
+              "
             >
-              <option value="">Select Employee</option>
+              <option value="" disabled selected>Select Employee</option>
               <option *ngFor="let employee of employees" [value]="employee.id">
                 {{ employee.emp_name }}
               </option>
             </select>
             <div
-          *ngIf="employeeId.invalid && (employeeId.dirty || employeeId.touched)"
-          class="invalid-feedback"
-          id="form-validation"
-        >
-          <div *ngIf="employeeId.errors?.['required']" class="warning-message">
-            Please Select a Employee
-          </div>
-        </div>
+              *ngIf="
+                employeeId.invalid && (employeeId.dirty || employeeId.touched)
+              "
+              class="invalid-feedback"
+              id="form-validation"
+            >
+              <div
+                *ngIf="employeeId.errors?.['required']"
+                class="warning-message"
+              >
+                Please Select a Employee
+              </div>
+            </div>
           </mdb-form-control>
         </div>
       </div>
       <br />
       <!-- Dynamic rows for leave types and days -->
-      <div *ngFor="let leave of leaveTypes; let i = index" class="row mb-3">
+      <div *ngFor="let leave of leaveTypes; let i = index" class="row justify-content-center mb-3">
         <!-- First Column -->
-        <div class="col-md-6">
+        <div class="col-md-3">
           <mdb-form-control>
             <label class="form-control">
               {{ leave.leaveType }}
@@ -93,7 +98,7 @@
           </mdb-form-control>
         </div>
         <!-- Second Column -->
-        <div class="col-md-6">
+        <div class="col-md-3">
           <mdb-form-control>
             <input
               type="number"

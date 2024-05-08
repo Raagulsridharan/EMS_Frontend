@@ -11,97 +11,113 @@
   <!--Collapsed content-->
   <div class="mt-3" id="collapseExample" mdbCollapse #collapse="mdbCollapse">
     <form [formGroup]="formData" (ngSubmit)="submitForm()">
-      <mdb-form-control>
-        <select
-          formControlName="departmentId"
-          id="departmentId"
-          class="form-control"
-          #mySelect
-          (change)="fetchEmployeesByDepartment(+mySelect.value)"
-          required
-          [class.is-invalid]="
-            departmentId.invalid && (departmentId.dirty || departmentId.touched)
-          "
-        >
-          <option value="" disabled selected>Select Department</option>
-          <option
-            *ngFor="let department of departments"
-            [value]="department.id"
-          >
-            {{ department.name }}
-          </option>
-        </select>
-        <div
-          *ngIf="
-            departmentId.invalid && (departmentId.dirty || departmentId.touched)
-          "
-          class="invalid-feedback"
-          id="form-validation"
-        >
-          <div
-            *ngIf="departmentId.errors?.['required']"
-            class="warning-message"
-          >
-            Please Select a Department
-          </div>
+      <div class="row justify-content-center mb-3">
+        <div class="col-md-5">
+          <mdb-form-control>
+            <select
+              formControlName="departmentId"
+              id="departmentId"
+              class="form-control"
+              #mySelect
+              (change)="fetchEmployeesByDepartment(+mySelect.value)"
+              required
+              [class.is-invalid]="
+                departmentId.invalid && (departmentId.dirty || departmentId.touched)
+              "
+            >
+              <option value="" disabled selected>Select Department</option>
+              <option
+                *ngFor="let department of departments"
+                [value]="department.id"
+              >
+                {{ department.name }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                departmentId.invalid && (departmentId.dirty || departmentId.touched)
+              "
+              class="invalid-feedback"
+              id="form-validation"
+            >
+              <div
+                *ngIf="departmentId.errors?.['required']"
+                class="warning-message"
+              >
+                Please Select a Department
+              </div>
+            </div>
+          </mdb-form-control>
         </div>
-      </mdb-form-control>
-      <br />
-      <mdb-form-control>
-        <select
-          formControlName="employeeId"
-          id="employeeId"
-          class="form-control"
-          [disabled]="isEmployeeSelectDisabled"
-          required
-          [class.is-invalid]="
-            employeeId.invalid && (employeeId.dirty || employeeId.touched)
-          "
-        >
-          <option value="" disabled selected>Select Employee</option>
-          <option *ngFor="let employee of employees" [value]="employee.id">
-            {{ employee.emp_name }}
-          </option>
-        </select>
+      </div>
+      <!-- <br /> -->
+      <div class="row justify-content-center mb-3">
+        <div class="col-md-5">
+          <mdb-form-control>
+            <select
+              formControlName="employeeId"
+              id="employeeId"
+              class="form-control"
+              [disabled]="isEmployeeSelectDisabled"
+              required
+              [class.is-invalid]="
+                employeeId.invalid && (employeeId.dirty || employeeId.touched)
+              "
+            >
+              <option value="" disabled selected>Select Employee</option>
+              <option *ngFor="let employee of employees" [value]="employee.id">
+                {{ employee.emp_name }}
+              </option>
+            </select>
+    
+            <div
+              *ngIf="employeeId.invalid && (employeeId.dirty || employeeId.touched)"
+              class="invalid-feedback"
+              id="form-validation"
+            >
+              <div *ngIf="employeeId.errors?.['required']" class="warning-message">
+                Please Select a Employee
+              </div>
+            </div>
+          </mdb-form-control>
+        </div>
+      </div>
 
-        <div
-          *ngIf="employeeId.invalid && (employeeId.dirty || employeeId.touched)"
-          class="invalid-feedback"
-          id="form-validation"
-        >
-          <div *ngIf="employeeId.errors?.['required']" class="warning-message">
-            Please Select a Employee
-          </div>
+      <!-- <br /> -->
+      <div class="row justify-content-center mb-3">
+        <div class="col-md-5">
+          <mdb-form-control>
+            <select
+              formControlName="roleId"
+              id="roleId"
+              class="form-control"
+              (change)="updateSalaryPlaceholder()"
+              required
+              [class.is-invalid]="
+                roleId.invalid && (roleId.dirty || roleId.touched)
+              "
+            >
+              <option value="" disabled selected>Select Role</option>
+              <option *ngFor="let role of roles" [value]="role.id">
+                {{ role.role }}
+              </option>
+            </select>
+            <div
+              *ngIf="roleId.invalid && (roleId.dirty || roleId.touched)"
+              class="invalid-feedback"
+              id="form-validation"
+            >
+              <div *ngIf="roleId.errors?.['required']" class="warning-message">
+                Please Select a Role
+              </div>
+            </div>
+          </mdb-form-control>
         </div>
-      </mdb-form-control>
-      <br />
-      <mdb-form-control>
-        <select
-          formControlName="roleId"
-          id="roleId"
-          class="form-control"
-          (change)="updateSalaryPlaceholder()"
-          required
-          [class.is-invalid]="
-            roleId.invalid && (roleId.dirty || roleId.touched)
-          "
-        >
-          <option value="" disabled selected>Select Role</option>
-          <option *ngFor="let role of roles" [value]="role.id">
-            {{ role.role }}
-          </option>
-        </select>
-        <div
-          *ngIf="roleId.invalid && (roleId.dirty || roleId.touched)"
-          class="invalid-feedback"
-          id="form-validation"
-        >
-          <div *ngIf="roleId.errors?.['required']" class="warning-message">
-            Please Select a Role
-          </div>
-        </div>
-      </mdb-form-control>
-      <br />
+      </div>
+      
+      <!-- <br /> -->
+      <div class="row justify-content-center mb-3">
+        <div class="col-md-5">
       <mdb-form-control>
         <input
           type="number"
@@ -124,6 +140,8 @@
           </div>
         </div>
       </mdb-form-control>
+        </div>
+      </div>
       <br />
 
       <button

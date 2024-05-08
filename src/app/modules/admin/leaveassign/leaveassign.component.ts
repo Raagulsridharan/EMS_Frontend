@@ -148,6 +148,7 @@ export class LeaveassignComponent implements OnInit {
         if (noOfdays !== null) {
           this.leaveAssignList.push({
             leaveId: leaveType.id,
+            leaveType: leaveType.leaveType,
             noOfdays: noOfdays,
           });
         }

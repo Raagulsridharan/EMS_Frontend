@@ -156,12 +156,9 @@ export class AdminService {
     .pipe(
       map((response:HttpStatusClass) => {
         this.employee = response.data;
-        console.log('Add Employee Response:', response);
         return this.employee;
       }),
       catchError((error) => {
-        //console.error('Error adding employee:', error);
-        //console.log('Error Response Body:', error.error);
         throw error;
       })
     );

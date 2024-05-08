@@ -90,6 +90,7 @@ export class DesignationComponent implements OnInit, AfterViewInit {
           this.formData.reset(); // Reset the form after successful addition
           this.ngAfterViewInit();
           this.toastr.success("Successfully Designation Created!")
+          this.ngAfterViewInit();
         },
         (error) => {
           //alert('Error in adding designation...!')

@@ -124,7 +124,6 @@ export class LeaveApplyComponent implements OnInit {
         .applyingLeave(Number(this.empId), this.leaveApplied)
         .subscribe({
           next: (response:LeaveApplied) => {
-            //console.log(response);
             if(response && response.submittedOn === moment().format('YYYY-MM-DD')){
               this.toastrService.success('Leave Applied !')
               this.loadData();

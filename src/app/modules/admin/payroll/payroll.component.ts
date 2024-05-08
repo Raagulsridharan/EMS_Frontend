@@ -114,14 +114,11 @@ export class PayrollComponent implements OnInit {
       const empId: number = this.formData.value.employeeId;
       this.adminService.createPayrollForEmployee(empId).subscribe({
         next:(response) => {
-          // console.log('Payroll added successfully:', response);
           this.formData.reset();
           this.toastr.success('Payroll Added !')
           this.loadData();
         },
         error:(error) => {
-          // alert('Error in adding Payroll...!');
-          // console.error('Error adding Payroll:', error);
           this.formData.reset();
         }
       });

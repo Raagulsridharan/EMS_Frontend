@@ -61,16 +61,17 @@ export class PaymentHistoryComponent implements OnInit {
         )
         .subscribe({
           next:(response) => {
-            //console.log('Payment make successfully:', response);
             this.formData.reset();
             this.ngAfterViewInit();
             this.toastr.success('Payment Done!')
           },
           error:(error) => {
-            // alert('Error in send Payment...!');
-            // console.error('Error send Payment:', error);
             this.formData.reset();
-            this.toastr.error('Already Paid!')
+            if (error.error.statusCode == 409) {
+              this.toastr.error(error.error.description);
+            } else {
+              this.toastr.error('Failure while make payment');
+            }
           }
         });
     }

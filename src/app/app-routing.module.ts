@@ -7,7 +7,7 @@ const routes: Routes = [
   { path:'login',
     component: LoginPageComponent
   },
-  { path: 'accountActivation/:id', 
+  { path: 'account-activation/:id', 
     component: ActivationPageComponent
   },
   {

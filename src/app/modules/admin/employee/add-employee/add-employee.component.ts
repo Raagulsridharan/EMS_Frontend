@@ -86,18 +86,14 @@ export class AddEmployeeComponent implements OnInit {
         next: (response:any) => {
           this.formData.reset();
           this.router.navigateByUrl('/admin/employee');
-          this.toastr.success('Successfully Profile created!\n'+response.employee.name)
-          // this.loginDetails.username = response.username;
-          // this.loginDetails.password = response.password;
-          // this.loginDetails.deptId = response.employee.department.id;
-          // this.adminService.sentEmailForLoginCredential(this.loginDetails).subscribe(
-          //   (response)=>{
-          //     console.log(response);
-          //   }
-          // );
+          this.toastr.success('Successfully Profile created!')
         },
         error: (error) => {
-          this.toastr.error(''+error.error.message)
+          if (error.error.statusCode == 409) {
+            this.toastr.error(error.error.description);
+          } else {
+            this.toastr.error('Failure while creating employee');
+          }
         }
       });
     } else {

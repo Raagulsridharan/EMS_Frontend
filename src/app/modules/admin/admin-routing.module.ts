@@ -64,7 +64,7 @@ const routes: Routes = [
         component: PayrollComponent
       },
       {
-        path: 'payroll/paymentHistory/:id',
+        path: 'payroll/history/:id',
         component: PaymentHistoryComponent
       },
       {
@@ -72,7 +72,7 @@ const routes: Routes = [
         component: LeaveappliedComponent
       },
       {
-        path: 'approvedLeaves',
+        path: 'approved-leaves',
         component: ApprovedLeavesComponent
       },
       {

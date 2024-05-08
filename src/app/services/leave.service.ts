@@ -26,7 +26,7 @@ export class LeaveService {
             this.leaveApplied = response.data;
             return this.leaveApplied;
           }else{
-            this.toastr.error('Insufficient Days');
+            this.toastr.error('Please check your remaining leave balance for '+leaveData.leaveType.leaveType);
             return null;
           }
         }),

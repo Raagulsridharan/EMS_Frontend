@@ -71,6 +71,7 @@ export class UpdateLeaveAssignComponent {
         if (updatedNoOfDays !== null) {
           this.leaveAssignList.push({
             leaveId: leaveType.id,
+            leaveType: leaveType.leaveType,
             noOfdays: updatedNoOfDays,
           });
         }

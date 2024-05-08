@@ -88,6 +88,7 @@ export class DepartmentComponent implements OnInit {
         next: (response) => {
           this.formData.reset();
           this.toastrService.success('Added Successfully');
+          this.loadData();
         },
         error: (error) => {
           this.formData.reset();
